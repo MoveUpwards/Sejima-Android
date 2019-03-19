@@ -13,3 +13,5 @@ gradle/
 .build/
 .captures/
 .externalNativeBuild
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
