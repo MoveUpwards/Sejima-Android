@@ -10,6 +10,6 @@
 .idea/
 gradle/
 .DS_Store
-/build
-/captures
+.build/
+.captures/
 .externalNativeBuild
