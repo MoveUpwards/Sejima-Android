@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MUHeader">
+        <attr name="title" format="string"/>
+        <attr name="detail" format="string"/>
+        <attr name="title_size" format="dimension"/>
+        <attr name="title_weight" format="enum">
+            <enum name="normal" value="0"/>
+            <enum name="bold" value="1"/>
+        </attr>
+
+        <attr name="detail_size" format="dimension"/>
+        <attr name="detail_weight" format="enum">
+            <enum name="normal" value="0"/>
+            <enum name="bold" value="1"/>
+        </attr>
+        <attr name="vertical_spacing" format="dimension"/>
+        <attr name="title_color" format="color"/>
+        <attr name="detail_color" format="color"/>
+        <attr name="text_alignment" format="enum">
+            <enum name="start" value="5"/>
+            <enum name="end" value="6"/>
+            <enum name="center" value="4"/>
+        </attr>
+    </declare-styleable>
+</resources>
