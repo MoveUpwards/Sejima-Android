@@ -27,6 +27,10 @@ public class MUTopBar extends RelativeLayout {
         super(context, attrs);
     }
 
+    /**
+     * Method called to apply attributes to the view
+     * @param context the view context
+     */
     private void init(Context context) {
         inflate(context, R.layout.feature_mu_header, this);
     }
