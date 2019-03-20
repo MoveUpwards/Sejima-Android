@@ -4,15 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <com.rlab.sejima.features.MUHeader
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="@string/title"
         app:detail="@string/detail"
+        app:detail_color="@color/colorPrimaryDark"
         app:text_alignment="start"
-        app:title_color="@color/colorAccent"
-        app:detail_color="@color/colorPrimaryDark" />
+        app:title="@string/title"
+        app:title_color="@color/colorAccent" />
+
+    <com.rlab.sejima.features.MUTopBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:topbar_btn_alignment="start"
+        app:topbar_btn_img="@mipmap/ic_launcher"
+        app:topbar_img_width="45dp"
+        app:topbar_title="@string/title"
+        app:topbar_title_color="@color/colorPrimary"
+        app:topbar_title_size="24dp"
+        app:topbar_title_weight="normal" />
 
 </LinearLayout>

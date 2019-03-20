@@ -33,17 +33,18 @@
         </attr>
         <attr name="topbar_title_color" format="color"/>
         <attr name="topbar_title_alignment" format="enum">
-            <enum name="start" value="5"/>
-            <enum name="end" value="6"/>
-            <enum name="center" value="4"/>
+            <enum name="start" value="20"/>
+            <enum name="end" value="21"/>
+            <enum name="center" value="14"/>
         </attr>
 
-        <attr name="btn_img" format="reference"/>
-        <attr name="btn_left_padding" format="dimension"/>
-        <attr name="btn_alignment">
-            <enum name="start" value="5"/>
-            <enum name="end" value="6"/>
-            <enum name="center" value="4"/>
+        <attr name="topbar_btn_img" format="reference"/>
+        <attr name="topbar_img_width" format="dimension"/>
+        <attr name="topbar_btn_left_padding" format="dimension"/>
+        <attr name="topbar_btn_alignment">
+            <enum name="start" value="20"/>
+            <enum name="end" value="21"/>
+            <enum name="center" value="14"/>
         </attr>
     </declare-styleable>
 </resources>
