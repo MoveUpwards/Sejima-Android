@@ -41,6 +41,7 @@
         <attr name="topbar_btn_img" format="reference"/>
         <attr name="topbar_img_width" format="dimension"/>
         <attr name="topbar_btn_left_padding" format="dimension"/>
+        <attr name="topbar_btn_leading" format="dimension"/>
         <attr name="topbar_btn_alignment">
             <enum name="start" value="20"/>
             <enum name="end" value="21"/>

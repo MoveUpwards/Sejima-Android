@@ -11,6 +11,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -25,7 +26,11 @@ public class MUTopBar extends RelativeLayout {
     /**
      * The default size of title
      */
-    private final static int DEFAULT_TITLE_SIZE_IN_SP = 24;
+    public final static int DEFAULT_TITLE_SIZE_IN_SP = 24;
+    /**
+     * The default width of button
+     */
+    public final static int DEFAULT_BUTTON_WIDTH_IN_SP = 40;
 
     /**
      * The TextView to display the title
@@ -37,25 +42,9 @@ public class MUTopBar extends RelativeLayout {
     private ImageButton mIBLeftButton;
 
     /**
-     * The left padding
-     */
-    private float leftButtonLeading;
-    /**
-     * The left button width
-     */
-    private int mLeftButtonWidth;
-    /**
      * The current title
      */
     private String mTitle = "";
-    /**
-     * The button's horizontal alignment
-     */
-    private int mButtonAlignment = RelativeLayout.ALIGN_PARENT_START;
-    /**
-     * The title's horizontal alignment
-     */
-    private int mTitleAlignment = Gravity.START;
     /**
      * The title's font size
      */
@@ -65,13 +54,30 @@ public class MUTopBar extends RelativeLayout {
      */
     private int mTitleFontWeight;
     /**
+     * The title's text color
+     */
+    private int mTitleColor = Color.WHITE;
+    /**
+     * The title's horizontal alignment
+     */
+    private int mTitleAlignment = Gravity.START;
+
+    /**
      * The image for the button
      */
     private int mButtonImage = R.drawable.ic_launcher_background;
     /**
-     * The title's text color
+     * The left padding
      */
-    private int mTitleColor = Color.WHITE;
+    private float mLeftButtonLeading = 0;
+    /**
+     * The left button width
+     */
+    private int mLeftButtonWidth;
+    /**
+     * The button's horizontal alignment
+     */
+    private int mButtonAlignment = RelativeLayout.ALIGN_PARENT_START;
     /**
      * Show button value
      */
@@ -109,18 +115,23 @@ public class MUTopBar extends RelativeLayout {
         mTitleAlignment = a.getInt(R.styleable.MUTopBar_topbar_title_alignment, TEXT_ALIGNMENT_TEXT_START);
 
         mButtonAlignment = a.getInt(R.styleable.MUTopBar_topbar_btn_alignment, mButtonAlignment);
-        mLeftButtonWidth = a.getDimensionPixelSize(R.styleable.MUTopBar_topbar_img_width, 150);
+        mLeftButtonWidth = a.getDimensionPixelSize(R.styleable.MUTopBar_topbar_img_width, 0);
+        mLeftButtonLeading = a.getDimensionPixelSize(R.styleable.MUTopBar_topbar_btn_leading, 0);
         mButtonImage = a.getResourceId(R.styleable.MUTopBar_topbar_btn_img, mButtonImage);
 
         init(context);
     }
 
     public float getLeftButtonLeading() {
-        return leftButtonLeading;
+        return mLeftButtonLeading;
     }
 
     public void setLeftButtonLeading(float leftButtonLeading) {
-        this.leftButtonLeading = leftButtonLeading;
+        float scale = ((float) getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        mLeftButtonLeading = leftButtonLeading * scale;
+        LayoutParams lpImBtn = (LayoutParams) mIBLeftButton.getLayoutParams();
+        lpImBtn.setMargins((int) mLeftButtonLeading, (int) mLeftButtonLeading, (int) mLeftButtonLeading, (int) mLeftButtonLeading);
+        mIBLeftButton.setLayoutParams(lpImBtn);
     }
 
     public float getLeftButtonWidth() {
@@ -146,6 +157,9 @@ public class MUTopBar extends RelativeLayout {
 
     public void setButtonAlignment(int buttonAlignment) {
         mButtonAlignment = buttonAlignment;
+        LayoutParams lpImBtn = (LayoutParams) mIBLeftButton.getLayoutParams();
+        lpImBtn.addRule(mButtonAlignment, RelativeLayout.TRUE);
+        mIBLeftButton.setLayoutParams(lpImBtn);
     }
 
     public int getTitleAlignment() {
@@ -161,7 +175,9 @@ public class MUTopBar extends RelativeLayout {
     }
 
     public void setTitleFontSize(int titleFontSize) {
-        mTitleFontSize = titleFontSize;
+        float scale = ((float) getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        mTitleFontSize = titleFontSize * scale;
+        mTVLabel.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTitleFontSize);
     }
 
     public int getTitleFontWeight() {
@@ -170,6 +186,7 @@ public class MUTopBar extends RelativeLayout {
 
     public void setTitleFontWeight(int titleFontWeight) {
         mTitleFontWeight = titleFontWeight;
+        mTVLabel.setTypeface(Typeface.create(Typeface.DEFAULT, mTitleFontWeight));
     }
 
     public int getButtonImage() {
@@ -178,6 +195,8 @@ public class MUTopBar extends RelativeLayout {
 
     public void setButtonImage(int buttonImage) {
         mButtonImage = buttonImage;
+        Drawable drawable = getResources().getDrawable(mButtonImage);
+        mIBLeftButton.setImageDrawable(drawable);
     }
 
     public int getTitleColor() {
@@ -186,6 +205,16 @@ public class MUTopBar extends RelativeLayout {
 
     public void setTitleColor(int titleColor) {
         mTitleColor = titleColor;
+        mTVLabel.setTextColor(mTitleColor);
+    }
+
+    public boolean isButtonHidden() {
+        return !showButton;
+    }
+
+    public void setButtonHidden(boolean hideButton) {
+        this.showButton = !hideButton;
+        mIBLeftButton.setVisibility(this.showButton ? VISIBLE : GONE);
     }
 
     /**
@@ -193,31 +222,34 @@ public class MUTopBar extends RelativeLayout {
      * @param context the view context
      */
     private void init(Context context) {
+        float scale = ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
         setOnClickListener(l -> didClick());
 
         LayoutParams lpRoot = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         setLayoutParams(lpRoot);
 
+        mLeftButtonWidth = mLeftButtonWidth != 0 ? mLeftButtonWidth : (int) (DEFAULT_BUTTON_WIDTH_IN_SP * scale);
         LayoutParams lpImBtn = new LayoutParams(mLeftButtonWidth, mLeftButtonWidth);
         lpImBtn.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
         lpImBtn.addRule(mButtonAlignment, RelativeLayout.TRUE);
-        lpImBtn.setMargins(15, 15, 15, 15);
+        lpImBtn.setMargins((int) mLeftButtonLeading, (int) mLeftButtonLeading, (int) mLeftButtonLeading, (int) mLeftButtonLeading);
 
         mIBLeftButton = new ImageButton(context);
         mIBLeftButton.setLayoutParams(lpImBtn);
-        mIBLeftButton.setId(150);
         Drawable drawable = context.getResources().getDrawable(mButtonImage);
         mIBLeftButton.setImageDrawable(drawable);
+        mIBLeftButton.setId(View.generateViewId());
         addView(mIBLeftButton);
 
         LayoutParams lpTVLabel = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lpTVLabel.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-        lpTVLabel.addRule(RelativeLayout.END_OF, 150);
+        lpTVLabel.addRule(RelativeLayout.END_OF, mIBLeftButton.getId());
 
         mTVLabel = new TextView(context);
         mTVLabel.setLayoutParams(lpTVLabel);
         mTVLabel.setText(mTitle);
         mTVLabel.setTextColor(mTitleColor);
+        mTitleFontSize = mTitleFontSize != 0 ? mTitleFontSize : DEFAULT_TITLE_SIZE_IN_SP * scale;
         mTVLabel.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTitleFontSize);
         mTVLabel.setTypeface(Typeface.create(Typeface.DEFAULT, mTitleFontWeight));
         addView(mTVLabel);

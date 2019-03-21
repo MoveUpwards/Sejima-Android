@@ -25,6 +25,7 @@
         app:topbar_title="@string/title"
         app:topbar_title_color="@color/colorPrimary"
         app:topbar_title_size="24dp"
+        app:topbar_btn_leading="5dp"
         app:topbar_title_weight="normal" />
 
 </LinearLayout>
