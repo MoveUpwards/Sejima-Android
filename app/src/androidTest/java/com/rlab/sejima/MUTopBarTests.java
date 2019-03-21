@@ -18,7 +18,9 @@ import org.junit.runner.RunWith;
 
 import static android.widget.RelativeLayout.ALIGN_PARENT_START;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class MUTopBarTests {
@@ -60,6 +62,8 @@ public class MUTopBarTests {
         assertEquals(mMUTopBar.getLeftButtonWidth(), defaultSize, 0);
         // Button's alignment
         assertEquals(mMUTopBar.getButtonAlignment(), RelativeLayout.ALIGN_PARENT_START);
+        // Button's visibility
+        assertFalse(mMUTopBar.isButtonHidden());
     }
 
     @Test
@@ -95,17 +99,20 @@ public class MUTopBarTests {
         // Button's alignment
         mMUTopBar.setButtonAlignment(RelativeLayout.ALIGN_PARENT_END);
         assertEquals(mMUTopBar.getButtonAlignment(), RelativeLayout.ALIGN_PARENT_END);
+        // Button's visibility
+        mMUTopBar.setButtonHidden(true);
+        assertTrue(mMUTopBar.isButtonHidden());
     }
 
     @Test
     public void hideBtn() {
 
-        assertEquals(mMUTopBar.isButtonHidden(), false);
+        assertFalse(mMUTopBar.isButtonHidden());
         mMUTopBar.setButtonImage(-4);
-        assertEquals(mMUTopBar.isButtonHidden(), true);
+        assertTrue(mMUTopBar.isButtonHidden());
 
         mMUTopBar.setButtonImage(R.mipmap.ic_launcher_round);
-        assertEquals(mMUTopBar.isButtonHidden(), false);
+        assertFalse(mMUTopBar.isButtonHidden());
     }
 }
 
