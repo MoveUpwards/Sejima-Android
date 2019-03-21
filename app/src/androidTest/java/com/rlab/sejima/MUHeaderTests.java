@@ -21,92 +21,80 @@ import static org.junit.Assert.assertNotNull;
 public class MUHeaderTests {
 
     private Context mContext;
+    private MUHeader mMUHeader;
 
     @Before
     public void setUp() {
         mContext= InstrumentationRegistry.getTargetContext();
+        mMUHeader= new MUHeader(mContext);
+        assertNotNull(mMUHeader);
     }
 
     @Test
     public void defaultValues() {
 
-        MUHeader muHeader = new MUHeader(mContext);
-        assertNotNull(muHeader);
         float scale = (float) mContext.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
-
-
         float defaultSize;
 
         // Title
-        assertEquals(muHeader.getTitle(), "");
+        assertEquals(mMUHeader.getTitle(), "");
         // Title's color
-        assertEquals(muHeader.getTitleColor(), Color.BLACK);
+        assertEquals(mMUHeader.getTitleColor(), Color.BLACK);
         // Title's size
         defaultSize = MUHeader.DEFAULT_TITLE_SIZE_IN_SP * scale;
-        assertEquals(muHeader.getTitleSize(), defaultSize, 0);
+        assertEquals(mMUHeader.getTitleSize(), defaultSize, 0);
         // Title's font
-        assertEquals(muHeader.getTitleWeight(), Typeface.NORMAL);
-
-
+        assertEquals(mMUHeader.getTitleWeight(), Typeface.NORMAL);
         // Detail
-        assertEquals(muHeader.getDetail(), "");
+        assertEquals(mMUHeader.getDetail(), "");
         // Detail's color
-        assertEquals(muHeader.getDetailColor(), Color.BLACK);
+        assertEquals(mMUHeader.getDetailColor(), Color.BLACK);
         // Detail's size
         defaultSize = MUHeader.DEFAULT_DETAIL_SIZE_IN_SP * scale;
-        assertEquals(muHeader.getDetailSize(), defaultSize, 0);
+        assertEquals(mMUHeader.getDetailSize(), defaultSize, 0);
         // Detail's font
-        assertEquals(muHeader.getDetailWeight(), Typeface.BOLD);
-
-
+        assertEquals(mMUHeader.getDetailWeight(), Typeface.BOLD);
         // Horizontal alignment
-        assertEquals(muHeader.getAlignment(), RelativeLayout.ALIGN_PARENT_START);
-
+        assertEquals(mMUHeader.getAlignment(), RelativeLayout.ALIGN_PARENT_START);
         // Vertical spacing
-        assertEquals(muHeader.getVerticalSpacing(), 8);
+        assertEquals(mMUHeader.getVerticalSpacing(), 8 * scale, 0.5);
     }
 
     @Test
     public void customValues() {
 
-        MUHeader muHeader = new MUHeader(mContext);
-        assertNotNull(muHeader);
-
-        muHeader.setTitle("Custom Title");
-        muHeader.setTitleColor(Color.BLUE);
-        muHeader.setTitleSize(58);
-        muHeader.setTitleWeight(Typeface.BOLD);
+        float scale = (float) mContext.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
 
         // Title
-        assertEquals(muHeader.getTitle(), "Custom Title");
+        mMUHeader.setTitle("Custom Title");
+        assertEquals(mMUHeader.getTitle(), "Custom Title");
         // Title's color
-        assertEquals(muHeader.getTitleColor(), Color.BLUE);
+        mMUHeader.setTitleColor(Color.BLUE);
+        assertEquals(mMUHeader.getTitleColor(), Color.BLUE);
         // Title's size
-        assertEquals(muHeader.getTitleSize(), 58, 0);
+        mMUHeader.setTitleSize(58);
+        assertEquals(mMUHeader.getTitleSize(), 58 * scale, 0);
         // Title's font
-        assertEquals(muHeader.getTitleWeight(), Typeface.BOLD);
-
-        muHeader.setDetail("Custom Detail");
-        muHeader.setDetailColor(Color.RED);
-        muHeader.setDetailSize(18);
-        muHeader.setDetailWeight(Typeface.ITALIC);
-
+        mMUHeader.setTitleWeight(Typeface.BOLD);
+        assertEquals(mMUHeader.getTitleWeight(), Typeface.BOLD);
         // Detail
-        assertEquals(muHeader.getDetail(), "Custom Detail");
+        mMUHeader.setDetail("Custom Detail");
+        assertEquals(mMUHeader.getDetail(), "Custom Detail");
         // Detail's color
-        assertEquals(muHeader.getDetailColor(), Color.RED);
+        mMUHeader.setDetailColor(Color.RED);
+        assertEquals(mMUHeader.getDetailColor(), Color.RED);
         // Detail's size
-        assertEquals(muHeader.getDetailSize(), 18, 0);
+        mMUHeader.setDetailSize(18);
+        assertEquals(mMUHeader.getDetailSize(), 18 * scale, 0);
         // Detail's font
-        assertEquals(muHeader.getDetailWeight(), Typeface.ITALIC);
-
+        mMUHeader.setDetailWeight(Typeface.ITALIC);
+        assertEquals(mMUHeader.getDetailWeight(), Typeface.ITALIC);
         // Horizontal alignment
-        muHeader.setAlignment(RelativeLayout.ALIGN_PARENT_END);
-        assertEquals(muHeader.getAlignment(), RelativeLayout.ALIGN_PARENT_END);
-
+        mMUHeader.setAlignment(RelativeLayout.ALIGN_PARENT_END);
+        assertEquals(mMUHeader.getAlignment(), RelativeLayout.ALIGN_PARENT_END);
         // Vertical spacing
-        muHeader.setVerticalSpacing(55);
-        assertEquals(muHeader.getVerticalSpacing(), 55);
+        mMUHeader.setVerticalSpacing(55);
+        assertEquals(mMUHeader.getVerticalSpacing(), 55 * scale, 0.5);
     }
 }
 

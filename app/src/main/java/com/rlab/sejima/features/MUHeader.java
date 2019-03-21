@@ -34,6 +34,10 @@ public class MUHeader extends RelativeLayout {
      * The default size of detail
      */
     public final static int DEFAULT_DETAIL_SIZE_IN_SP = 14;
+    /**
+     * The default size of vertical spacing
+     */
+    public final static int DEFAULT_VERTICAL_SPACING_IN_SP = 8;
 
     /**
      * The current title
@@ -76,7 +80,7 @@ public class MUHeader extends RelativeLayout {
     /**
      * Vertical spacing between title and detail
      */
-    private int mVerticalSpacing = 8;
+    private int mVerticalSpacing;
 
     /**
      * Default constructor
@@ -101,7 +105,6 @@ public class MUHeader extends RelativeLayout {
         // Deal with title's attributes
         s = a.getString(R.styleable.MUHeader_header_title);
         mTitle = TextUtils.isEmpty(s) ? mTitle : s.toString();
-
         mTitleColor = a.getColor(R.styleable.MUHeader_header_title_color, mTitleColor);
         mTitleSize = a.getDimensionPixelSize(R.styleable.MUHeader_header_title_size, 0);
         mTitleWeight = a.getInt(R.styleable.MUHeader_header_title_weight, mTitleWeight);
@@ -109,12 +112,11 @@ public class MUHeader extends RelativeLayout {
         // Deal with detail's attributes
         s = a.getString(R.styleable.MUHeader_header_detail);
         mDetail = TextUtils.isEmpty(s) ? mDetail : s.toString();
-
         mDetailColor = a.getColor(R.styleable.MUHeader_header_detail_color, mTitleColor);
         mDetailSize = a.getDimensionPixelSize(R.styleable.MUHeader_header_detail_size, 0);
         mDetailWeight = a.getInt(R.styleable.MUHeader_header_detail_weight, mDetailWeight);
 
-        mVerticalSpacing = a.getDimensionPixelSize(R.styleable.MUHeader_header_vertical_spacing, mVerticalSpacing);
+        mVerticalSpacing = a.getDimensionPixelSize(R.styleable.MUHeader_header_vertical_spacing, 0);
         mAlignment = a.getInt(R.styleable.MUHeader_header_alignment, mAlignment);
 
         init(context);
@@ -145,6 +147,8 @@ public class MUHeader extends RelativeLayout {
         mTVDetail.setLayoutParams(lpDetail);
         mDetailSize = mDetailSize != 0 ? mDetailSize : DEFAULT_DETAIL_SIZE_IN_SP * scale;
         setUpTextView(mTVDetail, mDetail, mDetailColor, mDetailSize, mDetailWeight);
+
+        mVerticalSpacing = mVerticalSpacing != 0 ? mVerticalSpacing : (int) (DEFAULT_VERTICAL_SPACING_IN_SP * scale);
         mTVDetail.setPadding(0, mVerticalSpacing, 0, 0);
         addView(mTVDetail);
     }
@@ -248,7 +252,9 @@ public class MUHeader extends RelativeLayout {
     }
 
     public void setVerticalSpacing(int verticalSpacing) {
-        mVerticalSpacing = verticalSpacing;
+        float scale = (float) getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
+        mVerticalSpacing = (int) (verticalSpacing * scale);
+        mTVDetail.setPadding(0, mVerticalSpacing, 0, 0);
     }
 
 }
