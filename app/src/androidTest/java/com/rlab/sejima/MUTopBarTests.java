@@ -38,7 +38,6 @@ public class MUTopBarTests {
         float defaultSize;
         float scale = ((float) mContext.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
 
-
         // Title
         assertEquals(mMUTopBar.getTitle(), "");
         // Title's size
@@ -47,7 +46,7 @@ public class MUTopBarTests {
         // Title's font weight
         assertEquals(mMUTopBar.getTitleFontWeight(), Typeface.NORMAL);
         // Title's color
-        assertEquals(mMUTopBar.getTitleColor(), Color.BLACK);
+        assertEquals(mMUTopBar.getTitleColor(), Color.WHITE);
         // Title's alignment
         assertEquals(mMUTopBar.getTitleAlignment(), Gravity.START);
 
@@ -65,9 +64,7 @@ public class MUTopBarTests {
     @Test
     public void customValues() {
 
-        float defaultSize;
         float scale = ((float) mContext.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
-
 
         // Title
         mMUTopBar.setTitle("CUSTOM");
@@ -86,8 +83,8 @@ public class MUTopBarTests {
         assertEquals(mMUTopBar.getTitleAlignment(), Gravity.END);
 
         // Button img
-        mMUTopBar.setButtonImage(R.drawable.ic_launcher_foreground);
-        assertEquals(mMUTopBar.getButtonImage(), R.drawable.ic_launcher_foreground);
+        mMUTopBar.setButtonImage(R.mipmap.ic_launcher);
+        assertEquals(mMUTopBar.getButtonImage(), R.mipmap.ic_launcher);
         // Button's left leading
         mMUTopBar.setLeftButtonLeading(25);
         assertEquals(mMUTopBar.getLeftButtonLeading(), scale * 25, 0);

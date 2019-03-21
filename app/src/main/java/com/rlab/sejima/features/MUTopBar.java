@@ -73,7 +73,7 @@ public class MUTopBar extends RelativeLayout {
     /**
      * The left button width
      */
-    private int mLeftButtonWidth;
+    private float mLeftButtonWidth;
     /**
      * The button's horizontal alignment
      */
@@ -138,8 +138,9 @@ public class MUTopBar extends RelativeLayout {
         return mLeftButtonWidth;
     }
 
-    public void setLeftButtonWidth(int leftButtonWidth) {
-        this.mLeftButtonWidth = leftButtonWidth;
+    public void setLeftButtonWidth(float leftButtonWidth) {
+        float scale = ((float) getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        this.mLeftButtonWidth = leftButtonWidth * scale;
     }
 
     public String getTitle() {
@@ -229,7 +230,7 @@ public class MUTopBar extends RelativeLayout {
         setLayoutParams(lpRoot);
 
         mLeftButtonWidth = mLeftButtonWidth != 0 ? mLeftButtonWidth : (int) (DEFAULT_BUTTON_WIDTH_IN_SP * scale);
-        LayoutParams lpImBtn = new LayoutParams(mLeftButtonWidth, mLeftButtonWidth);
+        LayoutParams lpImBtn = new LayoutParams((int) mLeftButtonWidth, (int) mLeftButtonWidth);
         lpImBtn.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
         lpImBtn.addRule(mButtonAlignment, RelativeLayout.TRUE);
         lpImBtn.setMargins((int) mLeftButtonLeading, (int) mLeftButtonLeading, (int) mLeftButtonLeading, (int) mLeftButtonLeading);
