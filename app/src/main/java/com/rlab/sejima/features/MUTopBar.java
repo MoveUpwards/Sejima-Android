@@ -1,6 +1,7 @@
 package com.rlab.sejima.features;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -81,7 +82,7 @@ public class MUTopBar extends RelativeLayout {
     /**
      * Show button value
      */
-    private boolean showButton;
+    private boolean showButton = true;
 
 
     /**
@@ -196,8 +197,16 @@ public class MUTopBar extends RelativeLayout {
 
     public void setButtonImage(int buttonImage) {
         mButtonImage = buttonImage;
-        Drawable drawable = getResources().getDrawable(mButtonImage);
-        mIBLeftButton.setImageDrawable(drawable);
+        Drawable drawable = null;
+        try {
+            drawable = getResources().getDrawable(mButtonImage);
+        } catch (Resources.NotFoundException e){
+            Log.e(getClass().getCanonicalName(), "Unfound img drawable", e);
+            drawable = null;
+        } finally {
+            mIBLeftButton.setImageDrawable(drawable);
+            setButtonHidden(null == drawable);
+        }
     }
 
     public int getTitleColor() {

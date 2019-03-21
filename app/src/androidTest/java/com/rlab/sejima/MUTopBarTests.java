@@ -7,6 +7,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.rlab.sejima.features.MUTopBar;
@@ -94,6 +95,17 @@ public class MUTopBarTests {
         // Button's alignment
         mMUTopBar.setButtonAlignment(RelativeLayout.ALIGN_PARENT_END);
         assertEquals(mMUTopBar.getButtonAlignment(), RelativeLayout.ALIGN_PARENT_END);
+    }
+
+    @Test
+    public void hideBtn() {
+
+        assertEquals(mMUTopBar.isButtonHidden(), false);
+        mMUTopBar.setButtonImage(-4);
+        assertEquals(mMUTopBar.isButtonHidden(), true);
+
+        mMUTopBar.setButtonImage(R.mipmap.ic_launcher_round);
+        assertEquals(mMUTopBar.isButtonHidden(), false);
     }
 }
 
