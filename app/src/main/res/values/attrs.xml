@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="title" format="string"/>
+    <attr name="title_size" format="dimension"/>
+    <attr name="title_color" format="color"/>
+    <attr name="title_weight" format="enum">
+        <enum name="normal" value="0"/>
+        <enum name="bold" value="1"/>
+    </attr>
+
     <declare-styleable name="MUHeader">
-        <attr name="header_title" format="string"/>
-        <attr name="header_detail" format="string"/>
-        <attr name="header_title_size" format="dimension"/>
-        <attr name="header_title_weight" format="enum">
+        <attr name="title"/>
+        <attr name="title_size"/>
+        <attr name="title_weight"/>
+        <attr name="title_color"/>
+
+        <attr name="detail" format="string"/>
+        <attr name="detail_size" format="dimension"/>
+        <attr name="detail_color" format="color"/>
+        <attr name="detail_weight" format="enum">
             <enum name="normal" value="0"/>
             <enum name="bold" value="1"/>
         </attr>
 
-        <attr name="header_detail_size" format="dimension"/>
-        <attr name="header_detail_weight" format="enum">
-            <enum name="normal" value="0"/>
-            <enum name="bold" value="1"/>
-        </attr>
-        <attr name="header_vertical_spacing" format="dimension"/>
-        <attr name="header_title_color" format="color"/>
-        <attr name="header_detail_color" format="color"/>
-        <attr name="header_alignment" format="enum">
+        <attr name="vertical_spacing" format="dimension"/>
+        <attr name="alignment" format="enum">
             <enum name="start" value="20"/>
             <enum name="end" value="21"/>
             <enum name="center" value="14"/>

@@ -9,10 +9,10 @@
     <com.rlab.sejima.features.MUHeader
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:header_detail="@string/detail"
-        app:header_detail_color="@color/colorPrimaryDark"
-        app:header_alignment="center"
-        app:header_title="@string/title"
-        app:header_title_color="@color/colorAccent" />
+        app:detail="@string/detail"
+        app:detail_color="@color/colorPrimaryDark"
+        app:alignment="center"
+        app:title="@string/title"
+        app:title_color="@color/colorAccent" />
 
 </LinearLayout>
