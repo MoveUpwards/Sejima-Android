@@ -121,6 +121,7 @@ public class MUTopBar extends RelativeLayout {
         mButtonImage = a.getResourceId(R.styleable.MUTopBar_topbar_btn_img, mButtonImage);
 
         init(context);
+        a.recycle();
     }
 
     public float getLeftButtonLeading() {
