@@ -7,7 +7,6 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.rlab.sejima.features.MUTopBar;
@@ -16,7 +15,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static android.widget.RelativeLayout.ALIGN_PARENT_START;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
