@@ -193,11 +193,11 @@ public class MUTopBar extends RelativeLayout {
         Drawable drawable = null;
         try {
             drawable = getResources().getDrawable(mButtonImage);
+            mIBLeftButton.setImageDrawable(drawable);
         } catch (Resources.NotFoundException e){
             Log.e(getClass().getCanonicalName(), "Img drawable not found", e);
             drawable = null;
         } finally {
-            mIBLeftButton.setImageDrawable(drawable);
             setButtonHidden(null == drawable);
         }
     }
@@ -259,7 +259,9 @@ public class MUTopBar extends RelativeLayout {
      * Method triggered each time button is tapped.
      */
     public void didClick(){
-        Log.d(this.getClass().getName(), "MUTopBar has been clicked");
+        Log.d(this.getClass().getName(), "MUTopBar has been clicked 2");
+//        updateImageWidth((float) (mIBLeftButton.getWidth() * 1.1)); // FOR TEST ONLY
+//        setButtonImage(-8/**/); // Test if the button disappears
     }
 
     /**
