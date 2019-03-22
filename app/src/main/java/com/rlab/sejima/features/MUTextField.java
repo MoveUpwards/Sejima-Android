@@ -34,13 +34,13 @@ public class MUTextField extends RelativeLayout {
     isSecure ?
     isEditable ?
     isCopyable ?
-    TODO
     keyboard type
     keyboard appearance
+    auto-correction type
+    TODO
     keyboard return key type
     title of the return key (envoyer)
     is the return key available ?
-    auto-correction type
     placeholder
     placeholder color
     underline color
@@ -110,6 +110,10 @@ public class MUTextField extends RelativeLayout {
      * Keyboard type
      */
     private int mKeyboardType;
+    /**
+     * Enable/disable auto-correction
+     */
+    private boolean mAutoCorrection = true;
 
     /**
      * Default constructor
@@ -143,8 +147,9 @@ public class MUTextField extends RelativeLayout {
         mFieldFontSize = a.getDimensionPixelSize(R.styleable.MUTextField_field_size, 0);
         mFieldFontWeight = a.getInt(R.styleable.MUTextField_field_weight, mFieldFontWeight);
 
-        mIsSecure   = a.getBoolean(R.styleable.MUTextField_isSecure, false);
+        mIsSecure   = a.getBoolean(R.styleable.MUTextField_is_secure, false);
         mIsEditable = a.getBoolean(R.styleable.MUTextField_android_editable, true);
+        mAutoCorrection = a.getBoolean(R.styleable.MUTextField_auto_correct, true);
 
         mKeyboardType = a.getInt(R.styleable.MUTextField_android_inputType, InputType.TYPE_NULL);
 //        mIsSecure = inputType == InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT;
@@ -182,6 +187,7 @@ public class MUTextField extends RelativeLayout {
         setFieldFontWeight(mFieldFontWeight);
         setSecure(mIsSecure);
         setEditable(mIsEditable);
+        setAutoCorrection(mAutoCorrection);
         mFieldFontSize = mFieldFontSize != 0 ? mFieldFontSize : mETInput.getTextSize();
         mETInput.setTextSize(TypedValue.COMPLEX_UNIT_PX, mFieldFontSize);
         mETInput.setInputType(mKeyboardType);
@@ -288,9 +294,17 @@ public class MUTextField extends RelativeLayout {
 
     public void setSecure(boolean secure) {
         mIsSecure = secure;
-        mETInput.setInputType(mIsSecure ?
-                InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD
-                : InputType.TYPE_CLASS_TEXT);
+
+        if (mKeyboardType == InputType.TYPE_CLASS_NUMBER) {
+            mETInput.setInputType(mIsSecure ?
+                    InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD
+                    : mKeyboardType);
+        } else {
+            mETInput.setInputType(mIsSecure ?
+                    InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD
+                    : mKeyboardType);
+        }
+
         mETInput.setLongClickable(!secure); // Disable contextual action like copying/selection
     }
 
@@ -310,5 +324,16 @@ public class MUTextField extends RelativeLayout {
     public void setKeyboardType(int keyboardType) {
         mKeyboardType = keyboardType;
         mETInput.setInputType(mKeyboardType);
+    }
+
+    public boolean isAutoCorrection() {
+        return mAutoCorrection;
+    }
+
+    public void setAutoCorrection(boolean autoCorrection) {
+        mAutoCorrection = autoCorrection;
+        mETInput.setInputType(mAutoCorrection ?
+                InputType.TYPE_TEXT_FLAG_AUTO_CORRECT | mKeyboardType
+                : InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS | mKeyboardType);
     }
 }

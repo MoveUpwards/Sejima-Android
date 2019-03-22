@@ -54,7 +54,8 @@
         <attr name="title_weight"/>
         <attr name="title_color"/>
         <attr name="alignment"/>
-        <attr name="isSecure" format="boolean"/>
+        <attr name="is_secure" format="boolean"/>
+        <attr name="auto_correct" format="boolean"/>
         <attr name="android:inputType"/>
         <attr name="android:editable"/>
         <attr name="field" format="string"/>

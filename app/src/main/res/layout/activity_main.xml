@@ -24,12 +24,43 @@
         app:topbar_btn_img="@mipmap/ic_launcher"
         app:topbar_btn_leading="5dp" />
 
-    <EditText
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType=""/>
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="password"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btn_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="visible"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btn_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="enable"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btn_4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="auto-cor"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
 
     <com.rlab.sejima.features.MUTextField
+        android:id="@+id/mutf1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="Text"
@@ -39,6 +70,7 @@
         app:title_color="@color/colorPrimaryDark"/>
 
     <com.rlab.sejima.features.MUTextField
+        android:id="@+id/mutf2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="Mail"
@@ -48,6 +80,7 @@
         app:title_color="@color/colorPrimaryDark"/>
 
     <com.rlab.sejima.features.MUTextField
+        android:id="@+id/mutf3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="Number"
