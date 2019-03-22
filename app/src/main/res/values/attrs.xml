@@ -58,6 +58,8 @@
         <attr name="auto_correct" format="boolean"/>
         <attr name="android:inputType"/>
         <attr name="android:editable"/>
+        <attr name="android:hint"/>
+        <attr name="android:textColorHint"/>
         <attr name="field" format="string"/>
         <attr name="field_size" format="dimension"/>
         <attr name="field_color" format="color"/>

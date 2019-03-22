@@ -22,32 +22,32 @@ public class MUTextField extends RelativeLayout {
 
     /*
     DONE
-    title
-    title font
-    title size
-    title color
-    alignment
-    field
-    field font
-    field size
-    field color
-    isSecure ?
-    isEditable ?
-    isCopyable ?
-    keyboard type
-    keyboard appearance
-    auto-correction type
+    - title
+    - title font
+    - title size
+    - title color
+    - alignment
+    - field
+    - field font
+    - field size
+    - field color
+    - isSecure ?
+    - isEditable ?
+    - isCopyable ?
+    - keyboard type
+    - keyboard appearance
+    - auto-correction type
+    - placeholder
+    - placeholder color
     TODO
-    keyboard return key type
-    title of the return key (envoyer)
-    is the return key available ?
-    placeholder
-    placeholder color
-    underline color
-    focus/unfocus text field (setActive?)
-    selectingListener
-    returnListener
-    editingListener
+    - keyboard return key type
+    - title of the return key (envoyer)
+    - is the return key available ?
+    - underline color
+    - focus/unfocus text field (setActive?)
+    - selectingListener
+    - returnListener
+    - editingListener
      */
 
     /**
@@ -114,6 +114,14 @@ public class MUTextField extends RelativeLayout {
      * Enable/disable auto-correction
      */
     private boolean mAutoCorrection = true;
+    /**
+     * Placeholder for text field
+     */
+    private String mPlaceHolderText = "";
+    /**
+     * Placeholder color for text field
+     */
+    private int mPlaceHolderFontColor;
 
     /**
      * Default constructor
@@ -150,9 +158,11 @@ public class MUTextField extends RelativeLayout {
         mIsSecure   = a.getBoolean(R.styleable.MUTextField_is_secure, false);
         mIsEditable = a.getBoolean(R.styleable.MUTextField_android_editable, true);
         mAutoCorrection = a.getBoolean(R.styleable.MUTextField_auto_correct, true);
-
         mKeyboardType = a.getInt(R.styleable.MUTextField_android_inputType, InputType.TYPE_NULL);
-//        mIsSecure = inputType == InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT;
+
+        s = a.getString(R.styleable.MUTextField_android_hint);
+        mPlaceHolderText = TextUtils.isEmpty(s) ? mPlaceHolderText : s;
+        mPlaceHolderFontColor = a.getColor(R.styleable.MUTextField_android_textColorHint, mPlaceHolderFontColor);
         init(context);
         a.recycle();
     }
@@ -163,6 +173,7 @@ public class MUTextField extends RelativeLayout {
         LayoutParams lpRoot = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         setLayoutParams(lpRoot);
 
+        // Field's label
         LayoutParams lpTVLabel = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lpTVLabel.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
         lpTVLabel.addRule(mAlignment, RelativeLayout.TRUE);
@@ -176,21 +187,29 @@ public class MUTextField extends RelativeLayout {
         mTVLabel.setTextSize(TypedValue.COMPLEX_UNIT_PX, mLabelFontSize);
         addView(mTVLabel);
 
+        // Input field
         LayoutParams lpEVInput = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lpEVInput.addRule(mAlignment, RelativeLayout.TRUE);
         lpEVInput.addRule(RelativeLayout.BELOW, mTVLabel.getId());
         mETInput = new EditText(context);
         mETInput.setLayoutParams(lpEVInput);
+        // Field's font
         setField(mField);
         mFieldColor = mFieldColor != 0 ? mFieldColor : mETInput.getCurrentTextColor();
         setFieldColor(mFieldColor);
         setFieldFontWeight(mFieldFontWeight);
+        mFieldFontSize = mFieldFontSize != 0 ? mFieldFontSize : mETInput.getTextSize();
+        mETInput.setTextSize(TypedValue.COMPLEX_UNIT_PX, mFieldFontSize);
+        // Field's placeholder
+        setPlaceHolderText(mPlaceHolderText);
+        mPlaceHolderFontColor = mPlaceHolderFontColor != 0 ? mPlaceHolderFontColor : mETInput.getCurrentHintTextColor();
+        setPlaceHolderFontColor(mPlaceHolderFontColor);
+
+        // Field's comportment
         setSecure(mIsSecure);
         setEditable(mIsEditable);
         setAutoCorrection(mAutoCorrection);
-        mFieldFontSize = mFieldFontSize != 0 ? mFieldFontSize : mETInput.getTextSize();
-        mETInput.setTextSize(TypedValue.COMPLEX_UNIT_PX, mFieldFontSize);
-        mETInput.setInputType(mKeyboardType);
+        setKeyboardType(mKeyboardType);
         addView(mETInput);
 
         setAlignment(mAlignment);
@@ -335,5 +354,23 @@ public class MUTextField extends RelativeLayout {
         mETInput.setInputType(mAutoCorrection ?
                 InputType.TYPE_TEXT_FLAG_AUTO_CORRECT | mKeyboardType
                 : InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS | mKeyboardType);
+    }
+
+    public String getPlaceHolderText() {
+        return mPlaceHolderText;
+    }
+
+    public void setPlaceHolderText(String placeHolderText) {
+        mPlaceHolderText = placeHolderText;
+        mETInput.setHint(mPlaceHolderText);
+    }
+
+    public int getPlaceHolderFontColor() {
+        return mPlaceHolderFontColor;
+    }
+
+    public void setPlaceHolderFontColor(int placeHolderFontColor) {
+        mPlaceHolderFontColor = placeHolderFontColor;
+        mETInput.setHintTextColor(mPlaceHolderFontColor);
     }
 }
