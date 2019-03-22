@@ -7,12 +7,18 @@
         <enum name="normal" value="0"/>
         <enum name="bold" value="1"/>
     </attr>
+    <attr name="alignment" format="enum">
+        <enum name="start" value="20"/>
+        <enum name="end" value="21"/>
+        <enum name="center" value="14"/>
+    </attr>
 
     <declare-styleable name="MUHeader">
         <attr name="title"/>
         <attr name="title_size"/>
         <attr name="title_weight"/>
         <attr name="title_color"/>
+        <attr name="alignment"/>
 
         <attr name="detail" format="string"/>
         <attr name="detail_size" format="dimension"/>
@@ -23,11 +29,6 @@
         </attr>
 
         <attr name="vertical_spacing" format="dimension"/>
-        <attr name="alignment" format="enum">
-            <enum name="start" value="20"/>
-            <enum name="end" value="21"/>
-            <enum name="center" value="14"/>
-        </attr>
     </declare-styleable>
 
     <declare-styleable name="MUTopBar">
@@ -52,6 +53,7 @@
         <attr name="title_size"/>
         <attr name="title_weight"/>
         <attr name="title_color"/>
+        <attr name="alignment"/>
     </declare-styleable>
 
 </resources>

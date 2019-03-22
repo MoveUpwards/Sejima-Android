@@ -26,6 +26,9 @@
 
     <com.rlab.sejima.features.MUTextField
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        app:title="@string/title"
+        app:alignment="start"
+        app:title_color="@color/colorPrimaryDark"/>
 
 </LinearLayout>
