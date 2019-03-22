@@ -29,6 +29,7 @@
         android:layout_height="wrap_content"
         app:title="@string/title"
         app:alignment="start"
+        app:field="@string/app_name"
         app:title_color="@color/colorPrimaryDark"/>
 
 </LinearLayout>

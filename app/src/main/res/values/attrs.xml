@@ -54,6 +54,13 @@
         <attr name="title_weight"/>
         <attr name="title_color"/>
         <attr name="alignment"/>
+        <attr name="field" format="string"/>
+        <attr name="field_size" format="dimension"/>
+        <attr name="field_color" format="color"/>
+        <attr name="field_weight" format="enum">
+            <enum name="normal" value="0"/>
+            <enum name="bold" value="1"/>
+        </attr>
     </declare-styleable>
 
 </resources>

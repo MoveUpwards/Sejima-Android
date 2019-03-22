@@ -19,10 +19,34 @@ import com.rlab.sejima.R;
 
 public class MUTextField extends RelativeLayout {
 
-    /**
-     * The default size of label
+    /*
+    DONE
+    title
+    title font
+    title size
+    title color
+    alignment
+    field
+    field font
+    field size
+    TODO
+    keyboard type
+    keyboard appearance
+    keyboard return key type
+    title of the return key (envoyer)
+    is the return key available ?
+    auto-correction type
+    placeholder
+    placeholder color
+    field color
+    isCopyable ?
+    isSecure ?
+    underline color
+    focus/unfocus textfield (setActive?)
+    selectingListener
+    returnListener
+    editingListener
      */
-    public final static int DEFAULT_LABEL_SIZE_IN_SP = 14;
 
     /**
      * The scale used to convert px in dp
@@ -56,7 +80,22 @@ public class MUTextField extends RelativeLayout {
      * The text's horizontal alignment
      */
     private int mAlignment = RelativeLayout.ALIGN_PARENT_START;
-
+    /**
+     * The field's text
+     */
+    private String mField = "";
+    /**
+     * The field's font size
+     */
+    private float mFieldFontSize;
+    /**
+     * The field's font weight
+     */
+    private int mFieldFontWeight;
+    /**
+     * The field's text color
+     */
+    private int mFieldColor;
     /**
      * Default constructor
      * @param context the view context
@@ -83,6 +122,11 @@ public class MUTextField extends RelativeLayout {
         mLabelFontWeight = a.getInt(R.styleable.MUTextField_title_weight, mLabelFontWeight);
         mAlignment = a.getInt(R.styleable.MUHeader_alignment, mAlignment);
 
+        s = a.getString(R.styleable.MUTextField_field);
+        mField = TextUtils.isEmpty(s) ? mField : s;
+        mFieldColor = a.getColor(R.styleable.MUTextField_field_color, mFieldColor);
+        mFieldFontSize = a.getDimensionPixelSize(R.styleable.MUTextField_field_size, 0);
+        mFieldFontWeight = a.getInt(R.styleable.MUTextField_field_weight, mFieldFontWeight);
         init(context);
         a.recycle();
     }
@@ -102,7 +146,7 @@ public class MUTextField extends RelativeLayout {
         setLabel(mLabel);
         setLabelColor(mLabelColor);
         setLabelFontWeight(mLabelFontWeight);
-        mLabelFontSize = mLabelFontSize != 0 ? mLabelFontSize : DEFAULT_LABEL_SIZE_IN_SP * mScale;
+        mLabelFontSize = mLabelFontSize != 0 ? mLabelFontSize : mTVLabel.getTextSize();
         mTVLabel.setTextSize(TypedValue.COMPLEX_UNIT_PX, mLabelFontSize);
         addView(mTVLabel);
 
@@ -111,7 +155,12 @@ public class MUTextField extends RelativeLayout {
         lpEVInput.addRule(RelativeLayout.BELOW, mTVLabel.getId());
         mETInput = new EditText(context);
         mETInput.setLayoutParams(lpEVInput);
-        mETInput.setText("TEST");
+        setField(mField);
+        mFieldColor = mFieldColor != 0 ? mFieldColor : mETInput.getCurrentTextColor();
+        setFieldColor(mFieldColor);
+        setFieldFontWeight(mFieldFontWeight);
+        mFieldFontSize = mFieldFontSize != 0 ? mFieldFontSize : mETInput.getTextSize();
+        mETInput.setTextSize(TypedValue.COMPLEX_UNIT_PX, mFieldFontSize);
         addView(mETInput);
 
         setAlignment(mAlignment);
@@ -171,5 +220,41 @@ public class MUTextField extends RelativeLayout {
             mETInput.setGravity(Gravity.START);
         }
         mAlignment = alignment;
+    }
+
+    public String getField() {
+        return mField;
+    }
+
+    public void setField(String field) {
+        mField = field;
+        mETInput.setText(mField);
+    }
+
+    public float getFieldFontSize() {
+        return mFieldFontSize;
+    }
+
+    public void setFieldFontSize(float fieldFontSize) {
+        mFieldFontSize = fieldFontSize * mScale;
+        mETInput.setTextSize(TypedValue.COMPLEX_UNIT_PX, mFieldFontSize);
+    }
+
+    public int getFieldFontWeight() {
+        return mFieldFontWeight;
+    }
+
+    public void setFieldFontWeight(int fieldFontWeight) {
+        mFieldFontWeight = fieldFontWeight;
+        mETInput.setTypeface(Typeface.create(Typeface.DEFAULT, mFieldFontWeight));
+    }
+
+    public int getFieldColor() {
+        return mFieldColor;
+    }
+
+    public void setFieldColor(int fieldColor) {
+        mFieldColor = fieldColor;
+        mETInput.setTextColor(mFieldColor);
     }
 }
