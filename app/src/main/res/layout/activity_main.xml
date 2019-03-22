@@ -24,12 +24,36 @@
         app:topbar_btn_img="@mipmap/ic_launcher"
         app:topbar_btn_leading="5dp" />
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType=""/>
+
     <com.rlab.sejima.features.MUTextField
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="@string/title"
+        app:title="Text"
         app:alignment="start"
         app:field="@string/app_name"
+        android:inputType="text"
+        app:title_color="@color/colorPrimaryDark"/>
+
+    <com.rlab.sejima.features.MUTextField
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Mail"
+        app:alignment="start"
+        app:field="@string/app_name"
+        android:inputType="textEmailAddress"
+        app:title_color="@color/colorPrimaryDark"/>
+
+    <com.rlab.sejima.features.MUTextField
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Number"
+        app:alignment="start"
+        app:field="@string/app_name"
+        android:inputType="number"
         app:title_color="@color/colorPrimaryDark"/>
 
 </LinearLayout>

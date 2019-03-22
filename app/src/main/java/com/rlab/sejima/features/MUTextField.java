@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -29,6 +30,10 @@ public class MUTextField extends RelativeLayout {
     field
     field font
     field size
+    field color
+    isSecure ?
+    isEditable ?
+    isCopyable ?
     TODO
     keyboard type
     keyboard appearance
@@ -38,11 +43,8 @@ public class MUTextField extends RelativeLayout {
     auto-correction type
     placeholder
     placeholder color
-    field color
-    isCopyable ?
-    isSecure ?
     underline color
-    focus/unfocus textfield (setActive?)
+    focus/unfocus text field (setActive?)
     selectingListener
     returnListener
     editingListener
@@ -97,6 +99,19 @@ public class MUTextField extends RelativeLayout {
      */
     private int mFieldColor;
     /**
+     * Is text field secure
+     */
+    private boolean mIsSecure = false;
+    /**
+     * Is text field editable
+     */
+    private boolean mIsEditable = true;
+    /**
+     * Keyboard type
+     */
+    private int mKeyboardType;
+
+    /**
      * Default constructor
      * @param context the view context
      */
@@ -127,6 +142,12 @@ public class MUTextField extends RelativeLayout {
         mFieldColor = a.getColor(R.styleable.MUTextField_field_color, mFieldColor);
         mFieldFontSize = a.getDimensionPixelSize(R.styleable.MUTextField_field_size, 0);
         mFieldFontWeight = a.getInt(R.styleable.MUTextField_field_weight, mFieldFontWeight);
+
+        mIsSecure   = a.getBoolean(R.styleable.MUTextField_isSecure, false);
+        mIsEditable = a.getBoolean(R.styleable.MUTextField_android_editable, true);
+
+        mKeyboardType = a.getInt(R.styleable.MUTextField_android_inputType, InputType.TYPE_NULL);
+//        mIsSecure = inputType == InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT;
         init(context);
         a.recycle();
     }
@@ -159,8 +180,11 @@ public class MUTextField extends RelativeLayout {
         mFieldColor = mFieldColor != 0 ? mFieldColor : mETInput.getCurrentTextColor();
         setFieldColor(mFieldColor);
         setFieldFontWeight(mFieldFontWeight);
+        setSecure(mIsSecure);
+        setEditable(mIsEditable);
         mFieldFontSize = mFieldFontSize != 0 ? mFieldFontSize : mETInput.getTextSize();
         mETInput.setTextSize(TypedValue.COMPLEX_UNIT_PX, mFieldFontSize);
+        mETInput.setInputType(mKeyboardType);
         addView(mETInput);
 
         setAlignment(mAlignment);
@@ -256,5 +280,35 @@ public class MUTextField extends RelativeLayout {
     public void setFieldColor(int fieldColor) {
         mFieldColor = fieldColor;
         mETInput.setTextColor(mFieldColor);
+    }
+
+    public boolean isSecure() {
+        return mIsSecure;
+    }
+
+    public void setSecure(boolean secure) {
+        mIsSecure = secure;
+        mETInput.setInputType(mIsSecure ?
+                InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD
+                : InputType.TYPE_CLASS_TEXT);
+        mETInput.setLongClickable(!secure); // Disable contextual action like copying/selection
+    }
+
+    public boolean isEditable() {
+        return mIsEditable;
+    }
+
+    public void setEditable(boolean editable) {
+        mIsEditable = editable;
+        mETInput.setEnabled(editable);
+    }
+
+    public int getKeyboardType() {
+        return mKeyboardType;
+    }
+
+    public void setKeyboardType(int keyboardType) {
+        mKeyboardType = keyboardType;
+        mETInput.setInputType(mKeyboardType);
     }
 }
