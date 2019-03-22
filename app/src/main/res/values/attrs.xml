@@ -46,4 +46,12 @@
         <attr name="topbar_btn_left_padding" format="dimension"/>
         <attr name="topbar_btn_leading" format="dimension"/>
     </declare-styleable>
+
+    <declare-styleable name="MUTextField">
+        <attr name="title"/>
+        <attr name="title_size"/>
+        <attr name="title_weight"/>
+        <attr name="title_color"/>
+    </declare-styleable>
+
 </resources>

@@ -24,4 +24,8 @@
         app:topbar_btn_img="@mipmap/ic_launcher"
         app:topbar_btn_leading="5dp" />
 
+    <com.rlab.sejima.features.MUTextField
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
 </LinearLayout>
