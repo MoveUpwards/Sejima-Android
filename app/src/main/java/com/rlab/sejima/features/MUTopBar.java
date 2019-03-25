@@ -124,40 +124,80 @@ public class MUTopBar extends RelativeLayout {
     }
 
     /**
-     *
-     * @return the left padding of image button
+     * Get the left padding of ImageButton
+     * @return the left padding of image button in dp.
      */
     public float getLeftButtonLeading() {
         return mLeftButtonLeading;
     }
 
+    /**
+     * Set the left padding of ImageButton
+     * @param leftButtonLeading the left padding of ImageButton in pixels.
+     */
     public void setLeftButtonLeading(float leftButtonLeading) {
         mLeftButtonLeading = leftButtonLeading * mScale;
         mIBLeftButton.setLayoutParams(getLeftBtnLayoutParams(mLeftButtonWidth));
     }
 
+    /**
+     * Get the left button width
+     * @return the left button width in dp.
+     */
     public float getLeftButtonWidth() {
         return mLeftButtonWidth;
     }
 
+    /**
+     * Set the left button width of ImageButton
+     * @param leftButtonWidth the left button width in pixels.
+     */
     public void setLeftButtonWidth(float leftButtonWidth) {
         mLeftButtonWidth = leftButtonWidth * mScale;
         updateImageWidth(mLeftButtonWidth);
     }
 
+    /**
+     * Get the title's text
+     * @return the text of the Top Bar
+     */
     public String getTitle() {
         return mTitle;
     }
 
+    /**
+     * Set the text of the title
+     * @param title the title's text
+     */
     public void setTitle(String title) {
         mTitle = title;
         mTVLabel.setText(mTitle);
     }
 
+    /**
+     * Get the text horizontal alignment
+     * @return an integer representing the horizontal alignment.
+     * Must be
+     * <ul>
+     * <li>RelativeLayout.ALIGN_PARENT_START</li>
+     * <li>RelativeLayout.ALIGN_PARENT_END</li>
+     * <li>RelativeLayout.CENTER_HORIZONTAL</li>
+     * </ul>
+     */
     public int getTitleAlignment() {
         return mTitleAlignment;
     }
 
+    /**
+     * Set the text horizontal alignment
+     * @param titleAlignment the integer representing the horizontal alignment.
+     * Must be
+     * <ul>
+     * <li>RelativeLayout.ALIGN_PARENT_START</li>
+     * <li>RelativeLayout.ALIGN_PARENT_END</li>
+     * <li>RelativeLayout.CENTER_HORIZONTAL</li>
+     * </ul>
+     */
     public void setTitleAlignment(int titleAlignment) {
         LayoutParams ll = (LayoutParams) mTVLabel.getLayoutParams();
         ll.removeRule(mTitleAlignment);
@@ -173,28 +213,52 @@ public class MUTopBar extends RelativeLayout {
         mTitleAlignment = titleAlignment;
     }
 
+    /**
+     * Get the font size in
+     * @return the font size in dp.
+     */
     public float getTitleFontSize() {
         return mTitleFontSize;
     }
 
+    /**
+     * Set the font size
+     * @param titleFontSize the title font size in pixels.
+     */
     public void setTitleFontSize(float titleFontSize) {
         mTitleFontSize = titleFontSize * mScale;
         mTVLabel.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTitleFontSize);
     }
 
+    /**
+     * Get the font weight
+     * @return en integer representing the font weight
+     */
     public int getTitleFontWeight() {
         return mTitleFontWeight;
     }
 
+    /**
+     * Set the font weight
+     * @param titleFontWeight an integer representing the font weight
+     */
     public void setTitleFontWeight(int titleFontWeight) {
         mTitleFontWeight = titleFontWeight;
         mTVLabel.setTypeface(Typeface.create(Typeface.DEFAULT, mTitleFontWeight));
     }
 
+    /**
+     * Get the resource id of the drawable used by left image button
+     * @return the resource id of the drawable
+     */
     public int getButtonImage() {
         return mButtonImage;
     }
 
+    /**
+     * Set the drawable of the image button by using its resource id
+     * @param buttonImage the resource id of the left image button
+     */
     public void setButtonImage(int buttonImage) {
         mButtonImage = buttonImage;
         Drawable drawable = null;
@@ -208,28 +272,52 @@ public class MUTopBar extends RelativeLayout {
         }
     }
 
+    /**
+     * Get the code color of the title.
+     * @return the code color as RGBA integer.
+     */
     public int getTitleColor() {
         return mTitleColor;
     }
 
+    /**
+     * Set the color of the text
+     * @param titleColor the title color as RGBA integer.
+     */
     public void setTitleColor(int titleColor) {
         mTitleColor = titleColor;
         mTVLabel.setTextColor(mTitleColor);
     }
 
+    /**
+     * A boolean value to know if the button is visible
+     * @return true if the button is visible, false otherwise
+     */
     public boolean isButtonHidden() {
         return !mShowButton;
     }
 
+    /**
+     * Display/hide the left image button
+     * @param hideButton boolean value to hide or display the button
+     */
     public void setButtonHidden(boolean hideButton) {
         this.mShowButton = !hideButton;
         mIBLeftButton.setVisibility(this.mShowButton ? VISIBLE : GONE);
     }
 
+    /**
+     * Get the interface to handle clicks
+     * @return the interface if its set, null otherwise.
+     */
     public MUTopBarClickListener getMUTopBarClickListener() {
         return mClickListener;
     }
 
+    /**
+     * Attach an interface which manages the clicks on the view
+     * @param clickListener the {@link MUTopBarClickListener} to attach.
+     */
     public void setMUTopBarClickListener(MUTopBarClickListener clickListener) {
         mClickListener = clickListener;
         if (null != mClickListener) {
@@ -275,12 +363,18 @@ public class MUTopBar extends RelativeLayout {
 
 
     /**
-     * Update Image width
+     * Apply the given width on the left image button
+     * @param width the width in dp.
      */
     private void updateImageWidth(float width){
         mIBLeftButton.setLayoutParams(getLeftBtnLayoutParams(width));
     }
 
+    /**
+     * Get the params to update width and padding of the left ImageButton
+     * @param width the width in dp.
+     * @return the layout params of the left image button.
+     */
     private RelativeLayout.LayoutParams getLeftBtnLayoutParams(float width){
         LayoutParams lpImBtn = new LayoutParams((int) width, (int) width);
         lpImBtn.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);

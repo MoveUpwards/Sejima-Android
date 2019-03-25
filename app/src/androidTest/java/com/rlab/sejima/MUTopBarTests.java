@@ -17,6 +17,7 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
@@ -57,6 +58,8 @@ public class MUTopBarTests {
         assertEquals(mMUTopBar.getLeftButtonWidth(), defaultSize, 0);
         // Button's visibility
         assertFalse(mMUTopBar.isButtonHidden());
+        // Default interface null
+        assertNull(mMUTopBar.getMUTopBarClickListener());
     }
 
     @Test
@@ -89,6 +92,11 @@ public class MUTopBarTests {
         // Button's visibility
         mMUTopBar.setButtonHidden(true);
         assertTrue(mMUTopBar.isButtonHidden());
+
+        // Interface
+        MUTopBar.MUTopBarClickListener listener = () -> { };
+        mMUTopBar.setMUTopBarClickListener(listener);
+        assertNotNull(mMUTopBar.getMUTopBarClickListener());
     }
 
     @Test
