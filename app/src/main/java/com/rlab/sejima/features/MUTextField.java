@@ -4,12 +4,15 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -39,15 +42,15 @@ public class MUTextField extends RelativeLayout {
     - auto-correction type
     - placeholder
     - placeholder color
+    - focus/unfocus text field (setActive?)
+    - focusListener
+    - editingListener
     TODO
     - keyboard return key type
     - title of the return key (envoyer)
     - is the return key available ?
     - underline color
-    - focus/unfocus text field (setActive?)
     - selectingListener
-    - returnListener
-    - editingListener
      */
 
     /**
@@ -122,6 +125,10 @@ public class MUTextField extends RelativeLayout {
      * Placeholder color for text field
      */
     private int mPlaceHolderFontColor;
+    /**
+     * The interface listener for text field
+     */
+    private MUTextFieldListener mTFListener;
 
     /**
      * Default constructor
@@ -140,31 +147,31 @@ public class MUTextField extends RelativeLayout {
     public MUTextField(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MUTextField);
+        TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.MUTextField);
 
-        String s = a.getString(R.styleable.MUTextField_title);
+        String s = attributes.getString(R.styleable.MUTextField_title);
         mLabel = TextUtils.isEmpty(s) ? mLabel : s;
-        mLabelColor = a.getColor(R.styleable.MUTextField_title_color, mLabelColor);
-        mLabelFontSize = a.getDimensionPixelSize(R.styleable.MUTextField_title_size, 0);
-        mLabelFontWeight = a.getInt(R.styleable.MUTextField_title_weight, mLabelFontWeight);
-        mAlignment = a.getInt(R.styleable.MUHeader_alignment, mAlignment);
+        mLabelColor = attributes.getColor(R.styleable.MUTextField_title_color, mLabelColor);
+        mLabelFontSize = attributes.getDimensionPixelSize(R.styleable.MUTextField_title_size, 0);
+        mLabelFontWeight = attributes.getInt(R.styleable.MUTextField_title_weight, mLabelFontWeight);
+        mAlignment = attributes.getInt(R.styleable.MUHeader_alignment, mAlignment);
 
-        s = a.getString(R.styleable.MUTextField_field);
+        s = attributes.getString(R.styleable.MUTextField_field);
         mField = TextUtils.isEmpty(s) ? mField : s;
-        mFieldColor = a.getColor(R.styleable.MUTextField_field_color, mFieldColor);
-        mFieldFontSize = a.getDimensionPixelSize(R.styleable.MUTextField_field_size, 0);
-        mFieldFontWeight = a.getInt(R.styleable.MUTextField_field_weight, mFieldFontWeight);
+        mFieldColor = attributes.getColor(R.styleable.MUTextField_field_color, mFieldColor);
+        mFieldFontSize = attributes.getDimensionPixelSize(R.styleable.MUTextField_field_size, 0);
+        mFieldFontWeight = attributes.getInt(R.styleable.MUTextField_field_weight, mFieldFontWeight);
 
-        mIsSecure   = a.getBoolean(R.styleable.MUTextField_is_secure, false);
-        mIsEditable = a.getBoolean(R.styleable.MUTextField_android_editable, true);
-        mAutoCorrection = a.getBoolean(R.styleable.MUTextField_auto_correct, true);
-        mKeyboardType = a.getInt(R.styleable.MUTextField_android_inputType, InputType.TYPE_NULL);
+        mIsSecure   = attributes.getBoolean(R.styleable.MUTextField_is_secure, false);
+        mIsEditable = attributes.getBoolean(R.styleable.MUTextField_android_editable, true);
+        mAutoCorrection = attributes.getBoolean(R.styleable.MUTextField_auto_correct, true);
+        mKeyboardType = attributes.getInt(R.styleable.MUTextField_android_inputType, InputType.TYPE_NULL);
 
-        s = a.getString(R.styleable.MUTextField_android_hint);
+        s = attributes.getString(R.styleable.MUTextField_android_hint);
         mPlaceHolderText = TextUtils.isEmpty(s) ? mPlaceHolderText : s;
-        mPlaceHolderFontColor = a.getColor(R.styleable.MUTextField_android_textColorHint, mPlaceHolderFontColor);
+        mPlaceHolderFontColor = attributes.getColor(R.styleable.MUTextField_android_textColorHint, mPlaceHolderFontColor);
         init(context);
-        a.recycle();
+        attributes.recycle();
     }
 
     private void init(Context context){
@@ -191,7 +198,12 @@ public class MUTextField extends RelativeLayout {
         LayoutParams lpEVInput = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lpEVInput.addRule(mAlignment, RelativeLayout.TRUE);
         lpEVInput.addRule(RelativeLayout.BELOW, mTVLabel.getId());
-        mETInput = new EditText(context);
+        mETInput = new android.support.v7.widget.AppCompatEditText(context){
+            @Override
+            public boolean performClick() {
+                return super.performClick();
+            }
+        };
         mETInput.setLayoutParams(lpEVInput);
         // Field's font
         setField(mField);
@@ -204,6 +216,43 @@ public class MUTextField extends RelativeLayout {
         setPlaceHolderText(mPlaceHolderText);
         mPlaceHolderFontColor = mPlaceHolderFontColor != 0 ? mPlaceHolderFontColor : mETInput.getCurrentHintTextColor();
         setPlaceHolderFontColor(mPlaceHolderFontColor);
+        // Field's listeners
+        mETInput.setOnFocusChangeListener((view, hasFocus) -> {
+            if(null != mTFListener && !hasFocus){
+                mTFListener.focusLost(this);
+            }
+        });
+
+        MUTextField rootView = this;
+        mETInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int count, int after) {
+                if(null != mTFListener){
+                    mTFListener.textUpdated(rootView);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        mETInput.setOnTouchListener((view, motionEvent) -> {
+            if(MotionEvent.ACTION_UP == motionEvent.getAction()){
+                if(mETInput.hasSelection() && null != mTFListener){
+                    mTFListener.isSelected(this);
+                    mETInput.performClick();
+                    return true;
+                }
+            }
+            mETInput.performClick();
+            return false;
+        });
 
         // Field's comportment
         setSecure(mIsSecure);
@@ -272,6 +321,8 @@ public class MUTextField extends RelativeLayout {
     }
 
     public String getField() {
+        String s = mETInput.getText().toString();
+        mField = !TextUtils.isEmpty(s) ? s : "";
         return mField;
     }
 
@@ -356,6 +407,18 @@ public class MUTextField extends RelativeLayout {
                 : InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS | mKeyboardType);
     }
 
+    public boolean isActive() {
+        return mETInput.hasFocus();
+    }
+
+    public void setActive(boolean active) {
+        if(active) {
+            mETInput.requestFocusFromTouch();
+        } else {
+            mETInput.clearFocus();
+        }
+    }
+
     public String getPlaceHolderText() {
         return mPlaceHolderText;
     }
@@ -372,5 +435,19 @@ public class MUTextField extends RelativeLayout {
     public void setPlaceHolderFontColor(int placeHolderFontColor) {
         mPlaceHolderFontColor = placeHolderFontColor;
         mETInput.setHintTextColor(mPlaceHolderFontColor);
+    }
+
+    public MUTextFieldListener getTFListener() {
+        return mTFListener;
+    }
+
+    public void setTFListener(MUTextFieldListener TFListener) {
+        mTFListener = TFListener;
+    }
+
+    public interface MUTextFieldListener {
+        void isSelected(MUTextField textField);
+        void focusLost(MUTextField textField);
+        void textUpdated(MUTextField textField);
     }
 }
