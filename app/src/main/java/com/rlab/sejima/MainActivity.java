@@ -1,16 +1,18 @@
 package com.rlab.sejima;
 
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatEditText;
+import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.rlab.sejima.features.MUTextField;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, MUTextField.MUTextFieldListener {
 
-    private boolean editable = true;
-    private boolean autocorrect = true;
+//    private boolean editable = true;
+//    private boolean autocorrect = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,28 +28,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.btn_1:
-                ((MUTextField) findViewById(R.id.mutf1)).setSecure(true);
-                ((MUTextField) findViewById(R.id.mutf2)).setSecure(true);
-                ((MUTextField) findViewById(R.id.mutf3)).setSecure(true);
+                Log.e(getClass().getCanonicalName(), "add listener");
+//                ((MUTextField) findViewById(R.id.mutf1)).setSecure(true);
+//                ((MUTextField) findViewById(R.id.mutf2)).setSecure(true);
+//                ((MUTextField) findViewById(R.id.mutf3)).setSecure(true);
+                ((MUTextField) findViewById(R.id.mutf1)).setTFListener(this);
+                ((MUTextField) findViewById(R.id.mutf1)).setUnderlineColor(Color.BLACK);
+
                 break;
             case R.id.btn_2:
-                ((MUTextField) findViewById(R.id.mutf1)).setSecure(false);
-                ((MUTextField) findViewById(R.id.mutf2)).setSecure(false);
-                ((MUTextField) findViewById(R.id.mutf3)).setSecure(false);
+                Log.e(getClass().getCanonicalName(), "remove listener");
+//                ((MUTextField) findViewById(R.id.mutf1)).setSecure(false);
+//                ((MUTextField) findViewById(R.id.mutf2)).setSecure(false);
+//                ((MUTextField) findViewById(R.id.mutf3)).setSecure(false);
+                ((MUTextField) findViewById(R.id.mutf1)).setTFListener(null);
+                ((MUTextField) findViewById(R.id.mutf1)).setUnderlineColor(Color.BLUE
+                );
                 break;
             case R.id.btn_3:
-                ((MUTextField) findViewById(R.id.mutf1)).setEditable(!editable);
-                ((MUTextField) findViewById(R.id.mutf2)).setEditable(!editable);
-                ((MUTextField) findViewById(R.id.mutf3)).setEditable(!editable);
-                editable = !editable;
+                ((MUTextField) findViewById(R.id.mutf1)).setReturnKeyAvailable(true);
                 break;
             case R.id.btn_4:
-                ((MUTextField) findViewById(R.id.mutf1)).setAutoCorrection(!autocorrect);
-                ((MUTextField) findViewById(R.id.mutf2)).setAutoCorrection(!autocorrect);
-                ((MUTextField) findViewById(R.id.mutf3)).setAutoCorrection(!autocorrect);
-                Toast.makeText(this, "autocorrect="+!autocorrect, Toast.LENGTH_SHORT).show();
-                autocorrect = !autocorrect;
+                ((MUTextField) findViewById(R.id.mutf1)).setReturnKeyAvailable(false);
                 break;
         }
+    }
+
+    @Override
+    public void isSelecting(AppCompatEditText textField) {
+        Log.e(getClass().getCanonicalName(), "selection listener: ok");
+    }
+
+    @Override
+    public void focusLost(AppCompatEditText textField) {
+        Log.e(getClass().getCanonicalName(), "focus lost listener: ok");
+    }
+
+    @Override
+    public void textUpdated(AppCompatEditText textField) {
+        Log.e(getClass().getCanonicalName(), "text update listener: ok");
     }
 }

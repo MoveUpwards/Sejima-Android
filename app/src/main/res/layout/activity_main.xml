@@ -33,28 +33,28 @@
             android:id="@+id/btn_1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="password"
+            android:text="listener on"
             android:layout_weight="1"/>
 
         <Button
             android:id="@+id/btn_2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="visible"
+            android:text="listener off"
             android:layout_weight="1"/>
 
         <Button
             android:id="@+id/btn_3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="enable"
+            android:text="return key on"
             android:layout_weight="1"/>
 
         <Button
             android:id="@+id/btn_4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="auto-cor"
+            android:text="return key off"
             android:layout_weight="1"/>
 
     </LinearLayout>
@@ -69,24 +69,29 @@
         android:inputType="text"
         app:title_color="@color/colorPrimaryDark"/>
 
-    <com.rlab.sejima.features.MUTextField
-        android:id="@+id/mutf2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="Mail"
-        app:alignment="start"
-        app:field="@string/app_name"
-        android:inputType="textEmailAddress"
-        app:title_color="@color/colorPrimaryDark"/>
+    <!--<com.rlab.sejima.features.MUTextField-->
+        <!--android:id="@+id/mutf2"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:title="Mail"-->
+        <!--app:alignment="start"-->
+        <!--app:field="@string/app_name"-->
+        <!--android:inputType="textEmailAddress"-->
+        <!--app:title_color="@color/colorPrimaryDark"/>-->
 
-    <com.rlab.sejima.features.MUTextField
-        android:id="@+id/mutf3"
+    <!--<com.rlab.sejima.features.MUTextField-->
+        <!--android:id="@+id/mutf3"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:title="Number"-->
+        <!--app:alignment="start"-->
+        <!--app:field="@string/app_name"-->
+        <!--android:inputType="number"-->
+        <!--app:title_color="@color/colorPrimaryDark"/>-->
+
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="Number"
-        app:alignment="start"
-        app:field="@string/app_name"
-        android:inputType="number"
-        app:title_color="@color/colorPrimaryDark"/>
+        android:hint="@string/title"/>
 
 </LinearLayout>
