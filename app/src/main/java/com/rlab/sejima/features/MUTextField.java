@@ -51,7 +51,7 @@ public class MUTextField extends RelativeLayout {
     /**
      * The title's font weight
      */
-    private int mLabelFontWeight;
+    private int mLabelFontWeight = Typeface.NORMAL;
     /**
      * The title's text color
      */
@@ -71,7 +71,7 @@ public class MUTextField extends RelativeLayout {
     /**
      * The field's font weight
      */
-    private int mFieldFontWeight;
+    private int mFieldFontWeight = Typeface.NORMAL;
     /**
      * The field's text color
      */
@@ -87,7 +87,7 @@ public class MUTextField extends RelativeLayout {
     /**
      * Keyboard type
      */
-    private int mKeyboardType;
+    private int mKeyboardType = InputType.TYPE_NULL;
     /**
      * Enable/disable auto-correction
      */
@@ -148,7 +148,7 @@ public class MUTextField extends RelativeLayout {
         mIsSecure   = attributes.getBoolean(R.styleable.MUTextField_is_secure, false);
         mIsEditable = attributes.getBoolean(R.styleable.MUTextField_android_editable, true);
         mAutoCorrection = attributes.getBoolean(R.styleable.MUTextField_auto_correct, true);
-        mKeyboardType = attributes.getInt(R.styleable.MUTextField_android_inputType, InputType.TYPE_NULL);
+        mKeyboardType = attributes.getInt(R.styleable.MUTextField_android_inputType, mKeyboardType);
 
         s = attributes.getString(R.styleable.MUTextField_android_hint);
         mPlaceHolderText = TextUtils.isEmpty(s) ? mPlaceHolderText : s;
