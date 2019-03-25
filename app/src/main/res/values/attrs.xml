@@ -29,4 +29,21 @@
             <enum name="center" value="14"/>
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="MUTopBar">
+        <attr name="title"/>
+        <attr name="title_size"/>
+        <attr name="title_weight"/>
+        <attr name="title_color"/>
+        <attr name="topbar_title_alignment" format="enum">
+            <enum name="start" value="20"/>
+            <enum name="end" value="21"/>
+            <enum name="center" value="14"/>
+        </attr>
+
+        <attr name="topbar_btn_img" format="reference"/>
+        <attr name="topbar_img_width" format="dimension"/>
+        <attr name="topbar_btn_left_padding" format="dimension"/>
+        <attr name="topbar_btn_leading" format="dimension"/>
+    </declare-styleable>
 </resources>

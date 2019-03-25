@@ -20,15 +20,14 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(AndroidJUnit4.class)
 public class MUHeaderTests {
 
-    private Context mContext;
     private MUHeader mMUHeader;
     private float mScale;
 
     @Before
     public void setUp() {
-        mContext = InstrumentationRegistry.getTargetContext();
-        mMUHeader = new MUHeader(mContext);
-        mScale = (float) mContext.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
+        Context context = InstrumentationRegistry.getTargetContext();
+        mMUHeader = new MUHeader(context);
+        mScale = (float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
         assertNotNull(mMUHeader);
     }
 
