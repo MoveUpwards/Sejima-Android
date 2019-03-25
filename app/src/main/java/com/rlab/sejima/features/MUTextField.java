@@ -24,33 +24,8 @@ import com.rlab.sejima.R;
 public class MUTextField extends RelativeLayout {
 
     /*
-    DONE
-    - title
-    - title font
-    - title size
-    - title color
-    - alignment
-    - field
-    - field font
-    - field size
-    - field color
-    - isSecure ?
-    - isEditable ?
-    - isCopyable ?
-    - keyboard type
-    - keyboard appearance
-    - auto-correction type
-    - placeholder
-    - placeholder color
-    - focus/unfocus text field (setActive?)
-    - focusListener
-    - editingListener
-    - selectingListener
-    - is the return key available ?
-    - underline color
     TODO
     - keyboard return key type
-    - title of the return key (envoyer)
      */
 
     /**
@@ -266,42 +241,84 @@ public class MUTextField extends RelativeLayout {
         return mLabel;
     }
 
+    /**
+     * Set the label's text
+     * @param label the label's text as String
+     */
     public void setLabel(String label) {
         mLabel = label;
         mTVLabel.setText(mLabel);
     }
 
+    /**
+     * Get the label font size
+     * @return the label's font size as dp
+     */
     public float getLabelFontSize() {
         return mLabelFontSize;
     }
 
+    /**
+     * Set the label's font size
+     * @param labelFontSize the size in pixels
+     */
     public void setLabelFontSize(float labelFontSize) {
         mLabelFontSize = labelFontSize * mScale;
         mTVLabel.setTextSize(TypedValue.COMPLEX_UNIT_PX, mLabelFontSize);
     }
 
+    /**
+     * Get the label's font weight
+     * @return the label font weight
+     */
     public int getLabelFontWeight() {
         return mLabelFontWeight;
     }
 
+    /**
+     * Set the label's font weight
+     * @param labelFontWeight the label's font weight as Integer
+     */
     public void setLabelFontWeight(int labelFontWeight) {
         mLabelFontWeight = labelFontWeight;
         mTVLabel.setTypeface(Typeface.create(Typeface.DEFAULT, mLabelFontWeight));
     }
 
+    /**
+     * Get the label's color
+     * @return the label's color as RGBA int
+     */
     public int getLabelColor() {
         return mLabelColor;
     }
 
+    /**
+     * Set the label's color
+     * @param labelColor the label color as as RGBA int
+     */
     public void setLabelColor(int labelColor) {
         mLabelColor = labelColor;
         mTVLabel.setTextColor(mLabelColor);
     }
 
+    /**
+     * Get the horizontal alignment of the label and the text for the input field
+     * @return the horizontal alignment as integer
+     */
     public int getAlignment() {
         return mAlignment;
     }
 
+    /**
+     * Seth the text horizontal alignment of the view
+     * @param alignment the horizontal alignment for the label and the text field as integer.
+     * Must be:
+     * <ul>
+     * <li>RelativeLayout.ALIGN_PARENT_START</li>
+     * <li>RelativeLayout.ALIGN_PARENT_END</li>
+     * <li>RelativeLayout.CENTER_HORIZONTAL</li>
+     * </ul>
+     */
     public void setAlignment(int alignment) {
         RelativeLayout.LayoutParams ll = (LayoutParams) mTVLabel.getLayoutParams();
         ll.removeRule(mAlignment);
@@ -318,48 +335,88 @@ public class MUTextField extends RelativeLayout {
         mAlignment = alignment;
     }
 
+    /**
+     * Get the input field value
+     * @return the input field value as String
+     */
     public String getField() {
         String s = mETInput.getText().toString();
         mField = !TextUtils.isEmpty(s) ? s : "";
         return mField;
     }
 
+    /**
+     * Set the input field value
+     * @param field the input field value as String
+     */
     public void setField(String field) {
         mField = field;
         mETInput.setText(mField);
     }
 
+    /**
+     * Get the input field's font size
+     * @return the font size in dp
+     */
     public float getFieldFontSize() {
         return mFieldFontSize;
     }
 
+    /**
+     * Set the input field's font size
+     * @param fieldFontSize the input field's font size in pixels
+     */
     public void setFieldFontSize(float fieldFontSize) {
         mFieldFontSize = fieldFontSize * mScale;
         mETInput.setTextSize(TypedValue.COMPLEX_UNIT_PX, mFieldFontSize);
     }
 
+    /**
+     * Get the input field's font weight
+     * @return the font weight as integer
+     */
     public int getFieldFontWeight() {
         return mFieldFontWeight;
     }
 
+    /**
+     * Set the input field's font weight
+     * @param fieldFontWeight the font weight as integer
+     */
     public void setFieldFontWeight(int fieldFontWeight) {
         mFieldFontWeight = fieldFontWeight;
         mETInput.setTypeface(Typeface.create(Typeface.DEFAULT, mFieldFontWeight));
     }
 
+    /**
+     * Get the input field's color
+     * @return the input field's color as RGBA integer
+     */
     public int getFieldColor() {
         return mFieldColor;
     }
 
+    /**
+     * Set the input field's color
+     * @param fieldColor the color as RGBA integer
+     */
     public void setFieldColor(int fieldColor) {
         mFieldColor = fieldColor;
         mETInput.setTextColor(mFieldColor);
     }
 
+    /**
+     * Get the boolean value indicating if the input text is hidden
+     * @return the boolean value
+     */
     public boolean isSecure() {
         return mIsSecure;
     }
 
+    /**
+     * Enable to switch between hidden and shown input text
+     * @param secure the boolean value which show/hide the input field's text
+     */
     public void setSecure(boolean secure) {
         mIsSecure = secure;
 
@@ -376,28 +433,52 @@ public class MUTextField extends RelativeLayout {
         mETInput.setLongClickable(!secure); // Disable contextual action like copying/selection
     }
 
+    /**
+     * Get the editable value of the input field
+     * @return true if the input field is editable, false otherwise
+     */
     public boolean isEditable() {
         return mIsEditable;
     }
 
+    /**
+     * Enable or disable input field edition
+     * @param editable the value of the edition-availability
+     */
     public void setEditable(boolean editable) {
         mIsEditable = editable;
         mETInput.setEnabled(editable);
     }
 
+    /**
+     * Get the keyboard type (number, text, mail)
+     * @return the type as integer
+     */
     public int getKeyboardType() {
         return mKeyboardType;
     }
 
+    /**
+     * Switch between different mode of input
+     * @param keyboardType the input mode (number, text, mail) as integer
+     */
     public void setKeyboardType(int keyboardType) {
         mKeyboardType = keyboardType;
         mETInput.setInputType(mKeyboardType);
     }
 
+    /**
+     * Get the state of the auto-correction
+     * @return true if the auto-correction is active, false otherwise
+     */
     public boolean isAutoCorrection() {
         return mAutoCorrection;
     }
 
+    /**
+     * Enable / disable the auto-correction
+     * @param autoCorrection the value of the auto-correction state
+     */
     public void setAutoCorrection(boolean autoCorrection) {
         mAutoCorrection = autoCorrection;
         mETInput.setInputType(mAutoCorrection ?
@@ -405,10 +486,18 @@ public class MUTextField extends RelativeLayout {
                 : InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS | mKeyboardType);
     }
 
+    /**
+     * Know if the input field is focused or not
+     * @return true if focus is on input field, false otherwise
+     */
     public boolean isActive() {
         return mETInput.hasFocus();
     }
 
+    /**
+     * Request or clear focus from the input field
+     * @param active true to set the focus on the input field, false to clear focus
+     */
     public void setActive(boolean active) {
         if(active) {
             mETInput.requestFocusFromTouch();
@@ -417,50 +506,93 @@ public class MUTextField extends RelativeLayout {
         }
     }
 
+    /**
+     * Know if the return key is available on the soft keyboard
+     * @return true if it is, false otherwise
+     */
     public boolean isReturnKeyAvailable() {
         return mIsReturnKeyAvailable;
     }
 
+    /**
+     * Enable / disable the return key on soft keyboard
+     * @param returnKeyAvailable true if the input allows multi line, false otherwise
+     */
     public void setReturnKeyAvailable(boolean returnKeyAvailable) {
         mIsReturnKeyAvailable = returnKeyAvailable;
         mETInput.setSingleLine(!mIsReturnKeyAvailable);
     }
 
+    /**
+     * Get the placeholder's text
+     * @return the placeholder's text as String
+     */
     public String getPlaceHolderText() {
         return mPlaceHolderText;
     }
 
+    /**
+     * Set the placeholder's text
+     * @param placeHolderText the placeholder's text as String
+     */
     public void setPlaceHolderText(String placeHolderText) {
         mPlaceHolderText = placeHolderText;
         mETInput.setHint(mPlaceHolderText);
     }
 
+    /**
+     * Get the color of the placeholder's text
+     * @return the color as RGBA integer
+     */
     public int getPlaceHolderFontColor() {
         return mPlaceHolderFontColor;
     }
 
+    /**
+     * Set the placeholder's text color
+     * @param placeHolderFontColor the color as RGBA integer
+     */
     public void setPlaceHolderFontColor(int placeHolderFontColor) {
         mPlaceHolderFontColor = placeHolderFontColor;
         mETInput.setHintTextColor(mPlaceHolderFontColor);
     }
 
+    /**
+     * Get the interface attached to the view
+     * @return the MUTextField interface attached to the view, null if there is not.
+     */
     public MUTextFieldListener getTFListener() {
         return mTFListener;
     }
 
+    /**
+     * Attach a listener to the view
+     * @param tFListener the listener to attach
+     */
     public void setTFListener(MUTextFieldListener tFListener) {
         mTFListener = tFListener;
     }
 
+    /**
+     * Get the input field's underline color
+     * @return the color as RGBA integer
+     */
     public int getUnderlineColor() {
         return mUnderlineColor;
     }
 
+    /**
+     * Set the input field's underline color
+     * @param underlineColor the color as RGBA integer
+     */
     public void setUnderlineColor(int underlineColor) {
         mUnderlineColor = underlineColor;
         mETInput.getBackground().setColorFilter(mUnderlineColor, PorterDuff.Mode.SRC_IN);
     }
 
+    /**
+     * The interface of the view to listen for events.
+     */
     public interface MUTextFieldListener {
         void focusLost(AppCompatEditText textField);
         void isSelecting(AppCompatEditText textField);
