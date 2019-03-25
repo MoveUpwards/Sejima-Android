@@ -9,7 +9,6 @@ import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,7 +80,11 @@ public class MUTopBar extends RelativeLayout {
     /**
      * Show button value
      */
-    private boolean showButton = true;
+    private boolean mShowButton = true;
+    /**
+     * The listener to handle clicks on MUTopBar
+     */
+    private MUTopBarClickListener mClickListener;
 
 
     /**
@@ -101,25 +104,29 @@ public class MUTopBar extends RelativeLayout {
     public MUTopBar(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MUTopBar);
+        TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.MUTopBar);
         CharSequence s;
 
         // Deal with title's attributes
-        s = a.getString(R.styleable.MUTopBar_title);
+        s = attributes.getString(R.styleable.MUTopBar_title);
         mTitle = TextUtils.isEmpty(s) ? mTitle : s.toString();
-        mTitleColor = a.getColor(R.styleable.MUTopBar_title_color, mTitleColor);
-        mTitleFontSize = a.getDimensionPixelSize(R.styleable.MUTopBar_title_size, 0);
-        mTitleFontWeight = a.getInt(R.styleable.MUTopBar_title_weight, mTitleFontWeight);
-        mTitleAlignment = a.getInt(R.styleable.MUTopBar_topbar_title_alignment, mTitleAlignment);
+        mTitleColor = attributes.getColor(R.styleable.MUTopBar_title_color, mTitleColor);
+        mTitleFontSize = attributes.getDimensionPixelSize(R.styleable.MUTopBar_title_size, 0);
+        mTitleFontWeight = attributes.getInt(R.styleable.MUTopBar_title_weight, mTitleFontWeight);
+        mTitleAlignment = attributes.getInt(R.styleable.MUTopBar_topbar_title_alignment, mTitleAlignment);
 
-        mLeftButtonWidth = a.getDimensionPixelSize(R.styleable.MUTopBar_topbar_img_width, 0);
-        mLeftButtonLeading = a.getDimensionPixelSize(R.styleable.MUTopBar_topbar_btn_leading, 0);
-        mButtonImage = a.getResourceId(R.styleable.MUTopBar_topbar_btn_img, mButtonImage);
+        mLeftButtonWidth = attributes.getDimensionPixelSize(R.styleable.MUTopBar_topbar_img_width, 0);
+        mLeftButtonLeading = attributes.getDimensionPixelSize(R.styleable.MUTopBar_topbar_btn_leading, 0);
+        mButtonImage = attributes.getResourceId(R.styleable.MUTopBar_topbar_btn_img, mButtonImage);
 
         init(context);
-        a.recycle();
+        attributes.recycle();
     }
 
+    /**
+     *
+     * @return the left padding of image button
+     */
     public float getLeftButtonLeading() {
         return mLeftButtonLeading;
     }
@@ -195,7 +202,6 @@ public class MUTopBar extends RelativeLayout {
             drawable = getResources().getDrawable(mButtonImage);
             mIBLeftButton.setImageDrawable(drawable);
         } catch (Resources.NotFoundException e){
-            Log.e(getClass().getCanonicalName(), "Img drawable not found", e);
             drawable = null;
         } finally {
             setButtonHidden(null == drawable);
@@ -212,12 +218,28 @@ public class MUTopBar extends RelativeLayout {
     }
 
     public boolean isButtonHidden() {
-        return !showButton;
+        return !mShowButton;
     }
 
     public void setButtonHidden(boolean hideButton) {
-        this.showButton = !hideButton;
-        mIBLeftButton.setVisibility(this.showButton ? VISIBLE : GONE);
+        this.mShowButton = !hideButton;
+        mIBLeftButton.setVisibility(this.mShowButton ? VISIBLE : GONE);
+    }
+
+    public MUTopBarClickListener getMUTopBarClickListener() {
+        return mClickListener;
+    }
+
+    public void setMUTopBarClickListener(MUTopBarClickListener clickListener) {
+        mClickListener = clickListener;
+        if (null != mClickListener) {
+            mIBLeftButton.setOnClickListener(l -> mClickListener.clickOnMUTopBar());
+            setOnClickListener(l -> mClickListener.clickOnMUTopBar());
+        }
+        else {
+            mIBLeftButton.setOnClickListener(null);
+            setOnClickListener(null);
+        }
     }
 
     /**
@@ -227,14 +249,11 @@ public class MUTopBar extends RelativeLayout {
     private void init(Context context) {
         mScale = (float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
 
-        setOnClickListener(l -> didClick());
-
         LayoutParams lpRoot = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         setLayoutParams(lpRoot);
 
         mLeftButtonWidth = mLeftButtonWidth != 0 ? mLeftButtonWidth : (int) (DEFAULT_BUTTON_WIDTH_IN_SP * mScale);
         mIBLeftButton = new ImageButton(context);
-        mIBLeftButton.setOnClickListener(l -> didClick());
         mIBLeftButton.setId(View.generateViewId());
         mIBLeftButton.setLayoutParams(getLeftBtnLayoutParams(mLeftButtonWidth));
         setButtonImage(mButtonImage);
@@ -256,15 +275,6 @@ public class MUTopBar extends RelativeLayout {
 
 
     /**
-     * Method triggered each time button is tapped.
-     */
-    public void didClick(){
-        Log.d(this.getClass().getName(), "MUTopBar has been clicked 2");
-//        updateImageWidth((float) (mIBLeftButton.getWidth() * 1.1)); // FOR TEST ONLY
-//        setButtonImage(-8/**/); // Test if the button disappears
-    }
-
-    /**
      * Update Image width
      */
     private void updateImageWidth(float width){
@@ -277,5 +287,12 @@ public class MUTopBar extends RelativeLayout {
         lpImBtn.addRule(RelativeLayout.ALIGN_PARENT_START, RelativeLayout.TRUE);
         lpImBtn.setMargins((int) mLeftButtonLeading, (int) mLeftButtonLeading, (int) mLeftButtonLeading, (int) mLeftButtonLeading);
         return lpImBtn;
+    }
+
+    /**
+     * Interface to handle clicks on ImageButton and TopBar
+     */
+    public interface MUTopBarClickListener {
+        void clickOnMUTopBar();
     }
 }
