@@ -90,11 +90,11 @@
         <!--app:title_color="@color/colorPrimaryDark"/>-->
 
     <com.rlab.sejima.features.MUAvatar
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        app:border_type="square"
-        app:corner_radius="50"
-        app:border_width="5"
-        android:src="@mipmap/ic_launcher"/>
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:border_type="circle"
+        app:corner_radius="20"
+        app:border_width="4"
+        android:src="@drawable/avatar"/>
 
 </LinearLayout>

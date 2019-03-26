@@ -27,9 +27,6 @@ import com.rlab.sejima.R;
     credits: https://github.com/hdodenhof/CircleImageView
  */
 
-
-
-
 public class MUAvatar extends android.support.v7.widget.AppCompatImageView {
 
     /**
@@ -151,6 +148,7 @@ public class MUAvatar extends android.support.v7.widget.AppCompatImageView {
 
     private void init() {
         setScaleType(ScaleType.CENTER_CROP);
+        setPadding(2,2,2,2);
         setBorderColor(mBorderColor);
         setCornerRadius(mCornerRadius);
         setBorderType(mBorderType);
@@ -306,8 +304,8 @@ public class MUAvatar extends android.support.v7.widget.AppCompatImageView {
         mBkgPaint.setAntiAlias(true);
         mBkgPaint.setColor(mBkgColor);
 
-        mBitmapHeight = mBitmap.getHeight();
-        mBitmapWidth = mBitmap.getWidth();
+        mBitmapHeight = (int) (mBitmap.getHeight() - mBorderWidth);
+        mBitmapWidth = (int) (mBitmap.getWidth() - mBorderWidth);
 
         mBorderRect.set(calculateBounds());
         mDrawableRect.set(mBorderRect);
@@ -321,7 +319,9 @@ public class MUAvatar extends android.support.v7.widget.AppCompatImageView {
      */
     private RectF calculateBounds() {
         int availableWidth  = getWidth() - getPaddingLeft() - getPaddingRight();
+        availableWidth -= mBorderWidth;
         int availableHeight = getHeight() - getPaddingTop() - getPaddingBottom();
+        availableHeight -= mBorderWidth;
 
         int sideLength = Math.min(availableWidth, availableHeight);
 
