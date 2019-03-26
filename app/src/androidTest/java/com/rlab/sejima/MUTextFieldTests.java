@@ -123,6 +123,7 @@ public class MUTextFieldTests {
         mMUTextField.setPlaceHolderFontColor(Color.TRANSPARENT);
         assertEquals(mMUTextField.getPlaceHolderFontColor(), Color.TRANSPARENT);
         // Underline
+        // Commented to avoid heavy mocks
 //        mMUTextField.setUnderlineColor(Color.RED);
 //        assertEquals(mMUTextField.getUnderlineColor(), Color.RED);
 
