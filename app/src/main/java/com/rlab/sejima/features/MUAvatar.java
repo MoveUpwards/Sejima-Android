@@ -17,7 +17,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
-import android.util.Log;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 
 import com.rlab.sejima.R;
@@ -34,6 +34,7 @@ public class MUAvatar extends android.support.v7.widget.AppCompatImageView {
      */
     public static final Integer SQUARE_BORDER = 0;
     public static final Integer ROUND_BORDER = 1;
+    public static final Integer DEFAULT_BORDER_WIDTH_IN_DP = 3;
 
 
     // Drawing tools variables
@@ -93,11 +94,11 @@ public class MUAvatar extends android.support.v7.widget.AppCompatImageView {
     /**
      * The background color if the image is not large enough
      */
-    private int mBkgColor = Color.BLUE;
+    private int mBkgColor = Color.TRANSPARENT;
     /**
      * The border width
      */
-    private float mBorderWidth = 5;
+    private float mBorderWidth;
     /**
      * The drawable representation of the image
      */
@@ -118,6 +119,10 @@ public class MUAvatar extends android.support.v7.widget.AppCompatImageView {
      * The current corner radius (=1000) in case of circle border
      */
     private float mCornerRadius;
+    /**
+     * The scale used to convert px in dp
+     */
+    private float mScale;
 
     /**
      * Default constructor
@@ -125,7 +130,7 @@ public class MUAvatar extends android.support.v7.widget.AppCompatImageView {
      */
     public MUAvatar(Context context) {
         super(context);
-        init();
+        init(context);
     }
 
     /**
@@ -137,21 +142,26 @@ public class MUAvatar extends android.support.v7.widget.AppCompatImageView {
         super(context, attrs);
 
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.MUAvatar);
-        mBorderWidth = attributes.getFloat(R.styleable.MUAvatar_border_width, mBorderWidth);
+        mBorderWidth = attributes.getDimension(R.styleable.MUAvatar_border_width, mBorderWidth);
         mBorderColor = attributes.getColor(R.styleable.MUAvatar_border_color, mBorderColor);
-        mCornerRadius = attributes.getFloat(R.styleable.MUAvatar_corner_radius, mCornerRadius);
+        mBkgColor = attributes.getColor(R.styleable.MUAvatar_bkg_color, mBkgColor);
+        mCornerRadius = attributes.getDimension(R.styleable.MUAvatar_corner_radius, mCornerRadius);
         mBorderType = attributes.getInt(R.styleable.MUAvatar_border_type, mBorderType);
+        mImage = attributes.getDrawable(R.styleable.MUAvatar_android_src);
 
-        init();
+        init(context);
         attributes.recycle();
     }
 
-    private void init() {
+    private void init(Context context) {
+        mScale = (float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
+
+        setImageDrawable(mImage);
         setScaleType(ScaleType.CENTER_CROP);
-        setPadding(2,2,2,2);
         setBorderColor(mBorderColor);
         setCornerRadius(mCornerRadius);
         setBorderType(mBorderType);
+        setBorderWidth(mBorderWidth != 0 ? mBorderWidth : DEFAULT_BORDER_WIDTH_IN_DP);
 
         mReady = true;
 
@@ -162,12 +172,10 @@ public class MUAvatar extends android.support.v7.widget.AppCompatImageView {
 
         AppCompatImageView root = this;
         setOnTouchListener((v, event) -> {
-            Log.e(getClass().getCanonicalName(), "click on touch");
             if(mClickListener != null
                     && event.getAction() == MotionEvent.ACTION_DOWN
                     && isInCircle(event.getX(), event.getY())){
                 mClickListener.clickOnImage(root);
-                Log.e(getClass().getCanonicalName(), "click on avatar");
                 this.performClick();
             }
             return false;
@@ -212,16 +220,6 @@ public class MUAvatar extends android.support.v7.widget.AppCompatImageView {
         setup();
     }
 
-    public void setBkgColor(@ColorInt int bkgColor) {
-        if (bkgColor == mBkgColor) {
-            return;
-        }
-
-        mBkgColor = bkgColor;
-        mBkgPaint.setColor(bkgColor);
-        invalidate();
-    }
-
     @Override
     public void setImageBitmap(Bitmap bm) {
         super.setImageBitmap(bm);
@@ -246,6 +244,11 @@ public class MUAvatar extends android.support.v7.widget.AppCompatImageView {
         initializeBitmap();
     }
 
+    /**
+     * Retrieve the drawable source image as Bitmap
+     * @param drawable the source image
+     * @return the image as a Bitmap
+     */
     private Bitmap getBitmapFromDrawable(Drawable drawable) {
         if (drawable == null) {
             return null;
@@ -271,8 +274,27 @@ public class MUAvatar extends android.support.v7.widget.AppCompatImageView {
     }
 
     private void initializeBitmap() {
-        mBitmap = getBitmapFromDrawable(getDrawable());
+        mImage = getDrawable();
+        mImage = mImage != null ? mImage : mPlaceholderImage;
+        mBitmap = getBitmapFromDrawable(mImage);
         setup();
+    }
+
+    /**
+     * Get the image attached to the view
+     * @return the image as Drawable
+     */
+    public Drawable getImage() {
+        return getDrawable();
+    }
+
+    /**
+     * Attach the image to the view
+     * @param image the image as Drawable
+     */
+    public void setImage(Drawable image) {
+        mImage = image != null ? image : mPlaceholderImage;
+        setImageDrawable(mImage);
     }
 
     private void setup() {
@@ -304,8 +326,8 @@ public class MUAvatar extends android.support.v7.widget.AppCompatImageView {
         mBkgPaint.setAntiAlias(true);
         mBkgPaint.setColor(mBkgColor);
 
-        mBitmapHeight = (int) (mBitmap.getHeight() - mBorderWidth);
-        mBitmapWidth = (int) (mBitmap.getWidth() - mBorderWidth);
+        mBitmapHeight = mBitmap.getHeight();
+        mBitmapWidth = mBitmap.getWidth();
 
         mBorderRect.set(calculateBounds());
         mDrawableRect.set(mBorderRect);
@@ -319,12 +341,10 @@ public class MUAvatar extends android.support.v7.widget.AppCompatImageView {
      */
     private RectF calculateBounds() {
         int availableWidth  = getWidth() - getPaddingLeft() - getPaddingRight();
-        availableWidth -= mBorderWidth;
         int availableHeight = getHeight() - getPaddingTop() - getPaddingBottom();
-        availableHeight -= mBorderWidth;
 
         int sideLength = Math.min(availableWidth, availableHeight);
-
+        sideLength -= 1 * mBorderWidth;
         float left = getPaddingLeft() + (availableWidth - sideLength) / 2f;
         float top = getPaddingTop() + (availableHeight - sideLength) / 2f;
 
@@ -350,6 +370,36 @@ public class MUAvatar extends android.support.v7.widget.AppCompatImageView {
         mShaderMatrix.postTranslate((int) (dx + 0.5f) + mDrawableRect.left, (int) (dy + 0.5f) + mDrawableRect.top);
 
         mBitmapShader.setLocalMatrix(mShaderMatrix);
+    }
+
+    /**
+     * Get the background color
+     * @return the background color as RGBA integer
+     */
+    public int getBkgColor() {
+        return mBkgColor;
+    }
+
+    /**
+     * Set the background color
+     * @param bkgColor the background color as RGBA integer
+     */
+    public void setBkgColor(@ColorInt int bkgColor) {
+        if (bkgColor == mBkgColor) {
+            return;
+        }
+
+        mBkgColor = bkgColor;
+        mBkgPaint.setColor(bkgColor);
+        invalidate();
+    }
+
+    /**
+     * Get the border color
+     * @return the border color as RGBA integer
+     */
+    public int getBorderColor() {
+        return mBorderColor;
     }
 
     /**
@@ -383,22 +433,6 @@ public class MUAvatar extends android.support.v7.widget.AppCompatImageView {
     }
 
     /**
-     * Get the current drawable representation of image
-     * @return the drawable representation of image
-     */
-    public Drawable getImage() {
-        return mImage;
-    }
-
-    /**
-     * Set the image as drawable
-     * @param imageDrawable the drawable representation of the image
-     */
-    public void setImage(Drawable imageDrawable) {
-        mImage = imageDrawable;
-    }
-
-    /**
      * Get the placeholder drawable image
      * @return the placeholder drawable image
      */
@@ -416,18 +450,19 @@ public class MUAvatar extends android.support.v7.widget.AppCompatImageView {
 
     /**
      * Get the border width
-     * @return the border width
+     * @return the border width in dp
      */
     public float getBorderWidth() {
         return mBorderWidth;
     }
 
     /**
-     * Get the border color
-     * @return the border color as RGBA integer
+     * Set the border width
+     * @param borderWidth the border width in pixels
      */
-    public int getBorderColor() {
-        return mBorderColor;
+    public void setBorderWidth(float borderWidth) {
+        mBorderWidth = borderWidth * mScale;
+        invalidate();
     }
 
     /**
@@ -442,6 +477,7 @@ public class MUAvatar extends android.support.v7.widget.AppCompatImageView {
         mBorderType = borderType == ROUND_BORDER ? ROUND_BORDER : SQUARE_BORDER;
         mCornerRadius = mBorderType == SQUARE_BORDER ?
                 mCornerRadius : 1000;
+        invalidate();
     }
 
     /**
@@ -459,6 +495,7 @@ public class MUAvatar extends android.support.v7.widget.AppCompatImageView {
     public void setCornerRadius(float cornerRadius) {
         mCornerRadius = mBorderType == SQUARE_BORDER ?
                 cornerRadius : 1000;
+        invalidate();
     }
 
     /**

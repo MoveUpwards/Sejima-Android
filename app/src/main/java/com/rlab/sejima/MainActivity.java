@@ -7,12 +7,14 @@ import android.support.v7.widget.AppCompatEditText;
 import android.util.Log;
 import android.view.View;
 
+import com.rlab.sejima.features.MUAvatar;
 import com.rlab.sejima.features.MUTextField;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, MUTextField.MUTextFieldListener {
 
 //    private boolean editable = true;
 //    private boolean autocorrect = true;
+    protected boolean bAvatar = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +24,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btn_2).setOnClickListener(this);
         findViewById(R.id.btn_3).setOnClickListener(this);
         findViewById(R.id.btn_4).setOnClickListener(this);
+        MUAvatar avatar = findViewById(R.id.muavatar);
+        avatar.setPlaceholderImage(getResources().getDrawable(R.mipmap.ic_launcher));
+        avatar.setImage(null);
+
+        avatar.setClickListener(imageView -> {
+            avatar.setImage(getResources().getDrawable(bAvatar ? R.drawable.ic_launcher_background : R.drawable.avatar));
+            avatar.setBorderType(bAvatar ? MUAvatar.ROUND_BORDER : MUAvatar.SQUARE_BORDER);
+            avatar.setCornerRadius(bAvatar ? -1 : 25);
+            bAvatar = !bAvatar;
+
+        });
     }
 
     @Override
@@ -47,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_3:
                 ((MUTextField) findViewById(R.id.mutf1)).setReturnKeyAvailable(true);
+
                 break;
             case R.id.btn_4:
                 ((MUTextField) findViewById(R.id.mutf1)).setReturnKeyAvailable(false);

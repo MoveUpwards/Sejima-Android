@@ -90,11 +90,11 @@
         <!--app:title_color="@color/colorPrimaryDark"/>-->
 
     <com.rlab.sejima.features.MUAvatar
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:id="@+id/muavatar"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         app:border_type="circle"
-        app:corner_radius="20"
-        app:border_width="4"
+        app:border_width="1dp"
         android:src="@drawable/avatar"/>
 
 </LinearLayout>
