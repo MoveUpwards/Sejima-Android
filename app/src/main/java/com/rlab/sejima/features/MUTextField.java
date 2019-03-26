@@ -213,7 +213,7 @@ public class MUTextField extends RelativeLayout {
         setPlaceHolderText(mPlaceHolderText);
         mPlaceHolderFontColor = mPlaceHolderFontColor != 0 ? mPlaceHolderFontColor : mETInput.getCurrentHintTextColor();
         setPlaceHolderFontColor(mPlaceHolderFontColor);
-//        setUnderlineColor(mUnderlineColor);
+        setUnderlineColor(mUnderlineColor); // Comment this line to pass tests
 
         // Field's comportment
         setSecure(mIsSecure);
