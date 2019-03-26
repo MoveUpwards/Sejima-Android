@@ -89,9 +89,9 @@
         <!--android:inputType="number"-->
         <!--app:title_color="@color/colorPrimaryDark"/>-->
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/title"/>
+    <com.rlab.sejima.features.MUAvatar
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:src="@mipmap/ic_launcher"/>
 
 </LinearLayout>
