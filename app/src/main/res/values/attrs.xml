@@ -7,12 +7,18 @@
         <enum name="normal" value="0"/>
         <enum name="bold" value="1"/>
     </attr>
+    <attr name="alignment" format="enum">
+        <enum name="start" value="20"/>
+        <enum name="end" value="21"/>
+        <enum name="center" value="14"/>
+    </attr>
 
     <declare-styleable name="MUHeader">
         <attr name="title"/>
         <attr name="title_size"/>
         <attr name="title_weight"/>
         <attr name="title_color"/>
+        <attr name="alignment"/>
 
         <attr name="detail" format="string"/>
         <attr name="detail_size" format="dimension"/>
@@ -23,11 +29,6 @@
         </attr>
 
         <attr name="vertical_spacing" format="dimension"/>
-        <attr name="alignment" format="enum">
-            <enum name="start" value="20"/>
-            <enum name="end" value="21"/>
-            <enum name="center" value="14"/>
-        </attr>
     </declare-styleable>
 
     <declare-styleable name="MUTopBar">
@@ -46,4 +47,26 @@
         <attr name="topbar_btn_left_padding" format="dimension"/>
         <attr name="topbar_btn_leading" format="dimension"/>
     </declare-styleable>
+
+    <declare-styleable name="MUTextField">
+        <attr name="title"/>
+        <attr name="title_size"/>
+        <attr name="title_weight"/>
+        <attr name="title_color"/>
+        <attr name="alignment"/>
+        <attr name="is_secure" format="boolean"/>
+        <attr name="auto_correct" format="boolean"/>
+        <attr name="android:inputType"/>
+        <attr name="android:editable"/>
+        <attr name="android:hint"/>
+        <attr name="android:textColorHint"/>
+        <attr name="field" format="string"/>
+        <attr name="field_size" format="dimension"/>
+        <attr name="field_color" format="color"/>
+        <attr name="field_weight" format="enum">
+            <enum name="normal" value="0"/>
+            <enum name="bold" value="1"/>
+        </attr>
+    </declare-styleable>
+
 </resources>

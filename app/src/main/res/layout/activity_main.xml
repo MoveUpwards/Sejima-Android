@@ -24,4 +24,36 @@
         app:topbar_btn_img="@mipmap/ic_launcher"
         app:topbar_btn_leading="5dp" />
 
+    <!--For tests only-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="btn 1"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btn_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="btn 2"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <com.rlab.sejima.features.MUTextField
+        android:id="@+id/mutf1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Text"
+        app:alignment="start"
+        app:field="@string/app_name"
+        android:inputType="text"
+        app:title_color="@color/colorPrimaryDark"/>
+
 </LinearLayout>
