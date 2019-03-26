@@ -70,10 +70,10 @@
     </declare-styleable>
 
     <declare-styleable name="MUAvatar">
+        <attr name="corner_radius" format="float"/>
         <attr name="border_width" format="float"/>
         <attr name="border_color" format="color"/>
-        <attr name="corner_radius" format="float"/>
-        <attr name="corner_style" format="enum">
+        <attr name="border_type" format="enum">
             <enum name="square" value="0"/>
             <enum name="circle" value="1"/>
         </attr>
