@@ -9,6 +9,7 @@ import android.support.v7.widget.AppCompatEditText;
 import android.text.InputType;
 import android.util.DisplayMetrics;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.rlab.sejima.features.MUTextField;
@@ -39,7 +40,7 @@ public class MUTextFieldTests {
         mScale = ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
 
         defaultTextViewSize = new TextView(context).getTextSize();
-        EditText et = new EditText(context);
+        AppCompatEditText et = new AppCompatEditText(context);
         defaultEditTextSize = et.getTextSize();
         defaultEditTextFontColor = et.getCurrentTextColor();
         defaultEditTextHintColor = et.getCurrentHintTextColor();
@@ -71,16 +72,19 @@ public class MUTextFieldTests {
         // Placeholder color
         assertEquals(mMUTextField.getPlaceHolderFontColor(), defaultEditTextHintColor);
         // Underline
-//        assertEquals(mMUTextField.getUnderlineColor(), Color.TRANSPARENT);
+        assertEquals(mMUTextField.getUnderlineColor(), Color.TRANSPARENT);
 
         // Field's comportment
         assertFalse(mMUTextField.isSecure());
         assertTrue(mMUTextField.isEditable());
+        assertFalse(mMUTextField.isActive());
         assertTrue(mMUTextField.isAutoCorrection());
         assertTrue(mMUTextField.isReturnKeyAvailable());
 
         assertEquals(mMUTextField.getKeyboardType(),  InputType.TYPE_NULL);
         assertNull(mMUTextField.getTFListener());
+
+        assertEquals(mMUTextField.getAlignment(), RelativeLayout.ALIGN_PARENT_START);
     }
 
     @Test
@@ -119,8 +123,8 @@ public class MUTextFieldTests {
         mMUTextField.setPlaceHolderFontColor(Color.TRANSPARENT);
         assertEquals(mMUTextField.getPlaceHolderFontColor(), Color.TRANSPARENT);
         // Underline
-        mMUTextField.setUnderlineColor(Color.RED);
-        assertEquals(mMUTextField.getUnderlineColor(), Color.RED);
+//        mMUTextField.setUnderlineColor(Color.RED);
+//        assertEquals(mMUTextField.getUnderlineColor(), Color.RED);
 
         // Field's comportment
         mMUTextField.setSecure(true);
@@ -131,6 +135,8 @@ public class MUTextFieldTests {
         assertFalse(mMUTextField.isAutoCorrection());
         mMUTextField.setReturnKeyAvailable(false);
         assertFalse(mMUTextField.isReturnKeyAvailable());
+        mMUTextField.setActive(true);
+        assertTrue(mMUTextField.isActive());
 
         mMUTextField.setKeyboardType(InputType.TYPE_CLASS_NUMBER);
         assertEquals(mMUTextField.getKeyboardType(),  InputType.TYPE_CLASS_NUMBER);
@@ -151,6 +157,9 @@ public class MUTextFieldTests {
             }
         });
         assertNotNull(mMUTextField.getTFListener());
+
+        mMUTextField.setAlignment(RelativeLayout.ALIGN_PARENT_END);
+        assertEquals(mMUTextField.getAlignment(), RelativeLayout.ALIGN_PARENT_END);
     }
 }
 

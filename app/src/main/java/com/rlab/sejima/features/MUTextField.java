@@ -11,7 +11,6 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -22,11 +21,6 @@ import android.widget.TextView;
 import com.rlab.sejima.R;
 
 public class MUTextField extends RelativeLayout {
-
-    /*
-    TODO
-    - keyboard return key type
-     */
 
     /**
      * The scale used to convert px in dp
@@ -193,7 +187,6 @@ public class MUTextField extends RelativeLayout {
             @Override
             protected void onSelectionChanged(int selStart, int selEnd) {
                 super.onSelectionChanged(selStart, selEnd);
-                Log.e(getClass().getCanonicalName(), "Start: " + selStart + " x End: " + selEnd);
                 if(null != mTFListener && (selEnd - selStart) > 0){
                     mTFListener.isSelecting(this);
                 }
@@ -340,9 +333,8 @@ public class MUTextField extends RelativeLayout {
      * @return the input field value as String
      */
     public String getField() {
-        String s = mETInput.getText().toString();
-        mField = !TextUtils.isEmpty(s) ? s : "";
-        return mField;
+        return !TextUtils.isEmpty(mETInput.getText()) ?
+                mETInput.getText().toString() : "";
     }
 
     /**
