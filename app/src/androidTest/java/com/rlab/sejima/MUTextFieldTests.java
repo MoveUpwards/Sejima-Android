@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.v7.widget.AppCompatEditText;
 import android.text.InputType;
 import android.util.DisplayMetrics;
 import android.widget.EditText;
@@ -17,6 +16,8 @@ import com.rlab.sejima.features.MUTextField;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import androidx.appcompat.widget.AppCompatEditText;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

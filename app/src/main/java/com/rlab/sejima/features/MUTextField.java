@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.support.v7.widget.AppCompatEditText;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -19,6 +18,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.rlab.sejima.R;
+
+import androidx.appcompat.widget.AppCompatEditText;
 
 public class MUTextField extends RelativeLayout {
 
@@ -175,7 +176,7 @@ public class MUTextField extends RelativeLayout {
         LayoutParams lpEVInput = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lpEVInput.addRule(mAlignment, RelativeLayout.TRUE);
         lpEVInput.addRule(RelativeLayout.BELOW, mTVLabel.getId());
-        mETInput = new android.support.v7.widget.AppCompatEditText(context){
+        mETInput = new AppCompatEditText(context){
             @Override
             protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
                 super.onFocusChanged(focused, direction, previouslyFocusedRect);

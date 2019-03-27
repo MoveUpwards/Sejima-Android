@@ -13,21 +13,23 @@ import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.support.annotation.ColorInt;
-import android.support.annotation.DrawableRes;
-import android.support.v7.widget.AppCompatImageView;
+
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 
 import com.rlab.sejima.R;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.DrawableRes;
+import androidx.appcompat.widget.AppCompatImageView;
+
 /*
     Created by Antoine RICHE on 26/03/2019.
     credits: https://github.com/hdodenhof/CircleImageView
  */
 
-public class MUAvatar extends android.support.v7.widget.AppCompatImageView {
+public class MUAvatar extends AppCompatImageView {
 
     /**
      * Static fields to determinate the border type

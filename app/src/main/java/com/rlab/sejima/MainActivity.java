@@ -1,9 +1,6 @@
 package com.rlab.sejima;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.AppCompatImageView;
 import android.text.InputType;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -12,6 +9,10 @@ import android.widget.Toast;
 import com.rlab.sejima.features.MUAvatar;
 import com.rlab.sejima.features.MUTextField;
 import com.rlab.sejima.features.MUTopBar;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.AppCompatImageView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
         MUTextField.MUTextFieldListener, MUAvatar.MUAvatarClickListener {

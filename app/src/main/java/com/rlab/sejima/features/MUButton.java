@@ -8,16 +8,16 @@ import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.design.button.MaterialButton;
-import android.support.v4.graphics.ColorUtils;
-import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 
+import com.google.android.material.button.MaterialButton;
 import com.rlab.sejima.R;
+
+import androidx.core.graphics.ColorUtils;
 
 /*
     Created by Antoine RICHE on 27/03/2019.
@@ -457,7 +457,7 @@ public class MUButton extends MaterialButton {
      */
     public void setBorderColor(int borderColor) {
         mBorderColor = borderColor;
-//        setStrokeColorResource(mBorderColor);
+        setStrokeColorResource(mBorderColor);
     }
 
     /**
@@ -474,14 +474,14 @@ public class MUButton extends MaterialButton {
      */
     public void setBorderWidth(float borderWidth) {
         mBorderWidth = borderWidth;
-//        setStrokeWidth((int) mBorderWidth);
+        setStrokeWidth((int) mBorderWidth);
     }
 
     /**
      * Get the current corner radius value
      * @return the current corner radius
      */
-//    @Override
+    @Override
     public int getCornerRadius() {
         return mCornerRadius;
     }
@@ -490,10 +490,10 @@ public class MUButton extends MaterialButton {
      * Set the radius value
      * @param cornerRadius the radius value
      */
-//    @Override
+    @Override
     public void setCornerRadius(int cornerRadius) {
         mCornerRadius = cornerRadius;
-//        super.setCornerRadius(mCornerRadius);
+        super.setCornerRadius(mCornerRadius);
     }
 
     /**
@@ -565,7 +565,7 @@ public class MUButton extends MaterialButton {
                 ColorUtils.setAlphaComponent(mBorderColor, (int) (mBorderAlpha * mDisabledAlpha * 255)),
                 ColorUtils.setAlphaComponent(mBorderColor, (int) (mBorderAlpha * 255))
         };
-//        setStrokeColor(new ColorStateList(STATES, colors));
+        setStrokeColor(new ColorStateList(STATES, colors));
     }
 
     /**
