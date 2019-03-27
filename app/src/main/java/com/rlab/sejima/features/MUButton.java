@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
 
@@ -26,6 +27,10 @@ public class MUButton extends AppCompatButton {
      */
     private float mBorderAlpha = 1.0f;
     /**
+     * The alpha value for disabled state
+     */
+    private float mDisabledAlpha = 0.7f;
+    /**
      * Label of the button
      */
     private String mLabel = "";
@@ -45,6 +50,42 @@ public class MUButton extends AppCompatButton {
      * The label alignment
      */
     private int mLabelAlignment = Gravity.CENTER;
+    /**
+     * The label highlighted color
+     */
+    private int mLabelHighLightedColor = Color.BLUE;
+    /**
+     * The label progressing color
+     */
+    private int mLabelProgressingColor = Color.YELLOW;
+    /**
+     * Show or hide the progress indicator
+     */
+    private boolean isLoading = false;
+    /**
+     * Background color
+     */
+    private int mBkgColor;
+    /**
+     * Border color
+     */
+    private int mBorderColor;
+    /**
+     * Border width
+     */
+    private float mBorderWidth = 0;
+    /**
+     * Corner radius
+     */
+    private float mCornerRadius = 0;
+    /**
+     * Vertical padding
+     */
+    private float mVerticalPadding = 0;
+    /**
+     * Horizontal padding
+     */
+    private float mHorizontalPadding = 0;
 
     /**
      * The scale to convert pixels into dp
@@ -69,7 +110,7 @@ public class MUButton extends AppCompatButton {
     }
 
     private void init(Context context){
-
+        mScale = (float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
     }
 
     /**
@@ -122,6 +163,7 @@ public class MUButton extends AppCompatButton {
     public void setBorderAlpha(float borderAlpha) {
         mBorderAlpha = borderAlpha;
     }
+
     /**
      * Get the current label
      * @return the current label as String
@@ -129,6 +171,7 @@ public class MUButton extends AppCompatButton {
     public String getLabel() {
         return mLabel;
     }
+
     /**
      * Set tthe current label
      * @param label the label as String
@@ -137,6 +180,7 @@ public class MUButton extends AppCompatButton {
         mLabel = label;
         setText(label);
     }
+
     /**
      * Get the label font size
      * @return the font size in dp
@@ -144,14 +188,16 @@ public class MUButton extends AppCompatButton {
     public float getLabelFontSize() {
         return mLabelFontSize;
     }
+
     /**
      * Set the label font size
      * @param labelFontSize the label font size in pixels.
      */
-    public void setLabelFontSize(int labelFontSize) {
+    public void setLabelFontSize(float labelFontSize) {
         mLabelFontSize = labelFontSize * mScale;
         setTextSize(TypedValue.COMPLEX_UNIT_PX, mLabelFontSize);
     }
+
     /**
      * Get the current label font weight
      * @return the current label font weight as integer
@@ -159,6 +205,7 @@ public class MUButton extends AppCompatButton {
     public int getLabelFontWeight() {
         return mLabelFontWeight;
     }
+
     /**
      * Set the label font weight
      * @param labelFontWeight the label font weight as integer
@@ -167,6 +214,7 @@ public class MUButton extends AppCompatButton {
         mLabelFontWeight = labelFontWeight;
         setTypeface(Typeface.create(Typeface.DEFAULT, mLabelFontWeight));
     }
+
     /**
      * Get the current label color as integer
      * @return the label color as RGBA integer
@@ -174,6 +222,7 @@ public class MUButton extends AppCompatButton {
     public int getLabelColor() {
         return mLabelColor;
     }
+
     /**
      * Set the label color
      * @param labelColor the label color as RGBA integer
@@ -181,6 +230,7 @@ public class MUButton extends AppCompatButton {
     public void setLabelColor(int labelColor) {
         mLabelColor = labelColor;
     }
+
     /**
      * Get the current label alignment
      * @return the integer representing the current horizontal alignment
@@ -188,6 +238,7 @@ public class MUButton extends AppCompatButton {
     public int getLabelAlignment() {
         return mLabelAlignment;
     }
+
     /**
      * Set the label alignment
      * @param labelAlignment the label alignment as integer.
@@ -200,5 +251,170 @@ public class MUButton extends AppCompatButton {
      */
     public void setLabelAlignment(int labelAlignment) {
         mLabelAlignment = labelAlignment;
+    }
+
+    /**
+     * Get the current alpha value of disabled state
+     * @return the current alpha value as float
+     */
+    public float getDisabledAlpha() {
+        return mDisabledAlpha;
+    }
+
+    /**
+     * Set the alpha value for disabled state
+     * @param disabledAlpha the alpha value to apply
+     */
+    public void setDisabledAlpha(float disabledAlpha) {
+        mDisabledAlpha = disabledAlpha;
+        //TODO: update state
+    }
+
+    /**
+     * Get the current color for highlighted (=pressed) state
+     * @return the current pressed state color as RGBA integer
+     */
+    public int getLabelHighLightedColor() {
+        return mLabelHighLightedColor;
+    }
+
+    /**
+     * Set the color for pressed state
+     * @param labelHighLightedColor the color as RGBA integer
+     */
+    public void setLabelHighLightedColor(int labelHighLightedColor) {
+        mLabelHighLightedColor = labelHighLightedColor;
+        // TODO update state
+    }
+
+    /**
+     * Get the current progressing color
+     * @return the color as RGBA integer
+     */
+    public int getLabelProgressingColor() {
+        return mLabelProgressingColor;
+    }
+
+    /**
+     * Set the progressing color
+     * @param labelProgressingColor the progressing color as RGBA integer
+     */
+    public void setLabelProgressingColor(int labelProgressingColor) {
+        mLabelProgressingColor = labelProgressingColor;
+        // TODO update state
+    }
+
+    /**
+     * Get the value of the loading state
+     * @return the boolean value of the loading state
+     */
+    public boolean isLoading() {
+        return isLoading;
+    }
+
+    /**
+     * Set the loading value
+     * @param loading the loading state value as boolean
+     */
+    public void setLoading(boolean loading) {
+        isLoading = loading;
+        // TODO update UI
+    }
+
+    /**
+     * Get the current background color
+     * @return the background color as RGBA integer
+     */
+    public int getBkgColor() {
+        return mBkgColor;
+    }
+
+    /**
+     * Set the background color
+     * @param bkgColor the color as RGBA integer
+     */
+    public void setBkgColor(int bkgColor) {
+        mBkgColor = bkgColor;
+    }
+
+    /**
+     * Get the current border color
+     * @return the border color as RGBA integer
+     */
+    public int getBorderColor() {
+        return mBorderColor;
+    }
+
+    /**
+     * Set the border color
+     * @param borderColor the border color as RGBA integer
+     */
+    public void setBorderColor(int borderColor) {
+        mBorderColor = borderColor;
+    }
+
+    /**
+     * Get the current border width
+     * @return the current border width in dp.
+     */
+    public float getBorderWidth() {
+        return mBorderWidth;
+    }
+
+    /**
+     * Set the border width in pixels
+     * @param borderWidth the border width in pixels
+     */
+    public void setBorderWidth(float borderWidth) {
+        mBorderWidth = borderWidth * mScale;
+        //TODO update UI
+    }
+
+    /**
+     * Get the current corner radius value
+     * @return the current corner radius
+     */
+    public float getCornerRadius() {
+        return mCornerRadius;
+    }
+
+    /**
+     * Set the radius value
+     * @param cornerRadius the radius value
+     */
+    public void setCornerRadius(float cornerRadius) {
+        mCornerRadius = cornerRadius;
+    }
+
+    /**
+     * Get the current vertical padding value
+     * @return the current vertical padding value in dp
+     */
+    public float getVerticalPadding() {
+        return mVerticalPadding;
+    }
+
+    /**
+     * Set the vertical padding value
+     * @param verticalPadding the vertical padding value in pixels
+     */
+    public void setVerticalPadding(float verticalPadding) {
+        mVerticalPadding = verticalPadding * mScale;
+    }
+
+    /**
+     * Get the current horizontal padding value
+     * @return the current horizontal padding value in dp
+     */
+    public float getHorizontalPadding() {
+        return mHorizontalPadding;
+    }
+
+    /**
+     * Set the horizontal padding value
+     * @param horizontalPadding the horizontal padding value in pixels
+     */
+    public void setHorizontalPadding(float horizontalPadding) {
+        mHorizontalPadding = horizontalPadding;
     }
 }
