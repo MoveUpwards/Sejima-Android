@@ -88,13 +88,9 @@
         app:bkg_color="@color/colorPrimaryDark"
         app:strokeColor="@color/colorAccent"
         app:border_alpha="01"
-
-        android:paddingVertical="13dp"
-        android:paddingHorizontal="13dp"
+        app:pressed_color="#ffff00"
+        app:strokeWidth="2dp"
+        app:cornerRadius="5dp"
         app:text_alignment="center"/>
-
-    <!--app:pressed_color="#ffff00"-->
-    <!--app:strokeWidth="2dp"-->
-    <!--app:cornerRadius="5dp"-->
 
 </LinearLayout>

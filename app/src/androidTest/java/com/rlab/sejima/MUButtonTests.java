@@ -2,8 +2,6 @@ package com.rlab.sejima;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
 import android.util.DisplayMetrics;
 
 import com.rlab.sejima.features.MUButton;
@@ -11,6 +9,9 @@ import com.rlab.sejima.features.MUButton;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -26,7 +27,7 @@ public class MUButtonTests {
 
     @Before
     public void setUp() {
-        mContext = InstrumentationRegistry.getTargetContext();
+        mContext = ApplicationProvider.getApplicationContext();
         mMUButton = new MUButton(mContext);
         assertNotNull(mMUButton);
         mScale = ((float) mContext.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);

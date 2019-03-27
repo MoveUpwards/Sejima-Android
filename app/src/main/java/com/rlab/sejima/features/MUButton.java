@@ -147,8 +147,8 @@ public class MUButton extends MaterialButton {
         mBorderColor = attributes.getColor(R.styleable.MUButton_strokeColor, mBkgColor);
         mCornerRadius = attributes.getDimensionPixelSize(R.styleable.MUButton_cornerRadius, 0);
         // Padding
-        mVerticalPadding = attributes.getDimensionPixelSize(R.styleable.MUButton_android_paddingVertical, 0);
-        mHorizontalPadding = attributes.getDimensionPixelSize(R.styleable.MUButton_android_paddingHorizontal, 0);
+//        mVerticalPadding = attributes.getDimensionPixelSize(R.styleable.MUButton_android_paddingVertical, 0);
+//        mHorizontalPadding = attributes.getDimensionPixelSize(R.styleable.MUButton_android_paddingHorizontal, 0);
         // IsLoading
         mIsLoading = attributes.getBoolean(R.styleable.MUButton_is_loading, false);
 

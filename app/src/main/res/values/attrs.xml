@@ -94,8 +94,6 @@
         <attr name="android:textColor"/>
         <attr name="android:textSize"/>
         <attr name="android:textStyle"/>
-        <attr name="android:paddingVertical"/>
-        <attr name="android:paddingHorizontal"/>
         <attr name="strokeColor"/>
         <attr name="strokeWidth"/>
         <attr name="cornerRadius"/>
@@ -111,5 +109,9 @@
         <attr name="is_loading"/>
         <attr name="border_alpha" format="float"/>
     </declare-styleable>
+
+    <!--<attr name="android:paddingVertical"/>-->
+    <!--<attr name="android:paddingHorizontal"/>-->
+
 
 </resources>
