@@ -16,7 +16,10 @@
         app:title="@string/title"
         app:title_color="@color/colorAccent" />
 
+    <LinearLayout style="@style/Separator" />
+
     <com.rlab.sejima.features.MUTopBar
+        android:id="@+id/mu_topbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="@string/title"
@@ -24,27 +27,7 @@
         app:topbar_btn_img="@mipmap/ic_launcher"
         app:topbar_btn_leading="5dp" />
 
-    <!--For tests only-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btn_1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="btn 1"
-            android:layout_weight="1"/>
-
-        <Button
-            android:id="@+id/btn_2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="btn 2"
-            android:layout_weight="1"/>
-
-    </LinearLayout>
+    <LinearLayout style="@style/Separator" />
 
     <com.rlab.sejima.features.MUTextField
         android:id="@+id/mutf1"
@@ -55,5 +38,47 @@
         app:field="@string/app_name"
         android:inputType="text"
         app:title_color="@color/colorPrimaryDark"/>
+
+    <LinearLayout style="@style/Separator" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Secure"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btn_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="alignment"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btn_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="keyboard type"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/Separator" />
+
+    <com.rlab.sejima.features.MUAvatar
+        android:id="@+id/muavatar"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:border_type="circle"
+        app:border_width="1dp"
+        android:src="@drawable/avatar"/>
+
+    <LinearLayout style="@style/Separator" />
 
 </LinearLayout>

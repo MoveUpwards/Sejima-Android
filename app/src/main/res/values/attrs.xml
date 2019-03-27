@@ -69,4 +69,16 @@
         </attr>
     </declare-styleable>
 
+    <declare-styleable name="MUAvatar">
+        <attr name="corner_radius" format="dimension"/>
+        <attr name="android:src"/>
+        <attr name="border_width" format="dimension"/>
+        <attr name="border_color" format="color"/>
+        <attr name="bkg_color" format="color"/>
+        <attr name="border_type" format="enum">
+            <enum name="square" value="0"/>
+            <enum name="circle" value="1"/>
+        </attr>
+    </declare-styleable>
+
 </resources>
