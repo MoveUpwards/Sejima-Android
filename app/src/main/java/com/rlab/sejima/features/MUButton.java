@@ -1,6 +1,7 @@
 package com.rlab.sejima.features;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.widget.AppCompatButton;
@@ -8,6 +9,8 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
+
+import com.rlab.sejima.R;
 
 /*
     Created by Antoine RICHE on 27/03/2019.
@@ -61,7 +64,7 @@ public class MUButton extends AppCompatButton {
     /**
      * Show or hide the progress indicator
      */
-    private boolean isLoading = false;
+    private boolean mIsLoading = false;
     /**
      * Background color
      */
@@ -98,6 +101,7 @@ public class MUButton extends AppCompatButton {
      */
     public MUButton(Context context) {
         super(context);
+        init(context);
     }
 
     /**
@@ -107,10 +111,44 @@ public class MUButton extends AppCompatButton {
      */
     public MUButton(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.MUButton);
+        mBkgColor = attributes.getColor(R.styleable.MUButton_android_background, mBkgColor);
+        mAlpha = attributes.getFloat(R.styleable.MUButton_android_alpha, mAlpha);
+        mBorderAlpha = attributes.getFloat(R.styleable.MUButton_border_alpha, mBorderAlpha);
+        mDisabledAlpha = attributes.getFloat(R.styleable.MUButton_disable_alpha, mDisabledAlpha);
+        mLabelAlignment = attributes.getInt(R.styleable.MUButton_text_alignment, mLabelAlignment);
+        mLabelHighLightedColor = attributes.getColor(R.styleable.MUButton_pressed_color, mLabelHighLightedColor);
+        mLabelProgressingColor = attributes.getColor(R.styleable.MUButton_progressing_color, mLabelProgressingColor);
+        mIsLoading = attributes.getBoolean(R.styleable.MUButton_is_loading, mIsLoading);
+        mBorderWidth = attributes.getDimensionPixelSize(R.styleable.MUButton_border_width, 0);
+        mBorderColor = attributes.getColor(R.styleable.MUButton_border_color, mBorderColor);
+        mCornerRadius = attributes.getDimensionPixelSize(R.styleable.MUButton_corner_radius, 0);
+        mVerticalPadding = attributes.getDimensionPixelSize(R.styleable.MUButton_android_paddingVertical, 0);
+        mHorizontalPadding = attributes.getDimensionPixelSize(R.styleable.MUButton_android_paddingHorizontal, 0);
+
+        init(context);
+        attributes.recycle();
     }
 
     private void init(Context context){
         mScale = (float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
+
+        // Update state
+        setAlpha(mAlpha);
+        setBorderAlpha(mBorderColor);
+        setDisabledAlpha(mDisabledAlpha);
+
+        // Update label appearance
+        setLabelAlignment(mLabelAlignment);
+        setLabelHighLightedColor(mLabelHighLightedColor);
+        setLabelProgressingColor(mLabelProgressingColor);
+
+        setBorderWidth(mBorderWidth);
+        setBorderColor(mBorderColor);
+        setCornerRadius(mCornerRadius);
+        setVerticalPadding(mVerticalPadding);
+        setHorizontalPadding(mHorizontalPadding);
     }
 
     /**
@@ -198,6 +236,18 @@ public class MUButton extends AppCompatButton {
         setTextSize(TypedValue.COMPLEX_UNIT_PX, mLabelFontSize);
     }
 
+    @Override
+    public void setTextSize(float size) {
+        mLabelFontSize = size;
+        super.setTextSize(size);
+    }
+
+    @Override
+    public void setTextSize(int unit, float size) {
+        mLabelFontSize = size;
+        super.setTextSize(unit, size);
+    }
+
     /**
      * Get the current label font weight
      * @return the current label font weight as integer
@@ -231,6 +281,12 @@ public class MUButton extends AppCompatButton {
         mLabelColor = labelColor;
     }
 
+    @Override
+    public void setTextColor(int color) {
+        mLabelColor = color;
+        super.setTextColor(color);
+    }
+
     /**
      * Get the current label alignment
      * @return the integer representing the current horizontal alignment
@@ -251,6 +307,12 @@ public class MUButton extends AppCompatButton {
      */
     public void setLabelAlignment(int labelAlignment) {
         mLabelAlignment = labelAlignment;
+    }
+
+    @Override
+    public void setTextAlignment(int textAlignment) {
+        super.setTextAlignment(textAlignment);
+        setLabelAlignment(textAlignment);
     }
 
     /**
@@ -309,7 +371,7 @@ public class MUButton extends AppCompatButton {
      * @return the boolean value of the loading state
      */
     public boolean isLoading() {
-        return isLoading;
+        return mIsLoading;
     }
 
     /**
@@ -317,7 +379,7 @@ public class MUButton extends AppCompatButton {
      * @param loading the loading state value as boolean
      */
     public void setLoading(boolean loading) {
-        isLoading = loading;
+        mIsLoading = loading;
         // TODO update UI
     }
 
