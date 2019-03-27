@@ -81,4 +81,19 @@
 
     <LinearLayout style="@style/Separator" />
 
+    <com.rlab.sejima.features.MUButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:background="@color/colorPrimaryDark"
+        android:paddingVertical="13dp"
+        android:paddingHorizontal="13dp"
+        app:text_alignment="end"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:gravity="end"/>
+
 </LinearLayout>
