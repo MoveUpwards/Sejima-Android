@@ -18,6 +18,7 @@
     <attr name="border_width" format="dimension"/>
     <attr name="border_color" format="color"/>
     <attr name="is_loading" format="boolean"/>
+    <attr name="bkg_color" format="color"/>
 
     <declare-styleable name="MUHeader">
         <attr name="title"/>
@@ -80,7 +81,7 @@
         <attr name="android:src"/>
         <attr name="border_width"/>
         <attr name="border_color"/>
-        <attr name="bkg_color" format="color"/>
+        <attr name="bkg_color"/>
         <attr name="border_type" format="enum">
             <enum name="square" value="0"/>
             <enum name="circle" value="1"/>
@@ -89,7 +90,13 @@
 
     <declare-styleable name="MUButton">
         <attr name="android:alpha"/>
-        <attr name="border_alpha" format="float"/>
+        <attr name="android:text"/>
+        <attr name="android:textColor"/>
+        <attr name="android:textSize"/>
+        <attr name="android:textStyle"/>
+        <attr name="android:paddingVertical"/>
+        <attr name="android:paddingHorizontal"/>
+        <attr name="bkg_color"/>
         <attr name="disable_alpha" format="float"/>
         <attr name="text_alignment" format="enum">
             <enum name="start" value="3"/>
@@ -101,10 +108,8 @@
         <attr name="is_loading"/>
         <attr name="border_width"/>
         <attr name="border_color"/>
+        <attr name="border_alpha" format="float"/>
         <attr name="corner_radius"/>
-        <attr name="android:background"/>
-        <attr name="android:paddingVertical"/>
-        <attr name="android:paddingHorizontal"/>
     </declare-styleable>
 
 </resources>

@@ -5,11 +5,14 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 
@@ -27,15 +30,15 @@ public class MUButton extends AppCompatButton {
     /**
      * The current background alpha
      */
-    private float mAlpha = 1.0f;
-    /**
-     * The current border alpha
-     */
-    private float mBorderAlpha = 1.0f;
+    private float mAlpha;
     /**
      * The alpha value for disabled state
      */
-    private float mDisabledAlpha = 0.7f;
+    private float mDisabledAlpha;
+    /**
+     * The current border alpha
+     */
+    private float mBorderAlpha;
     /**
      * Label of the button
      */
@@ -47,27 +50,27 @@ public class MUButton extends AppCompatButton {
     /**
      * The label font weight
      */
-    private int mLabelFontWeight = Typeface.NORMAL;
+    private int mLabelFontWeight;
     /**
      * The label font color
      */
-    private int mLabelColor = Color.BLACK;
+    private int mLabelColor;
     /**
      * The label alignment
      */
-    private int mLabelAlignment = Gravity.CENTER;
+    private int mLabelAlignment;
     /**
      * The label highlighted color
      */
-    private int mLabelHighLightedColor = Color.BLUE;
+    private int mLabelHighLightedColor;
     /**
      * The label progressing color
      */
-    private int mLabelProgressingColor = Color.YELLOW;
+    private int mLabelProgressingColor;
     /**
      * Show or hide the progress indicator
      */
-    private boolean mIsLoading = false;
+    private boolean mIsLoading;
     /**
      * Background color
      */
@@ -79,19 +82,19 @@ public class MUButton extends AppCompatButton {
     /**
      * Border width
      */
-    private float mBorderWidth = 0;
+    private float mBorderWidth;
     /**
      * Corner radius
      */
-    private float mCornerRadius = 0;
+    private float mCornerRadius;
     /**
      * Vertical padding
      */
-    private float mVerticalPadding = 0;
+    private float mVerticalPadding;
     /**
      * Horizontal padding
      */
-    private float mHorizontalPadding = 0;
+    private float mHorizontalPadding;
 
     /**
      * The scale to convert pixels into dp
@@ -116,14 +119,22 @@ public class MUButton extends AppCompatButton {
         super(context, attrs);
 
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.MUButton);
-        mBkgColor = attributes.getColor(R.styleable.MUButton_android_background, mBkgColor);
-        mAlpha = attributes.getFloat(R.styleable.MUButton_android_alpha, mAlpha);
-        mBorderAlpha = attributes.getFloat(R.styleable.MUButton_border_alpha, mBorderAlpha);
-        mDisabledAlpha = attributes.getFloat(R.styleable.MUButton_disable_alpha, mDisabledAlpha);
+        // Background and alpha
+        mBkgColor = attributes.getColor(R.styleable.MUButton_bkg_color, mBkgColor);
+        // Alphas
+        mAlpha = attributes.getFloat(R.styleable.MUButton_android_alpha, 1.0f);
+        mBorderAlpha = attributes.getFloat(R.styleable.MUButton_border_alpha, 1.0f);
+        mDisabledAlpha = attributes.getFloat(R.styleable.MUButton_disable_alpha, 0.7f);
 
-        mLabelAlignment = attributes.getInt(R.styleable.MUButton_text_alignment, mLabelAlignment);
-        mLabelHighLightedColor = attributes.getColor(R.styleable.MUButton_pressed_color, mLabelHighLightedColor);
-        mLabelProgressingColor = attributes.getColor(R.styleable.MUButton_progressing_color, mLabelProgressingColor);
+        // Label
+        mLabel = attributes.getString(R.styleable.MUButton_android_text);
+        mLabelColor = attributes.getColor(R.styleable.MUButton_android_textColor, getCurrentTextColor());
+        mLabelFontSize = attributes.getDimensionPixelSize(R.styleable.MUButton_android_textSize, (int) getTextSize());
+        mLabelFontWeight = attributes.getInt(R.styleable.MUButton_android_textStyle, Typeface.NORMAL);
+
+        mLabelAlignment = attributes.getInt(R.styleable.MUButton_text_alignment, Gravity.CENTER);
+        mLabelHighLightedColor = attributes.getColor(R.styleable.MUButton_pressed_color, getCurrentTextColor());
+        mLabelProgressingColor = attributes.getColor(R.styleable.MUButton_progressing_color, getCurrentTextColor());
 
         mBorderWidth = attributes.getDimensionPixelSize(R.styleable.MUButton_border_width, 0);
         mBorderColor = attributes.getColor(R.styleable.MUButton_border_color, mBorderColor);
@@ -132,7 +143,7 @@ public class MUButton extends AppCompatButton {
         mVerticalPadding = attributes.getDimensionPixelSize(R.styleable.MUButton_android_paddingVertical, 0);
         mHorizontalPadding = attributes.getDimensionPixelSize(R.styleable.MUButton_android_paddingHorizontal, 0);
 
-        mIsLoading = attributes.getBoolean(R.styleable.MUButton_is_loading, mIsLoading);
+        mIsLoading = attributes.getBoolean(R.styleable.MUButton_is_loading, false);
 
         init(context);
         attributes.recycle();
@@ -141,20 +152,22 @@ public class MUButton extends AppCompatButton {
     private void init(Context context){
         mScale = (float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
 
+        //Label
+        setLabel(mLabel);
+        setTextSize(TypedValue.COMPLEX_UNIT_PX, mLabelFontSize);
+        setLabelFontWeight(mLabelFontWeight);
         // Update state
+        setUpStatesFontColor();
         setUpStatesBackground();
-//        setAlpha(mAlpha);
         setBorderAlpha(mBorderColor);
-//        setDisabledAlpha(mDisabledAlpha);
-
         // Update label appearance
         setLabelAlignment(mLabelAlignment);
-        setLabelHighLightedColor(mLabelHighLightedColor);
         setLabelProgressingColor(mLabelProgressingColor);
-
+        //Border
         setBorderWidth(mBorderWidth);
         setBorderColor(mBorderColor);
         setCornerRadius(mCornerRadius);
+        //Padding
         setVerticalPadding(mVerticalPadding);
         setHorizontalPadding(mHorizontalPadding);
     }
@@ -192,6 +205,7 @@ public class MUButton extends AppCompatButton {
     @Override
     public void setAlpha(float alpha) {
         mAlpha = alpha;
+        setUpStatesBackground();
     }
 
     /**
@@ -287,12 +301,14 @@ public class MUButton extends AppCompatButton {
      */
     public void setLabelColor(int labelColor) {
         mLabelColor = labelColor;
+        setUpStatesFontColor();
     }
 
     @Override
     public void setTextColor(int color) {
         mLabelColor = color;
         super.setTextColor(color);
+        setUpStatesFontColor();
     }
 
     /**
@@ -338,7 +354,7 @@ public class MUButton extends AppCompatButton {
      */
     public void setDisabledAlpha(float disabledAlpha) {
         mDisabledAlpha = disabledAlpha;
-        //TODO: update state
+        setUpStatesBackground();
     }
 
     /**
@@ -355,7 +371,7 @@ public class MUButton extends AppCompatButton {
      */
     public void setLabelHighLightedColor(int labelHighLightedColor) {
         mLabelHighLightedColor = labelHighLightedColor;
-        // TODO update state
+        setUpStatesFontColor();
     }
 
     /**
@@ -372,7 +388,6 @@ public class MUButton extends AppCompatButton {
      */
     public void setLabelProgressingColor(int labelProgressingColor) {
         mLabelProgressingColor = labelProgressingColor;
-        // TODO update state
     }
 
     /**
@@ -406,6 +421,7 @@ public class MUButton extends AppCompatButton {
      */
     public void setBkgColor(int bkgColor) {
         mBkgColor = bkgColor;
+        setUpStatesBackground();
     }
 
     /**
@@ -489,18 +505,23 @@ public class MUButton extends AppCompatButton {
         mHorizontalPadding = horizontalPadding;
     }
 
-    private void setUpStatesBackground() {
-        int[][] states = new int[][]{
-                new int[]{ android.R.attr.state_enabled },
-                new int[]{ -android.R.attr.state_enabled },
-                new int[]{ android.R.attr.state_pressed }
-        };
-        int intAlpha = Math.round(Color.alpha(mBkgColor) * mAlpha);
+    @Override
+    public void setBackground(Drawable background) {
+        if(!(background instanceof ColorDrawable)){
+            super.setBackground(background);
+        } else {
+            Log.e(getClass().getCanonicalName(), "Background was a color");
+        }
+    }
 
+    /**
+     * Set up the alpha values to handle clicks
+     */
+    private void setUpStatesBackground() {
+        int[][] states = new int[][]{ new int[] { android.R.attr.state_pressed }, new int[] {} };
         int[] colors = new int[] {
-                ColorUtils.setAlphaComponent(mBkgColor, intAlpha(mBkgColor, mAlpha)),
-                ColorUtils.setAlphaComponent(mBkgColor, intAlpha(mBkgColor, mDisabledAlpha)),
-                ColorUtils.setAlphaComponent(mBkgColor, intAlpha(mBkgColor, mDisabledAlpha))
+                ColorUtils.setAlphaComponent(mBkgColor, (int) (mDisabledAlpha * 255)),
+                ColorUtils.setAlphaComponent(mBkgColor, (int) (mAlpha * 255)),
         };
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -508,7 +529,12 @@ public class MUButton extends AppCompatButton {
         }
     }
 
-    private int intAlpha(int color, float alpha){
-        return Math.round(Color.alpha(color) * alpha);
+    /**
+     * Set up the font color states
+     */
+    private void setUpStatesFontColor() {
+        int[][] states = new int[][]{ new int[] { android.R.attr.state_pressed }, new int[] {} };
+        int[] colors = new int[] { mLabelHighLightedColor, mLabelColor };
+        setTextColor(new ColorStateList(states, colors));
     }
 }
