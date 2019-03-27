@@ -1,12 +1,10 @@
 package com.rlab.sejima;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatImageView;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -18,12 +16,26 @@ import com.rlab.sejima.features.MUTopBar;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
         MUTextField.MUTextFieldListener, MUAvatar.MUAvatarClickListener {
 
+    /**
+     * A flag that enables to switch between images and shapes for MUAvatar
+     */
     protected boolean bAvatar = false;
-//    private MUAvatar mMUAvatar;
+    /**
+     * The MUTextField to be tested
+     */
     private MUTextField mMUTextField;
 
+    /**
+     * A flag to update security of MUTextField
+     */
     private boolean isSecure = false;
+    /**
+     * The alignment value of MUTextField
+     */
     private int alignment = RelativeLayout.ALIGN_PARENT_START;
+    /**
+     * The keyboard type of MUTextField
+     */
     private int keyboardType = InputType.TYPE_CLASS_TEXT;
 
     @Override

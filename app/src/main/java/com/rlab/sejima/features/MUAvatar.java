@@ -490,7 +490,6 @@ public class MUAvatar extends android.support.v7.widget.AppCompatImageView {
 
     /**
      * Set the corner radius
-     * @return the corner radius as float
      */
     public void setCornerRadius(float cornerRadius) {
         mCornerRadius = mBorderType == SQUARE_BORDER ?
