@@ -86,17 +86,15 @@
         android:layout_height="wrap_content"
         android:text="@string/app_name"
         app:bkg_color="@color/colorPrimaryDark"
-        app:pressed_color="@color/colorAccent"
+        app:strokeColor="@color/colorAccent"
+        app:border_alpha="01"
+
         android:paddingVertical="13dp"
         android:paddingHorizontal="13dp"
-        app:text_alignment="end"/>
+        app:text_alignment="center"/>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:typeface="serif"
-        android:textStyle="bold"
-        android:text="@string/app_name"
-        android:gravity="end"/>
+    <!--app:pressed_color="#ffff00"-->
+    <!--app:strokeWidth="2dp"-->
+    <!--app:cornerRadius="5dp"-->
 
 </LinearLayout>

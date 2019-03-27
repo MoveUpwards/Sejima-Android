@@ -96,6 +96,9 @@
         <attr name="android:textStyle"/>
         <attr name="android:paddingVertical"/>
         <attr name="android:paddingHorizontal"/>
+        <attr name="strokeColor"/>
+        <attr name="strokeWidth"/>
+        <attr name="cornerRadius"/>
         <attr name="bkg_color"/>
         <attr name="disable_alpha" format="float"/>
         <attr name="text_alignment" format="enum">
@@ -106,10 +109,7 @@
         <attr name="pressed_color"/>
         <attr name="progressing_color"/>
         <attr name="is_loading"/>
-        <attr name="border_width"/>
-        <attr name="border_color"/>
         <attr name="border_alpha" format="float"/>
-        <attr name="corner_radius"/>
     </declare-styleable>
 
 </resources>
