@@ -30,7 +30,7 @@ public class MUNavigationBar extends LinearLayout {
     /**
      * The alpha value for disabled state
      */
-    private float mDisabledAlpha;
+    private float mDisabledAlpha = 0.7f;
     /**
      * Label of the button
      */
@@ -42,35 +42,35 @@ public class MUNavigationBar extends LinearLayout {
     /**
      * The label font weight
      */
-    private int mLabelFontWeight;
+    private int mLabelFontWeight = Typeface.NORMAL;
     /**
      * The label font color
      */
-    private int mLabelColor;
+    private int mLabelColor = Color.BLACK;
     /**
      * The label alignment
      */
-    private int mLabelAlignment;
+    private int mLabelAlignment = Gravity.CENTER;
     /**
      * The label highlighted color
      */
-    private int mLabelHighLightedColor;
+    private int mLabelHighLightedColor = Color.BLACK;
     /**
      * The label progressing color
      */
-    private int mLabelProgressingColor;
+    private int mLabelProgressingColor = Color.BLACK;
     /**
      * Show or hide the progress indicator
      */
-    private boolean mIsLoading;
+    private boolean mIsLoading = false;
     /**
      * Background color
      */
-    private int mBkgColor;
+    private int mBkgColor = Color.LTGRAY;
     /**
      * Border color
      */
-    private int mBorderColor;
+    private int mBorderColor = Color.LTGRAY;
     /**
      * Border width
      */
@@ -94,7 +94,7 @@ public class MUNavigationBar extends LinearLayout {
     /**
      * The separator color
      */
-    private int mSeparatorColor;
+    private int mSeparatorColor = Color.BLACK;
     /**
      * The separator width
      */
@@ -102,7 +102,7 @@ public class MUNavigationBar extends LinearLayout {
     /**
      * The separator height multiplier
      */
-    private float mSeparatorMultiplier;
+    private float mSeparatorMultiplier = 1;
 
     /**
      * The MUNavigationBarListener listener
@@ -124,22 +124,22 @@ public class MUNavigationBar extends LinearLayout {
 
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.MUNavigationBar);
         mImgDrawable = attributes.getDrawable(R.styleable.MUNavigationBar_android_src);
-        mSeparatorColor = attributes.getColor(R.styleable.MUNavigationBar_separator_color, Color.WHITE);
+        mSeparatorColor = attributes.getColor(R.styleable.MUNavigationBar_separator_color, mSeparatorColor);
         mSeparatorWidth = attributes.getDimensionPixelSize(R.styleable.MUNavigationBar_separator_width, 0);
-        mSeparatorMultiplier = normalizeMultiplierValue(attributes.getFloat(R.styleable.MUNavigationBar_separator_height_multiplier, 1));
+        mSeparatorMultiplier = normalizeMultiplierValue(attributes.getFloat(R.styleable.MUNavigationBar_separator_height_multiplier, mSeparatorMultiplier));
         mLabel = attributes.getString(R.styleable.MUNavigationBar_android_text);
-        mLabelColor = attributes.getColor(R.styleable.MUNavigationBar_android_textColor, Color.WHITE);
+        mLabelColor = attributes.getColor(R.styleable.MUNavigationBar_android_textColor, mLabelColor);
         mLabelFontSize = attributes.getDimensionPixelSize(R.styleable.MUNavigationBar_android_textSize, 0);
-        mLabelFontWeight = attributes.getInt(R.styleable.MUNavigationBar_android_textStyle, Typeface.NORMAL);
-        mLabelAlignment = attributes.getInt(R.styleable.MUNavigationBar_text_alignment, Gravity.CENTER);
-        mLabelHighLightedColor = attributes.getColor(R.styleable.MUNavigationBar_pressed_color, Color.BLACK);
-        mLabelProgressingColor= attributes.getColor(R.styleable.MUNavigationBar_progressing_color, Color.YELLOW);
+        mLabelFontWeight = attributes.getInt(R.styleable.MUNavigationBar_android_textStyle, mLabelFontWeight);
+        mLabelAlignment = attributes.getInt(R.styleable.MUNavigationBar_text_alignment, mLabelAlignment);
+        mLabelHighLightedColor = attributes.getColor(R.styleable.MUNavigationBar_pressed_color, mLabelHighLightedColor);
+        mLabelProgressingColor= attributes.getColor(R.styleable.MUNavigationBar_progressing_color, mLabelProgressingColor);
         mBorderWidth = attributes.getDimensionPixelSize(R.styleable.MUNavigationBar_border_width, 0);
         mBorderColor = attributes.getColor(R.styleable.MUNavigationBar_border_color, Color.BLUE);
         mCornerRadius = attributes.getDimensionPixelSize(R.styleable.MUNavigationBar_corner_radius, 0);
-        mIsLoading = attributes.getBoolean(R.styleable.MUNavigationBar_is_loading, false);
+        mIsLoading = attributes.getBoolean(R.styleable.MUNavigationBar_is_loading, mIsLoading);
         mBkgColor = attributes.getColor(R.styleable.MUNavigationBar_bkg_color, 0);
-        mDisabledAlpha = attributes.getFloat(R.styleable.MUNavigationBar_disable_alpha, 0.7f);
+        mDisabledAlpha = attributes.getFloat(R.styleable.MUNavigationBar_disable_alpha, mDisabledAlpha);
         mVerticalPadding = attributes.getDimensionPixelSize(R.styleable.MUButton_android_paddingVertical, 0);
         mHorizontalPadding = attributes.getDimensionPixelSize(R.styleable.MUButton_android_paddingHorizontal, 0);
 
@@ -463,7 +463,7 @@ public class MUNavigationBar extends LinearLayout {
      * @param verticalPadding the vertical padding value in pixels
      */
     public void setVerticalPadding(float verticalPadding) {
-        mVerticalPadding = verticalPadding * mScale;
+        mVerticalPadding = verticalPadding;
     }
 
     /**
@@ -547,7 +547,7 @@ public class MUNavigationBar extends LinearLayout {
      * @param separatorMultiplier the separator height-multiplier, must be between 0 and 1
      */
     public void setSeparatorMultiplier(float separatorMultiplier) {
-        mSeparatorMultiplier = separatorMultiplier;
+        mSeparatorMultiplier = normalizeMultiplierValue(separatorMultiplier);
         updateSeparatorParams((int) mSeparatorWidth, (int) (mSeparatorMultiplier * getHeight()));
     }
 
@@ -573,7 +573,7 @@ public class MUNavigationBar extends LinearLayout {
 
     /**
      * Attached a listener to handle user clicks
-     * @param listener
+     * @param listener the interface listener
      */
     public void setListener(MUNavigationBarListener listener) {
         mListener = listener;

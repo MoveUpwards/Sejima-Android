@@ -1,13 +1,10 @@
 package com.rlab.sejima;
 
 import android.content.Context;
-
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
-import android.view.View;
-import android.widget.RelativeLayout;
 
 import com.rlab.sejima.features.MUButton;
 
@@ -79,7 +76,7 @@ public class MUButtonTests {
         assertEquals(0, mMUButton.getDisabledAlpha(), 0);
         mMUButton.setBorderAlpha(0.5f);
         assertEquals(0.5f, mMUButton.getBorderAlpha(), 0);
-//        // Label
+        // Label
         mMUButton.setLabel("c");
         assertEquals("c", mMUButton.getLabel());
         mMUButton.setLabelFontSize(12);
@@ -97,22 +94,22 @@ public class MUButtonTests {
         // Is loading
         mMUButton.setLoading(true);
         assertTrue(mMUButton.isLoading());
-//        // Bkg color
+        // Bkg color
         mMUButton.setBkgColor(Color.CYAN);
         assertEquals(Color.CYAN, mMUButton.getBkgColor());
-//        // Border color
+        // Border color
         mMUButton.setBorderColor(R.color.colorPrimary);
         assertEquals(R.color.colorPrimary, mMUButton.getBorderColor());
         mMUButton.setBorderWidth(15);
         assertEquals(15, mMUButton.getBorderWidth(),0);
         mMUButton.setCornerRadius(17);
         assertEquals(17, mMUButton.getCornerRadius(),0);
-//        // Padding
+        // Padding
         mMUButton.setHorizontalPadding(17);
         assertEquals(17, mMUButton.getHorizontalPadding(),0);
         mMUButton.setVerticalPadding(18);
         assertEquals(18, mMUButton.getVerticalPadding(),0);
-//        // Listener
+        // Listener
         mMUButton.setListener(v -> {
         });
         assertNotNull(mMUButton.getListener());

@@ -102,7 +102,7 @@
         android:layout_height="wrap_content"
         android:src="@mipmap/ic_launcher"
         android:text="@string/title"
-        app:bkg_color="#00f"
+        app:bkg_color="#0ff"
         app:border_color="@color/colorPrimary"
         app:border_width="2dp"
         app:pressed_color="#f00"
