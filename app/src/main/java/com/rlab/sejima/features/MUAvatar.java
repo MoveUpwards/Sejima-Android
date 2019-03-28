@@ -96,7 +96,7 @@ public class MUAvatar extends AppCompatImageView {
     /**
      * The background color if the image is not large enough
      */
-    private int mBkgColor = Color.TRANSPARENT;
+    private int mBkgColor= Color.TRANSPARENT;
     /**
      * The border width
      */

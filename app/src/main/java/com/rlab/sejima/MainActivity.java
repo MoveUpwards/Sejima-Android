@@ -26,6 +26,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * The MUTextField to be tested
      */
     private MUTextField mMUTextField;
+    /**
+     * The MUAvatar to be tested
+     */
+    private MUNavigationBar mMUNavBar;
 
     /**
      * A flag to update security of MUTextField
@@ -40,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private int keyboardType = InputType.TYPE_CLASS_TEXT;
 
-    private MUNavigationBar mMUNavBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,22 +108,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void isSelecting(AppCompatEditText textField) {
-    }
-
-    @Override
-    public void focusLost(AppCompatEditText textField) {
-    }
-
-    @Override
-    public void textUpdated(AppCompatEditText textField) {
-    }
-
-    @Override
     public void clickOnImage(AppCompatImageView imageView) {
         ((MUAvatar) imageView).setImage(getResources().getDrawable(bAvatar ? R.drawable.ic_launcher_background : R.drawable.avatar));
         ((MUAvatar) imageView).setBorderType(bAvatar ? MUAvatar.ROUND_BORDER : MUAvatar.SQUARE_BORDER);
         ((MUAvatar) imageView).setCornerRadius(bAvatar ? -1 : 25);
         bAvatar = !bAvatar;
+    }
+
+    @Override
+    public void focusLost(AppCompatEditText textField) {
+
+    }
+
+    @Override
+    public void isSelecting(AppCompatEditText textField) {
+
+    }
+
+    @Override
+    public void textUpdated(AppCompatEditText textField) {
+
     }
 }

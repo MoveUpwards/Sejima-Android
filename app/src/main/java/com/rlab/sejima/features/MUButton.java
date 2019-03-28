@@ -5,12 +5,9 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 
@@ -31,15 +28,15 @@ public class MUButton extends MaterialButton {
     /**
      * The current background alpha
      */
-    private float mAlpha;
+    private float mAlpha = 1;
     /**
      * The alpha value for disabled state
      */
-    private float mDisabledAlpha;
+    private float mDisabledAlpha = 0.7f;
     /**
      * The current border alpha
      */
-    private float mBorderAlpha;
+    private float mBorderAlpha = 1;
     /**
      * Label of the button
      */
@@ -51,7 +48,7 @@ public class MUButton extends MaterialButton {
     /**
      * The label font weight
      */
-    private int mLabelFontWeight;
+    private int mLabelFontWeight = Typeface.NORMAL;
     /**
      * The label font color
      */
@@ -59,7 +56,7 @@ public class MUButton extends MaterialButton {
     /**
      * The label alignment
      */
-    private int mLabelAlignment;
+    private int mLabelAlignment = Gravity.CENTER;
     /**
      * The label highlighted color
      */
@@ -75,11 +72,11 @@ public class MUButton extends MaterialButton {
     /**
      * Background color
      */
-    private int mBkgColor;
+    private int mBkgColor = Color.LTGRAY;
     /**
      * Border color
      */
-    private int mBorderColor;
+    private int mBorderColor = Color.LTGRAY;
     /**
      * Border width
      */
@@ -121,16 +118,16 @@ public class MUButton extends MaterialButton {
 
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.MUButton);
         // Background
-        mBkgColor = attributes.getColor(R.styleable.MUButton_bkg_color, Color.LTGRAY);
+        mBkgColor = attributes.getColor(R.styleable.MUButton_bkg_color, mBkgColor);
         // Alphas
-        mAlpha = attributes.getFloat(R.styleable.MUButton_android_alpha, 1.0f);
-        mBorderAlpha = attributes.getFloat(R.styleable.MUButton_border_alpha, 1.0f);
-        mDisabledAlpha = attributes.getFloat(R.styleable.MUButton_disable_alpha, 0.7f);
+        mAlpha = attributes.getFloat(R.styleable.MUButton_android_alpha, mAlpha);
+        mBorderAlpha = attributes.getFloat(R.styleable.MUButton_border_alpha, mBorderAlpha);
+        mDisabledAlpha = attributes.getFloat(R.styleable.MUButton_disable_alpha, mDisabledAlpha);
         // Label
         mLabel = attributes.getString(R.styleable.MUButton_android_text);
         mLabelColor = attributes.getColor(R.styleable.MUButton_android_textColor, getCurrentTextColor());
         mLabelFontSize = attributes.getDimensionPixelSize(R.styleable.MUButton_android_textSize, (int) getTextSize());
-        mLabelFontWeight = attributes.getInt(R.styleable.MUButton_android_textStyle, Typeface.NORMAL);
+        mLabelFontWeight = attributes.getInt(R.styleable.MUButton_android_textStyle, mLabelFontWeight);
         mLabelAlignment = attributes.getInt(R.styleable.MUButton_text_alignment, Gravity.CENTER);
         mLabelHighLightedColor = attributes.getColor(R.styleable.MUButton_pressed_color, getCurrentTextColor());
         mLabelProgressingColor = attributes.getColor(R.styleable.MUButton_progressing_color, getCurrentTextColor());
@@ -501,7 +498,7 @@ public class MUButton extends MaterialButton {
      * @param verticalPadding the vertical padding value in pixels
      */
     public void setVerticalPadding(float verticalPadding) {
-        mVerticalPadding = verticalPadding * mScale;
+        mVerticalPadding = verticalPadding;
     }
 
     /**
