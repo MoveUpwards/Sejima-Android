@@ -7,6 +7,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.rlab.sejima.features.MUAvatar;
+import com.rlab.sejima.features.MUNavigationBar;
 import com.rlab.sejima.features.MUTextField;
 import com.rlab.sejima.features.MUTopBar;
 
@@ -39,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private int keyboardType = InputType.TYPE_CLASS_TEXT;
 
+    private MUNavigationBar mMUNavBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +50,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btn_1).setOnClickListener(this);
         findViewById(R.id.btn_2).setOnClickListener(this);
         findViewById(R.id.btn_3).setOnClickListener(this);
+        findViewById(R.id.btn_4).setOnClickListener(this);
+        findViewById(R.id.btn_5).setOnClickListener(this);
+        findViewById(R.id.btn_6).setOnClickListener(this);
 
         MUTopBar mMUTopBar = findViewById(R.id.mu_topbar);
         mMUTopBar.setMUTopBarClickListener(() -> {
@@ -54,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
         mMUTextField = findViewById(R.id.mutf1);
+        mMUNavBar = findViewById(R.id.mu_navbar);
 
         MUAvatar mMUAvatar = findViewById(R.id.muavatar);
         mMUAvatar.setPlaceholderImage(getResources().getDrawable(R.mipmap.ic_launcher));
@@ -80,6 +87,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 keyboardType = keyboardType == InputType.TYPE_CLASS_TEXT ?
                         InputType.TYPE_CLASS_NUMBER : InputType.TYPE_CLASS_TEXT;
                 mMUTextField.setKeyboardType(keyboardType);
+                break;
+            case R.id.btn_4:
+                // Border width
+                mMUNavBar.setBorderWidth((float) (mMUNavBar.getBorderWidth() * 1.1));
+                break;
+            case R.id.btn_5:
+                // Separator height
+                mMUNavBar.setSeparatorMultiplier((float) (mMUNavBar.getSeparatorMultiplier() * 0.9));
+                break;
+            case R.id.btn_6:
+                // Loading
+                mMUNavBar.setLoading(!mMUNavBar.isLoading());
                 break;
         }
     }
