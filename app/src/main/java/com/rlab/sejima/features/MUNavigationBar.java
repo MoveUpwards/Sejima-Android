@@ -1,6 +1,7 @@
 package com.rlab.sejima.features;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -409,11 +410,19 @@ public class MUNavigationBar extends LinearLayout {
 
     /**
      * Set the border color
-     * @param borderColor the border color as RGBA integer
+     * @param borderColorID the resource identifier of the color
      */
-    public void setBorderColor(int borderColor) {
-        mBorderColor = borderColor;
-        mRightButton.setStrokeColorResource(mBorderColor);
+    public void setBorderColor(int borderColorID) {
+        int c;
+        try {
+            c = getResources().getColor(borderColorID);
+            mBorderColor = c;
+        } catch (Resources.NotFoundException e) {
+            borderColorID = R.color.colorPrimary;
+            mBorderColor = getResources().getColor(R.color.colorPrimary);
+        } finally {
+            mRightButton.setStrokeColorResource(borderColorID);
+        }
     }
 
     /**
