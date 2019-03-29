@@ -2,12 +2,12 @@ package com.rlab.sejima.features;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -218,6 +218,8 @@ public class MUButton extends RelativeLayout {
         addView(mButton);
 
         mProgressBar = new ProgressBar(context);
+        mProgressBar.setIndeterminate(true);
+        mProgressBar.setProgress(0);
         LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.addRule(RelativeLayout.ALIGN_END, mButton.getId());
         lp.addRule(RelativeLayout.ALIGN_START, mButton.getId());
@@ -236,7 +238,7 @@ public class MUButton extends RelativeLayout {
         mButton.setTextSize(TypedValue.COMPLEX_UNIT_PX, mButton.getTextSize());
         setLabelFontWeight(mLabelFontWeight);
         setLabelAlignment(mLabelAlignment);
-        setLabelProgressingColor(mLabelProgressingColor);
+        setProgressingColor(mLabelProgressingColor);
         //Border
         setBorderWidth(mBorderWidth);
         setCornerRadius(mCornerRadius);
@@ -245,7 +247,7 @@ public class MUButton extends RelativeLayout {
         setVerticalPadding(mVerticalPadding);
         setHorizontalPadding(mHorizontalPadding);
         // Is loading
-        setLoading(mIsLoading);
+        setLoading(false);
         //Listener
         setOnClickListener(mListener);
         // Colors
@@ -458,7 +460,7 @@ public class MUButton extends RelativeLayout {
      * Set the progressing color
      * @param labelProgressingColor the progressing color as RGBA integer
      */
-    public void setLabelProgressingColor(int labelProgressingColor) {
+    public void setProgressingColor(int labelProgressingColor) {
         mLabelProgressingColor = labelProgressingColor;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mProgressBar.setIndeterminateTintList(ColorStateList.valueOf(mLabelProgressingColor));
@@ -479,8 +481,10 @@ public class MUButton extends RelativeLayout {
      */
     public void setLoading(boolean loading) {
         mIsLoading = loading;
-        mProgressBar.setVisibility(mIsLoading ? VISIBLE : GONE);
-        mButton.setTextColor(mIsLoading ? mBkgColor : mLabelColor);
+        new Handler(Looper.getMainLooper()).post(() ->
+            mProgressBar.setVisibility(mIsLoading ? VISIBLE : GONE)
+        );
+        mButton.setTextColor(mIsLoading ? Color.TRANSPARENT : mLabelColor);
     }
 
     /**
@@ -511,21 +515,11 @@ public class MUButton extends RelativeLayout {
 
     /**
      * Set the border color
-     * @param borderColorID the border color as RGBA integer
+     * @param borderColor the border color as ARGB integer
      */
-    //FIXME use color integer instead
-    public void setBorderColor(int borderColorID) {
-        int c;
-        try {
-            c = getResources().getColor(borderColorID);
-            mBorderColor = c;
-        } catch (Resources.NotFoundException e) {
-            borderColorID = R.color.colorPrimary;
-            mBorderColor = getResources().getColor(R.color.colorPrimary);
-        } finally {
-//            setStrokeColor(new ColorStateList(STATES, colors));
-            mButton.setStrokeColorResource(borderColorID);
-        }
+    public void setBorderColor(int borderColor){
+        mBorderColor = borderColor;
+        mButton.setStrokeColor(ColorStateList.valueOf(borderColor));
     }
 
     /**
@@ -597,6 +591,22 @@ public class MUButton extends RelativeLayout {
     private void updateColorWithAlphaValues(){
         mBkgColor = ColorUtils.setAlphaComponent(mBkgColor, (int) (mAlpha * 255));
         mBorderColor = ColorUtils.setAlphaComponent(mBorderColor, (int) (mBorderAlpha * 255));
+    }
+
+    /**
+     * Return the progessbar used to show loading
+     * @return the ProgressBar
+     */
+    public ProgressBar getProgressBar() {
+        return mProgressBar;
+    }
+
+    /**
+     * Get the MaterialButton
+     * @return the main button
+     */
+    public MaterialButton getButton() {
+        return mButton;
     }
 
     /**

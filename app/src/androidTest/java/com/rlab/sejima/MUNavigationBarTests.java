@@ -98,8 +98,8 @@ public class MUNavigationBarTests {
         mMUNavigationBar.setBkgColor(Color.CYAN);
         assertEquals(Color.CYAN, mMUNavigationBar.getBkgColor());
         // Border color
-        mMUNavigationBar.setBorderColor(R.color.colorPrimary);
-        assertEquals(mContext.getResources().getColor(R.color.colorPrimary), mMUNavigationBar.getBorderColor());
+        mMUNavigationBar.setBorderColor(Color.RED);
+        assertEquals(Color.RED, mMUNavigationBar.getBorderColor());
         mMUNavigationBar.setBorderWidth(15);
         assertEquals(15, mMUNavigationBar.getBorderWidth(),0);
         mMUNavigationBar.setCornerRadius(17);
@@ -129,13 +129,6 @@ public class MUNavigationBarTests {
             }
         });
         assertNotNull(mMUNavigationBar.getListener());
-    }
-
-    @Test
-    public void notFoundBorderColorUseDefault() {
-        // Border color
-        mMUNavigationBar.setBorderColor(-4);
-        assertEquals(mContext.getResources().getColor(R.color.colorPrimary), mMUNavigationBar.getBorderColor());
     }
 
 }

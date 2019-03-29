@@ -83,16 +83,15 @@
     <LinearLayout style="@style/Separator" />
 
     <com.rlab.sejima.features.MUButton
-        android:layout_width="match_parent"
+        android:id="@+id/mu_button"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
-        app:bkg_color="@color/colorPrimaryDark"
-        app:strokeColor="@color/colorAccent"
         app:border_alpha="1"
-        app:pressed_color="#ffff00"
-        app:strokeWidth="2dp"
         app:cornerRadius="5dp"
-        app:text_alignment="center"/>
+        app:strokeColor="@color/colorPrimaryDark"
+        app:strokeWidth="2dp"
+        app:text_alignment="center" />
 
     <LinearLayout style="@style/Separator" />
 
@@ -102,11 +101,10 @@
         android:layout_height="wrap_content"
         android:src="@mipmap/ic_launcher"
         android:text="@string/title"
-        app:bkg_color="#0ff"
-        app:border_color="@color/colorPrimary"
+        app:bkg_color="@color/colorPrimary"
+        android:layout_margin="5dp"
         app:border_width="2dp"
-        app:pressed_color="#f00"
-        app:separator_color="#0ff"
+        app:separator_color="@color/colorAccent"
         app:separator_height_multiplier="0.8"
         app:separator_width="2dp"
         app:progressing_color="#f00"

@@ -15,10 +15,10 @@ import org.junit.runner.RunWith;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static android.view.View.GONE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
@@ -46,14 +46,15 @@ public class MUButtonTests {
         assertEquals(1, mMUButton.getBorderAlpha(), 0);
         // Label
         assertEquals("", mMUButton.getLabel());
-        assertEquals(mMUButton.getTextSize(), mMUButton.getLabelFontSize(), 0);
+        assertEquals(mMUButton.getLabelFontSize(), mMUButton.getLabelFontSize(), 0);
         assertEquals(Typeface.NORMAL, mMUButton.getLabelFontWeight());
-        assertEquals(mMUButton.getCurrentTextColor(), mMUButton.getLabelColor());
+        assertEquals(Color.BLACK, mMUButton.getLabelColor());
         assertEquals(mMUButton.getLabelAlignment(), Gravity.CENTER);
-        assertEquals(mMUButton.getCurrentTextColor(), mMUButton.getLabelHighLightedColor());
-        assertEquals(mMUButton.getCurrentTextColor(), mMUButton.getLabelProgressingColor());
+        assertEquals(Color.BLACK, mMUButton.getLabelHighLightedColor());
+        assertEquals(Color.BLACK, mMUButton.getLabelProgressingColor());
         // Is loading
         assertFalse(mMUButton.isLoading());
+//        assertEquals(mMUButton.getProgressBar().getVisibility(), GONE);
         // Bkg color
         assertEquals(Color.LTGRAY, mMUButton.getBkgColor());
         // Border color
@@ -64,7 +65,7 @@ public class MUButtonTests {
         assertEquals(0, mMUButton.getHorizontalPadding(),0);
         assertEquals(0, mMUButton.getVerticalPadding(),0);
         // Listener
-        assertNull(mMUButton.getListener());
+        assertNotNull(mMUButton.getListener());
     }
 
     @Test
@@ -90,17 +91,18 @@ public class MUButtonTests {
         assertEquals(mMUButton.getLabelAlignment(), Gravity.START|Gravity.CENTER_VERTICAL);
         mMUButton.setLabelHighLightedColor(Color.RED);
         assertEquals(Color.RED, mMUButton.getLabelHighLightedColor());
-        mMUButton.setLabelProgressingColor(Color.BLACK);
+        mMUButton.setProgressingColor(Color.BLACK);
         assertEquals(Color.BLACK, mMUButton.getLabelProgressingColor());
         // Is loading
         mMUButton.setLoading(true);
         assertTrue(mMUButton.isLoading());
+        assertEquals(mMUButton.getButton().getCurrentTextColor(), Color.TRANSPARENT);
         // Bkg color
         mMUButton.setBkgColor(Color.CYAN);
         assertEquals(Color.CYAN, mMUButton.getBkgColor());
         // Border color
-        mMUButton.setBorderColor(R.color.colorPrimary);
-        assertEquals(mContext.getResources().getColor(R.color.colorPrimary), mMUButton.getBorderColor());
+        mMUButton.setBorderColor(Color.CYAN);
+        assertEquals(Color.CYAN, mMUButton.getBorderColor());
         mMUButton.setBorderWidth(15);
         assertEquals(15, mMUButton.getBorderWidth(),0);
         mMUButton.setCornerRadius(17);
@@ -115,13 +117,4 @@ public class MUButtonTests {
         });
         assertNotNull(mMUButton.getListener());
     }
-
-    @Test
-    public void notFoundBorderColorUseDefault() {
-        // Border color
-        mMUButton.setBorderColor(-4);
-        assertEquals(mContext.getResources().getColor(R.color.colorPrimary), mMUButton.getBorderColor());
-    }
-
-
 }

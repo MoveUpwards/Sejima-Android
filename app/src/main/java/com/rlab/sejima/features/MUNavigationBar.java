@@ -266,7 +266,7 @@ public class MUNavigationBar extends LinearLayout {
      * @param labelProgressingColor the progressing color as RGBA integer
      */
     public void setLabelProgressingColor(int labelProgressingColor) {
-        mRightButton.setLabelProgressingColor(labelProgressingColor);
+        mRightButton.setProgressingColor(labelProgressingColor);
     }
 
     /**
@@ -311,10 +311,10 @@ public class MUNavigationBar extends LinearLayout {
 
     /**
      * Set the border color
-     * @param borderColorID the resource identifier of the color
+     * @param borderColor the border color as ARGB integer
      */
-    public void setBorderColor(int borderColorID) {
-        mRightButton.setBorderColor(borderColorID);
+    public void setBorderColor(int borderColor) {
+        mRightButton.setBorderColor(borderColor);
     }
 
     /**
