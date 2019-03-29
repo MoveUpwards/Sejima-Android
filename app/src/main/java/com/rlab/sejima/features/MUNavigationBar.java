@@ -1,7 +1,6 @@
 package com.rlab.sejima.features;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -16,7 +15,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.google.android.material.button.MaterialButton;
 import com.rlab.sejima.R;
 
 /*
@@ -24,7 +22,7 @@ import com.rlab.sejima.R;
  */
 public class MUNavigationBar extends LinearLayout {
 
-    private MaterialButton mRightButton;
+    private MUButton mRightButton;
     private ImageButton mLeftButton;
     private LinearLayout mSeparator;
 
@@ -181,7 +179,7 @@ public class MUNavigationBar extends LinearLayout {
         mSeparator.setBackgroundColor(mSeparatorColor);
         addView(mSeparator, lp);
 
-        mRightButton = new MaterialButton(context);
+        mRightButton = new MUButton(context);
         mRightButton.setOnClickListener(v -> {
             if(mListener != null) {
                 mListener.clickOnRightButton(this);
@@ -219,16 +217,16 @@ public class MUNavigationBar extends LinearLayout {
      * @return the current label as String
      */
     public String getLabel() {
-        return mLabel;
+        return mRightButton.getLabel();
     }
+
 
     /**
      * Set tthe current label
      * @param label the label as String
      */
     public void setLabel(String label) {
-        mLabel = label;
-        mRightButton.setText(label);
+        mRightButton.setLabel(label);
     }
 
     /**
@@ -236,7 +234,7 @@ public class MUNavigationBar extends LinearLayout {
      * @return the font size in dp
      */
     public float getLabelFontSize() {
-        return mLabelFontSize;
+        return mRightButton.getLabelFontSize();
     }
 
     /**
@@ -244,8 +242,7 @@ public class MUNavigationBar extends LinearLayout {
      * @param labelFontSize the label font size in pixels.
      */
     public void setLabelFontSize(float labelFontSize) {
-        mLabelFontSize = labelFontSize * mScale;
-        mRightButton.setTextSize(TypedValue.COMPLEX_UNIT_PX, mLabelFontSize);
+        mRightButton.setLabelFontSize(labelFontSize);
     }
 
     /**
@@ -253,7 +250,7 @@ public class MUNavigationBar extends LinearLayout {
      * @return the current label font weight as integer
      */
     public int getLabelFontWeight() {
-        return mLabelFontWeight;
+        return mRightButton.getLabelFontWeight();
     }
 
     /**
@@ -261,8 +258,7 @@ public class MUNavigationBar extends LinearLayout {
      * @param labelFontWeight the label font weight as integer
      */
     public void setLabelFontWeight(int labelFontWeight) {
-        mLabelFontWeight = labelFontWeight;
-        mRightButton.setTypeface(Typeface.create(Typeface.DEFAULT, mLabelFontWeight));
+        mRightButton.setLabelFontWeight(labelFontWeight);
     }
 
     /**
@@ -270,7 +266,7 @@ public class MUNavigationBar extends LinearLayout {
      * @return the label color as RGBA integer
      */
     public int getLabelColor() {
-        return mLabelColor;
+        return mRightButton.getLabelColor();
     }
 
     /**
@@ -278,8 +274,7 @@ public class MUNavigationBar extends LinearLayout {
      * @param labelColor the label color as RGBA integer
      */
     public void setLabelColor(int labelColor) {
-        mLabelColor = labelColor;
-        MUButton.MUButtonUtils.setStatesFontColor(mRightButton, mLabelColor, mLabelHighLightedColor, mLabelHighLightedColor);
+        mRightButton.setLabelColor(labelColor);
     }
 
     /**
@@ -287,7 +282,7 @@ public class MUNavigationBar extends LinearLayout {
      * @return the integer representing the current horizontal alignment
      */
     public int getLabelAlignment() {
-        return mLabelAlignment;
+        return mRightButton.getLabelAlignment();
     }
 
     /**
@@ -301,8 +296,7 @@ public class MUNavigationBar extends LinearLayout {
      * </ul>
      */
     public void setLabelAlignment(int labelAlignment) {
-        mLabelAlignment = labelAlignment|Gravity.CENTER_VERTICAL;
-        mRightButton.setGravity(mLabelAlignment);
+        mRightButton.setLabelAlignment(labelAlignment);
     }
 
     @Override
@@ -316,7 +310,7 @@ public class MUNavigationBar extends LinearLayout {
      * @return the current alpha value as float
      */
     public float getDisabledAlpha() {
-        return mDisabledAlpha;
+        return mRightButton.getDisabledAlpha();
     }
 
     /**
@@ -325,8 +319,7 @@ public class MUNavigationBar extends LinearLayout {
      * Alpha must be between 0 and 1
      */
     public void setDisabledAlpha(float disabledAlpha) {
-        mDisabledAlpha = MUButton.MUButtonUtils.normalizeAlphaValue(disabledAlpha);
-        MUButton.MUButtonUtils.setStatesBackground(mRightButton, mBkgColor, 1, mDisabledAlpha, mDisabledAlpha);
+        mRightButton.setDisabledAlpha(disabledAlpha);
     }
 
     /**
@@ -334,7 +327,7 @@ public class MUNavigationBar extends LinearLayout {
      * @return the current pressed state color as RGBA integer
      */
     public int getLabelHighLightedColor() {
-        return mLabelHighLightedColor;
+        return mRightButton.getLabelHighLightedColor();
     }
 
     /**
@@ -342,8 +335,7 @@ public class MUNavigationBar extends LinearLayout {
      * @param labelHighLightedColor the color as RGBA integer
      */
     public void setLabelHighLightedColor(int labelHighLightedColor) {
-        mLabelHighLightedColor = labelHighLightedColor;
-        MUButton.MUButtonUtils.setStatesFontColor(mRightButton, mLabelColor, mLabelHighLightedColor, mLabelHighLightedColor);
+        mRightButton.setLabelHighLightedColor(labelHighLightedColor);
     }
 
     /**
@@ -351,7 +343,7 @@ public class MUNavigationBar extends LinearLayout {
      * @return the color as RGBA integer
      */
     public int getLabelProgressingColor() {
-        return mLabelProgressingColor;
+        return mRightButton.getLabelProgressingColor();
     }
 
     /**
@@ -359,7 +351,7 @@ public class MUNavigationBar extends LinearLayout {
      * @param labelProgressingColor the progressing color as RGBA integer
      */
     public void setLabelProgressingColor(int labelProgressingColor) {
-        mLabelProgressingColor = labelProgressingColor;
+        mRightButton.setLabelProgressingColor(labelProgressingColor);
     }
 
     /**
@@ -367,7 +359,7 @@ public class MUNavigationBar extends LinearLayout {
      * @return the boolean value of the loading state
      */
     public boolean isLoading() {
-        return mIsLoading;
+        return mRightButton.isLoading();
     }
 
     /**
@@ -375,12 +367,7 @@ public class MUNavigationBar extends LinearLayout {
      * @param loading the loading state value as boolean
      */
     public void setLoading(boolean loading) {
-        mIsLoading = loading;
-        if(mIsLoading){
-            mRightButton.setTextColor(mLabelProgressingColor);
-        } else {
-            MUButton.MUButtonUtils.setStatesFontColor(mRightButton, mLabelColor, mLabelHighLightedColor, mLabelHighLightedColor);
-        }
+        mRightButton.setLoading(loading);
     }
 
     /**
@@ -388,7 +375,7 @@ public class MUNavigationBar extends LinearLayout {
      * @return the background color as RGBA integer
      */
     public int getBkgColor() {
-        return mBkgColor;
+        return mRightButton.getBkgColor();
     }
 
     /**
@@ -396,8 +383,7 @@ public class MUNavigationBar extends LinearLayout {
      * @param bkgColor the color as RGBA integer
      */
     public void setBkgColor(int bkgColor) {
-        mBkgColor = bkgColor;
-        MUButton.MUButtonUtils.setStatesBackground(mRightButton, mBkgColor, 1, mDisabledAlpha, mDisabledAlpha);
+        mRightButton.setBkgColor(bkgColor);
     }
 
     /**
@@ -405,7 +391,7 @@ public class MUNavigationBar extends LinearLayout {
      * @return the border color as RGBA integer
      */
     public int getBorderColor() {
-        return mBorderColor;
+        return mRightButton.getBorderColor();
     }
 
     /**
@@ -413,16 +399,7 @@ public class MUNavigationBar extends LinearLayout {
      * @param borderColorID the resource identifier of the color
      */
     public void setBorderColor(int borderColorID) {
-        int c;
-        try {
-            c = getResources().getColor(borderColorID);
-            mBorderColor = c;
-        } catch (Resources.NotFoundException e) {
-            borderColorID = R.color.colorPrimary;
-            mBorderColor = getResources().getColor(R.color.colorPrimary);
-        } finally {
-            mRightButton.setStrokeColorResource(borderColorID);
-        }
+        mRightButton.setBorderColor(borderColorID);
     }
 
     /**
@@ -430,7 +407,7 @@ public class MUNavigationBar extends LinearLayout {
      * @return the current border width in pixels.
      */
     public float getBorderWidth() {
-        return mBorderWidth;
+        return mRightButton.getBorderWidth();
     }
 
     /**
@@ -438,8 +415,7 @@ public class MUNavigationBar extends LinearLayout {
      * @param borderWidth the border width in pixels
      */
     public void setBorderWidth(float borderWidth) {
-        mBorderWidth = borderWidth;
-        mRightButton.setStrokeWidth((int) mBorderWidth);
+        mRightButton.setBorderWidth(borderWidth);
     }
 
     /**
@@ -447,7 +423,7 @@ public class MUNavigationBar extends LinearLayout {
      * @return the current corner radius
      */
     public int getCornerRadius() {
-        return mCornerRadius;
+        return mRightButton.getCornerRadius();
     }
 
     /**
@@ -455,8 +431,7 @@ public class MUNavigationBar extends LinearLayout {
      * @param cornerRadius the radius value
      */
     public void setCornerRadius(int cornerRadius) {
-        mCornerRadius = cornerRadius;
-        mRightButton.setCornerRadius(mCornerRadius);
+        mRightButton.setCornerRadius(cornerRadius);
     }
 
     /**

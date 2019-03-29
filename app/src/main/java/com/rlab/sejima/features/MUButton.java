@@ -55,7 +55,7 @@ public class MUButton extends MaterialButton {
     /**
      * The label font color
      */
-    private int mLabelColor;
+    private int mLabelColor = Color.BLACK;
     /**
      * The label alignment
      */
@@ -63,15 +63,15 @@ public class MUButton extends MaterialButton {
     /**
      * The label highlighted color
      */
-    private int mLabelHighLightedColor;
+    private int mLabelHighLightedColor = Color.BLACK;
     /**
      * The label progressing color
      */
-    private int mLabelProgressingColor;
+    private int mLabelProgressingColor =  Color.BLACK;
     /**
      * Show or hide the progress indicator
      */
-    private boolean mIsLoading;
+    private boolean mIsLoading = false;
     /**
      * Background color
      */
@@ -83,11 +83,11 @@ public class MUButton extends MaterialButton {
     /**
      * Border width
      */
-    private float mBorderWidth;
+    private float mBorderWidth = 0;
     /**
      * Corner radius
      */
-    private int mCornerRadius;
+    private int mCornerRadius = 0;
     /**
      * Vertical padding
      */
@@ -128,12 +128,12 @@ public class MUButton extends MaterialButton {
         mDisabledAlpha = attributes.getFloat(R.styleable.MUButton_disable_alpha, mDisabledAlpha);
         // Label
         mLabel = attributes.getString(R.styleable.MUButton_android_text);
-        mLabelColor = attributes.getColor(R.styleable.MUButton_android_textColor, getCurrentTextColor());
+        mLabelColor = attributes.getColor(R.styleable.MUButton_android_textColor, mLabelColor);
         mLabelFontSize = attributes.getDimensionPixelSize(R.styleable.MUButton_android_textSize, (int) getTextSize());
         mLabelFontWeight = attributes.getInt(R.styleable.MUButton_android_textStyle, mLabelFontWeight);
         mLabelAlignment = attributes.getInt(R.styleable.MUButton_text_alignment, Gravity.CENTER);
-        mLabelHighLightedColor = attributes.getColor(R.styleable.MUButton_pressed_color, getCurrentTextColor());
-        mLabelProgressingColor = attributes.getColor(R.styleable.MUButton_progressing_color, getCurrentTextColor());
+        mLabelHighLightedColor = attributes.getColor(R.styleable.MUButton_pressed_color, mLabelHighLightedColor);
+        mLabelProgressingColor = attributes.getColor(R.styleable.MUButton_progressing_color, mLabelProgressingColor);
         // Border
         mBorderWidth = attributes.getDimensionPixelSize(R.styleable.MUButton_strokeWidth, 0);
         mBorderColor = attributes.getColor(R.styleable.MUButton_strokeColor, mBkgColor);
@@ -206,7 +206,6 @@ public class MUButton extends MaterialButton {
      * @param alpha the background alpha as float
      * Alpha must be between 0 and 1
      */
-    // FIXME to test
     @Override
     public void setAlpha(float alpha) {
         mAlpha = MUButtonUtils.normalizeAlphaValue(alpha);

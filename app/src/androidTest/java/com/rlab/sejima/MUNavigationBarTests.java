@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 
+import com.rlab.sejima.features.MUButton;
 import com.rlab.sejima.features.MUNavigationBar;
 
 import org.junit.Before;
@@ -98,7 +99,7 @@ public class MUNavigationBarTests {
         assertEquals(Color.CYAN, mMUNavigationBar.getBkgColor());
         // Border color
         mMUNavigationBar.setBorderColor(R.color.colorPrimary);
-        assertEquals(R.color.colorPrimary, mMUNavigationBar.getBorderColor());
+        assertEquals(mContext.getResources().getColor(R.color.colorPrimary), mMUNavigationBar.getBorderColor());
         mMUNavigationBar.setBorderWidth(15);
         assertEquals(15, mMUNavigationBar.getBorderWidth(),0);
         mMUNavigationBar.setCornerRadius(17);
@@ -128,6 +129,13 @@ public class MUNavigationBarTests {
             }
         });
         assertNotNull(mMUNavigationBar.getListener());
+    }
+
+    @Test
+    public void notFoundBorderColorUseDefault() {
+        // Border color
+        mMUNavigationBar.setBorderColor(-4);
+        assertEquals(mContext.getResources().getColor(R.color.colorPrimary), mMUNavigationBar.getBorderColor());
     }
 
 }
