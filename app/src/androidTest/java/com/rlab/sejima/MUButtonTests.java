@@ -15,7 +15,6 @@ import org.junit.runner.RunWith;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import static android.view.View.GONE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -51,7 +50,7 @@ public class MUButtonTests {
         assertEquals(Color.BLACK, mMUButton.getLabelColor());
         assertEquals(mMUButton.getLabelAlignment(), Gravity.CENTER);
         assertEquals(Color.BLACK, mMUButton.getLabelHighLightedColor());
-        assertEquals(Color.BLACK, mMUButton.getLabelProgressingColor());
+        assertEquals(Color.BLACK, mMUButton.getProgressingColor());
         // Is loading
         assertFalse(mMUButton.isLoading());
 //        assertEquals(mMUButton.getProgressBar().getVisibility(), GONE);
@@ -92,7 +91,7 @@ public class MUButtonTests {
         mMUButton.setLabelHighLightedColor(Color.RED);
         assertEquals(Color.RED, mMUButton.getLabelHighLightedColor());
         mMUButton.setProgressingColor(Color.BLACK);
-        assertEquals(Color.BLACK, mMUButton.getLabelProgressingColor());
+        assertEquals(Color.BLACK, mMUButton.getProgressingColor());
         // Is loading
         mMUButton.setLoading(true);
         assertTrue(mMUButton.isLoading());

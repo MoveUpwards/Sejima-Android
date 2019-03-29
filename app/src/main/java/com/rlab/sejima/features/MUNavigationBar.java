@@ -258,7 +258,7 @@ public class MUNavigationBar extends LinearLayout {
      * @return the color as RGBA integer
      */
     public int getLabelProgressingColor() {
-        return mRightButton.getLabelProgressingColor();
+        return mRightButton.getProgressingColor();
     }
 
     /**

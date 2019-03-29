@@ -69,9 +69,9 @@ public class MUButton extends RelativeLayout {
      */
     private int mLabelHighLightedColor = Color.BLACK;
     /**
-     * The label progressing color
+     * The progressing color
      */
-    private int mLabelProgressingColor =  Color.BLACK;
+    private int mProgressingColor =  Color.BLACK;
     /**
      * Show or hide the progress indicator
      */
@@ -146,7 +146,7 @@ public class MUButton extends RelativeLayout {
         mLabelFontWeight = attributes.getInt(R.styleable.MUButton_android_textStyle, mLabelFontWeight);
         mLabelAlignment = attributes.getInt(R.styleable.MUButton_text_alignment, mLabelAlignment);
         mLabelHighLightedColor = attributes.getColor(R.styleable.MUButton_pressed_color, mLabelHighLightedColor);
-        mLabelProgressingColor = attributes.getColor(R.styleable.MUButton_progressing_color, mLabelProgressingColor);
+        mProgressingColor = attributes.getColor(R.styleable.MUButton_progressing_color, mProgressingColor);
         // Border
         mBorderWidth = attributes.getDimensionPixelSize(R.styleable.MUButton_strokeWidth, 0);
         mBorderColor = attributes.getColor(R.styleable.MUButton_strokeColor, mBkgColor);
@@ -190,9 +190,9 @@ public class MUButton extends RelativeLayout {
             mLabelHighLightedColor = attributes.hasValue(R.styleable.MUNavigationBar_pressed_color) ?
                     attributes.getInt(R.styleable.MUNavigationBar_pressed_color, mLabelHighLightedColor)
                     : mLabelHighLightedColor;
-            mLabelProgressingColor = attributes.hasValue(R.styleable.MUNavigationBar_progressing_color) ?
-                    attributes.getInt(R.styleable.MUNavigationBar_progressing_color, mLabelProgressingColor)
-                    : mLabelProgressingColor;
+            mProgressingColor = attributes.hasValue(R.styleable.MUNavigationBar_progressing_color) ?
+                    attributes.getInt(R.styleable.MUNavigationBar_progressing_color, mProgressingColor)
+                    : mProgressingColor;
             mBorderWidth = attributes.hasValue(R.styleable.MUNavigationBar_border_width) ?
                     attributes.getDimensionPixelSize(R.styleable.MUNavigationBar_border_width, 0)
                     : mBorderWidth;
@@ -238,7 +238,7 @@ public class MUButton extends RelativeLayout {
         mButton.setTextSize(TypedValue.COMPLEX_UNIT_PX, mButton.getTextSize());
         setLabelFontWeight(mLabelFontWeight);
         setLabelAlignment(mLabelAlignment);
-        setProgressingColor(mLabelProgressingColor);
+        setProgressingColor(mProgressingColor);
         //Border
         setBorderWidth(mBorderWidth);
         setCornerRadius(mCornerRadius);
@@ -452,8 +452,8 @@ public class MUButton extends RelativeLayout {
      * Get the current progressing color
      * @return the color as RGBA integer
      */
-    public int getLabelProgressingColor() {
-        return mLabelProgressingColor;
+    public int getProgressingColor() {
+        return mProgressingColor;
     }
 
     /**
@@ -461,9 +461,9 @@ public class MUButton extends RelativeLayout {
      * @param labelProgressingColor the progressing color as RGBA integer
      */
     public void setProgressingColor(int labelProgressingColor) {
-        mLabelProgressingColor = labelProgressingColor;
+        mProgressingColor = labelProgressingColor;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mProgressBar.setIndeterminateTintList(ColorStateList.valueOf(mLabelProgressingColor));
+            mProgressBar.setIndeterminateTintList(ColorStateList.valueOf(mProgressingColor));
         }
     }
 
