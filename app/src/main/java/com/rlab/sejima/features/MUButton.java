@@ -5,12 +5,18 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import com.google.android.material.button.MaterialButton;
 import com.rlab.sejima.R;
@@ -20,7 +26,7 @@ import androidx.core.graphics.ColorUtils;
 /*
     Created by Antoine RICHE on 27/03/2019.
  */
-public class MUButton extends MaterialButton {
+public class MUButton extends RelativeLayout {
 
     /**
      * OnCLickListener to handle clicks
@@ -101,6 +107,15 @@ public class MUButton extends MaterialButton {
     private float mScale;
 
     /**
+     * The main button
+     */
+    private MaterialButton mButton;
+    /**
+     * ProgressBar showing loading
+     */
+    private ProgressBar mProgressBar;
+
+    /**
      * Default constructor
      * @param context the view context
      */
@@ -127,7 +142,7 @@ public class MUButton extends MaterialButton {
         // Label
         mLabel = attributes.getString(R.styleable.MUButton_android_text);
         mLabelColor = attributes.getColor(R.styleable.MUButton_android_textColor, mLabelColor);
-        mLabelFontSize = attributes.getDimensionPixelSize(R.styleable.MUButton_android_textSize, (int) getTextSize());
+        mLabelFontSize = attributes.getDimensionPixelSize(R.styleable.MUButton_android_textSize, 0);
         mLabelFontWeight = attributes.getInt(R.styleable.MUButton_android_textStyle, mLabelFontWeight);
         mLabelAlignment = attributes.getInt(R.styleable.MUButton_text_alignment, mLabelAlignment);
         mLabelHighLightedColor = attributes.getColor(R.styleable.MUButton_pressed_color, mLabelHighLightedColor);
@@ -164,8 +179,8 @@ public class MUButton extends MaterialButton {
                     attributes.getColor(R.styleable.MUNavigationBar_android_textColor, mLabelColor)
                     : mLabelColor;
             mLabelFontSize = attributes.hasValue(R.styleable.MUNavigationBar_android_textSize) ?
-                    attributes.getDimensionPixelSize(R.styleable.MUNavigationBar_android_textSize, (int) getTextSize())
-                    : (int) getTextSize();
+                    attributes.getDimensionPixelSize(R.styleable.MUNavigationBar_android_textSize, 0)
+                    : mLabelFontSize;
             mLabelFontWeight = attributes.hasValue(R.styleable.MUNavigationBar_android_textStyle) ?
                     attributes.getColor(R.styleable.MUNavigationBar_android_textStyle, mLabelFontWeight)
                     : mLabelFontWeight;
@@ -198,6 +213,18 @@ public class MUButton extends MaterialButton {
     private void init(Context context){
         mScale = (float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
 
+        mButton = new MaterialButton(context);
+        mButton.setId(View.generateViewId());
+        addView(mButton);
+
+        mProgressBar = new ProgressBar(context);
+        LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.addRule(RelativeLayout.ALIGN_END, mButton.getId());
+        lp.addRule(RelativeLayout.ALIGN_START, mButton.getId());
+        lp.addRule(RelativeLayout.ALIGN_TOP, mButton.getId());
+        lp.addRule(RelativeLayout.ALIGN_BOTTOM, mButton.getId());
+        addView(mProgressBar, lp);
+
         // Background
         setBkgColor(mBkgColor);
         // Alphas
@@ -206,13 +233,14 @@ public class MUButton extends MaterialButton {
         setDisabledAlpha(mDisabledAlpha);
         //Label
         setLabel(mLabel);
-        setTextSize(TypedValue.COMPLEX_UNIT_PX, mLabelFontSize);
+        mButton.setTextSize(TypedValue.COMPLEX_UNIT_PX, mButton.getTextSize());
         setLabelFontWeight(mLabelFontWeight);
         setLabelAlignment(mLabelAlignment);
         setLabelProgressingColor(mLabelProgressingColor);
         //Border
         setBorderWidth(mBorderWidth);
         setCornerRadius(mCornerRadius);
+        setBorderColor(mBorderColor);
         //Padding
         setVerticalPadding(mVerticalPadding);
         setHorizontalPadding(mHorizontalPadding);
@@ -223,6 +251,10 @@ public class MUButton extends MaterialButton {
         // Colors
         setFontColors();
         setBackgroundColors();
+
+        Button b = new Button(getContext());
+        mButton.setPadding(b.getPaddingLeft(), b.getPaddingTop(), b.getPaddingRight(), b.getPaddingBottom());
+        mProgressBar.setPadding(b.getPaddingLeft(), b.getPaddingTop(), b.getPaddingRight(), b.getPaddingBottom());
     }
 
     /**
@@ -295,7 +327,7 @@ public class MUButton extends MaterialButton {
      */
     public void setLabel(String label) {
         mLabel = label;
-        setText(label);
+        mButton.setText(label);
     }
 
     /**
@@ -312,20 +344,9 @@ public class MUButton extends MaterialButton {
      */
     public void setLabelFontSize(float labelFontSize) {
         mLabelFontSize = labelFontSize * mScale;
-        setTextSize(TypedValue.COMPLEX_UNIT_PX, mLabelFontSize);
+        mButton.setTextSize(TypedValue.COMPLEX_UNIT_PX, mLabelFontSize);
     }
 
-    @Override
-    public void setTextSize(float size) {
-        mLabelFontSize = size;
-        super.setTextSize(size);
-    }
-
-    @Override
-    public void setTextSize(int unit, float size) {
-        mLabelFontSize = size;
-        super.setTextSize(unit, size);
-    }
 
     /**
      * Get the current label font weight
@@ -341,7 +362,7 @@ public class MUButton extends MaterialButton {
      */
     public void setLabelFontWeight(int labelFontWeight) {
         mLabelFontWeight = labelFontWeight;
-        setTypeface(Typeface.create(Typeface.DEFAULT, mLabelFontWeight));
+        mButton.setTypeface(Typeface.create(Typeface.DEFAULT, mLabelFontWeight));
     }
 
     /**
@@ -358,13 +379,6 @@ public class MUButton extends MaterialButton {
      */
     public void setLabelColor(int labelColor) {
         mLabelColor = labelColor;
-        setFontColors();
-    }
-
-    @Override
-    public void setTextColor(int color) {
-        mLabelColor = color;
-        super.setTextColor(color);
         setFontColors();
     }
 
@@ -446,6 +460,9 @@ public class MUButton extends MaterialButton {
      */
     public void setLabelProgressingColor(int labelProgressingColor) {
         mLabelProgressingColor = labelProgressingColor;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mProgressBar.setIndeterminateTintList(ColorStateList.valueOf(mLabelProgressingColor));
+        }
     }
 
     /**
@@ -462,11 +479,8 @@ public class MUButton extends MaterialButton {
      */
     public void setLoading(boolean loading) {
         mIsLoading = loading;
-        if(mIsLoading){
-            setTextColor(mLabelProgressingColor);
-        } else {
-//            MUButtonUtils.setStatesFontColor(this, mLabelColor, mLabelHighLightedColor, mLabelHighLightedColor);
-        }
+        mProgressBar.setVisibility(mIsLoading ? VISIBLE : GONE);
+        mButton.setTextColor(mIsLoading ? mBkgColor : mLabelColor);
     }
 
     /**
@@ -499,6 +513,7 @@ public class MUButton extends MaterialButton {
      * Set the border color
      * @param borderColorID the border color as RGBA integer
      */
+    //FIXME use color integer instead
     public void setBorderColor(int borderColorID) {
         int c;
         try {
@@ -509,7 +524,7 @@ public class MUButton extends MaterialButton {
             mBorderColor = getResources().getColor(R.color.colorPrimary);
         } finally {
 //            setStrokeColor(new ColorStateList(STATES, colors));
-            setStrokeColorResource(borderColorID);
+            mButton.setStrokeColorResource(borderColorID);
         }
     }
 
@@ -527,14 +542,13 @@ public class MUButton extends MaterialButton {
      */
     public void setBorderWidth(float borderWidth) {
         mBorderWidth = borderWidth;
-        setStrokeWidth((int) mBorderWidth);
+        mButton.setStrokeWidth((int) mBorderWidth);
     }
 
     /**
      * Get the current corner radius value
      * @return the current corner radius
      */
-    @Override
     public int getCornerRadius() {
         return mCornerRadius;
     }
@@ -543,10 +557,9 @@ public class MUButton extends MaterialButton {
      * Set the radius value
      * @param cornerRadius the radius value
      */
-    @Override
     public void setCornerRadius(int cornerRadius) {
         mCornerRadius = cornerRadius;
-        super.setCornerRadius(mCornerRadius);
+        mButton.setCornerRadius(mCornerRadius);
     }
 
     /**
@@ -605,10 +618,13 @@ public class MUButton extends MaterialButton {
         };
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            setBackgroundTintList(new ColorStateList(STATES, colors));
+            mButton.setBackgroundTintList(new ColorStateList(STATES, colors));
         }
     }
 
+    /**
+     * Set the font color for different states
+     */
     private void setFontColors() {
         int[] colors = new int[] {
                 mLabelHighLightedColor,                                                                 // pressed color
@@ -616,7 +632,7 @@ public class MUButton extends MaterialButton {
                 mLabelColor                                                                             // default color
         };
 
-        setTextColor(new ColorStateList(STATES, colors));
+        mButton.setTextColor(new ColorStateList(STATES, colors));
     }
 
     /**

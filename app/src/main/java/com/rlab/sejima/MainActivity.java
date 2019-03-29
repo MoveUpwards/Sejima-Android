@@ -7,6 +7,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.rlab.sejima.features.MUAvatar;
+import com.rlab.sejima.features.MUButton;
 import com.rlab.sejima.features.MUNavigationBar;
 import com.rlab.sejima.features.MUTextField;
 import com.rlab.sejima.features.MUTopBar;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btn_4).setOnClickListener(this);
         findViewById(R.id.btn_5).setOnClickListener(this);
         findViewById(R.id.btn_6).setOnClickListener(this);
+        findViewById(R.id.mu_button).setOnClickListener(this);
 
         MUTopBar mMUTopBar = findViewById(R.id.mu_topbar);
         mMUTopBar.setMUTopBarClickListener(() -> {
@@ -103,6 +105,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_6:
                 // Loading
                 mMUNavBar.setLoading(!mMUNavBar.isLoading());
+                break;
+            case R.id.mu_button:
+                MUButton b = (MUButton) v;
+                b.setLoading(!b.isLoading());
+                Toast.makeText(getApplicationContext(), "Click on MUButton", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
