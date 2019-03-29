@@ -2,19 +2,27 @@ package com.rlab.sejima;
 
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.google.android.material.navigation.NavigationView;
 import com.rlab.sejima.features.MUAvatar;
 import com.rlab.sejima.features.MUButton;
 import com.rlab.sejima.features.MUNavigationBar;
 import com.rlab.sejima.features.MUTextField;
 import com.rlab.sejima.features.MUTopBar;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
         MUTextField.MUTextFieldListener, MUAvatar.MUAvatarClickListener {
@@ -46,11 +54,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int keyboardType = InputType.TYPE_CLASS_TEXT;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         findViewById(R.id.btn_1).setOnClickListener(this);
         findViewById(R.id.btn_2).setOnClickListener(this);

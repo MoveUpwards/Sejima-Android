@@ -463,6 +463,7 @@ public class MUAvatar extends AppCompatImageView {
      * @param borderWidth the border width in pixels
      */
     public void setBorderWidth(float borderWidth) {
+        borderWidth = borderWidth >= 0 ? borderWidth : 0;
         mBorderWidth = borderWidth * mScale;
         invalidate();
     }
@@ -478,7 +479,7 @@ public class MUAvatar extends AppCompatImageView {
     public void setBorderType(int borderType) {
         mBorderType = borderType == ROUND_BORDER ? ROUND_BORDER : SQUARE_BORDER;
         mCornerRadius = mBorderType == SQUARE_BORDER ?
-                mCornerRadius : 1000;
+                0 : 1000;
         invalidate();
     }
 
@@ -494,8 +495,8 @@ public class MUAvatar extends AppCompatImageView {
      * Set the corner radius
      */
     public void setCornerRadius(float cornerRadius) {
-        mCornerRadius = mBorderType == SQUARE_BORDER ?
-                cornerRadius : 1000;
+        cornerRadius = cornerRadius >= 0 ? cornerRadius : 0;
+        mCornerRadius = mBorderType == SQUARE_BORDER ? cornerRadius : 1000;
         invalidate();
     }
 
