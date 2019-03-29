@@ -25,7 +25,7 @@ public class MUButton extends MaterialButton {
     /**
      * OnCLickListener to handle clicks
      */
-    private OnClickListener mListener;
+    private OnClickListener mListener = v -> { };
     /**
      * The current background alpha
      */
@@ -206,20 +206,23 @@ public class MUButton extends MaterialButton {
         setDisabledAlpha(mDisabledAlpha);
         //Label
         setLabel(mLabel);
-        MUButtonUtils.setStatesFontColor(this, mLabelColor, mLabelHighLightedColor, mLabelHighLightedColor);
         setTextSize(TypedValue.COMPLEX_UNIT_PX, mLabelFontSize);
         setLabelFontWeight(mLabelFontWeight);
         setLabelAlignment(mLabelAlignment);
         setLabelProgressingColor(mLabelProgressingColor);
         //Border
         setBorderWidth(mBorderWidth);
-        MUButtonUtils.setStatesBorderColor(this, mBorderColor, mBorderAlpha, mDisabledAlpha, mDisabledAlpha);
         setCornerRadius(mCornerRadius);
         //Padding
         setVerticalPadding(mVerticalPadding);
         setHorizontalPadding(mHorizontalPadding);
         // Is loading
         setLoading(mIsLoading);
+        //Listener
+        setOnClickListener(mListener);
+        // Colors
+        setFontColors();
+        setBackgroundColors();
     }
 
     /**
@@ -255,8 +258,9 @@ public class MUButton extends MaterialButton {
      */
     @Override
     public void setAlpha(float alpha) {
-        mAlpha = MUButtonUtils.normalizeAlphaValue(alpha);
-        MUButtonUtils.setStatesBackground(this, mBkgColor, mAlpha, mDisabledAlpha, mDisabledAlpha);
+        mAlpha = normalizeAlphaValue(alpha);
+        updateColorWithAlphaValues();
+        setBackgroundColors();
     }
 
     /**
@@ -272,8 +276,9 @@ public class MUButton extends MaterialButton {
      * @param borderAlpha the border alpha as float
      */
     public void setBorderAlpha(float borderAlpha) {
-        mBorderAlpha = MUButtonUtils.normalizeAlphaValue(borderAlpha);
-        MUButtonUtils.setStatesBorderColor(this, mBorderColor, mBorderAlpha, mDisabledAlpha, mDisabledAlpha);
+        mBorderAlpha = normalizeAlphaValue(borderAlpha);
+        updateColorWithAlphaValues();
+        setBackgroundColors();
     }
 
     /**
@@ -353,14 +358,14 @@ public class MUButton extends MaterialButton {
      */
     public void setLabelColor(int labelColor) {
         mLabelColor = labelColor;
-        MUButtonUtils.setStatesFontColor(this, mLabelColor, mLabelHighLightedColor, mLabelHighLightedColor);
+        setFontColors();
     }
 
     @Override
     public void setTextColor(int color) {
         mLabelColor = color;
         super.setTextColor(color);
-        MUButtonUtils.setStatesFontColor(this, mLabelColor, mLabelHighLightedColor, mLabelHighLightedColor);
+        setFontColors();
     }
 
     /**
@@ -406,8 +411,8 @@ public class MUButton extends MaterialButton {
      * Alpha must be between 0 and 1
      */
     public void setDisabledAlpha(float disabledAlpha) {
-        mDisabledAlpha = MUButtonUtils.normalizeAlphaValue(disabledAlpha);
-        MUButtonUtils.setStatesBackground(this, mBkgColor, mAlpha, mDisabledAlpha, mDisabledAlpha);
+        mDisabledAlpha = normalizeAlphaValue(disabledAlpha);
+        setBackgroundColors();
     }
 
     /**
@@ -424,7 +429,7 @@ public class MUButton extends MaterialButton {
      */
     public void setLabelHighLightedColor(int labelHighLightedColor) {
         mLabelHighLightedColor = labelHighLightedColor;
-        MUButtonUtils.setStatesFontColor(this, mLabelColor, mLabelHighLightedColor, mLabelHighLightedColor);
+        setFontColors();
     }
 
     /**
@@ -460,7 +465,7 @@ public class MUButton extends MaterialButton {
         if(mIsLoading){
             setTextColor(mLabelProgressingColor);
         } else {
-            MUButtonUtils.setStatesFontColor(this, mLabelColor, mLabelHighLightedColor, mLabelHighLightedColor);
+//            MUButtonUtils.setStatesFontColor(this, mLabelColor, mLabelHighLightedColor, mLabelHighLightedColor);
         }
     }
 
@@ -478,7 +483,8 @@ public class MUButton extends MaterialButton {
      */
     public void setBkgColor(int bkgColor) {
         mBkgColor = bkgColor;
-        MUButtonUtils.setStatesBackground(this, mBkgColor, mAlpha, mDisabledAlpha, mDisabledAlpha);
+        updateColorWithAlphaValues();
+        setBackgroundColors();
     }
 
     /**
@@ -502,6 +508,7 @@ public class MUButton extends MaterialButton {
             borderColorID = R.color.colorPrimary;
             mBorderColor = getResources().getColor(R.color.colorPrimary);
         } finally {
+//            setStrokeColor(new ColorStateList(STATES, colors));
             setStrokeColorResource(borderColorID);
         }
     }
@@ -574,57 +581,51 @@ public class MUButton extends MaterialButton {
         mHorizontalPadding = horizontalPadding;
     }
 
-    static class MUButtonUtils {
-        /**
-         * Static fields representing states; used for convenience only
-         */
-        static final int[] STATE_PRESSED = new int[] { android.R.attr.state_pressed };
-        static final int[] STATE_DISABLED = new int[] { -android.R.attr.state_enabled };
-        static final int[] STATE_DEFAULT = new int[] {};
-        static final int[][] STATES = new int[][]{STATE_PRESSED, STATE_DISABLED, STATE_DEFAULT};
+    private void updateColorWithAlphaValues(){
+        mBkgColor = ColorUtils.setAlphaComponent(mBkgColor, (int) (mAlpha * 255));
+        mBorderColor = ColorUtils.setAlphaComponent(mBorderColor, (int) (mBorderAlpha * 255));
+    }
 
-        /**
-         * Normalize alpha value between 0 and 1
-         * @param alpha the alpha value to check
-         * @return the normalized value of alpha
-         */
-        static float normalizeAlphaValue(float alpha) {
-            alpha = alpha < 0 ? 0 : alpha;
-            return alpha > 1 ? 1 : alpha;
-        }
+    /**
+     * Static fields representing states; used for convenience only
+     */
+    static final int[] STATE_PRESSED = new int[] { android.R.attr.state_pressed };
+    static final int[] STATE_DISABLED = new int[] { -android.R.attr.state_enabled };
+    static final int[] STATE_DEFAULT = new int[] {};
+    static final int[][] STATES = new int[][]{STATE_PRESSED, STATE_DISABLED, STATE_DEFAULT};
 
-        /**
-         * Set up the alpha values to handle clicks
-         */
-        static void setStatesBackground(MaterialButton button, int bkgColor, float defaultAlpha, float disabledAlpha, float pressedAlpha) {
-            int[] colors = new int[] {
-                    ColorUtils.setAlphaComponent(bkgColor, (int) (defaultAlpha * pressedAlpha * 255)),
-                    ColorUtils.setAlphaComponent(bkgColor, (int) (defaultAlpha * disabledAlpha * 255)),
-                    ColorUtils.setAlphaComponent(bkgColor, (int) (defaultAlpha * 255)),
-            };
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                button.setBackgroundTintList(new ColorStateList(STATES, colors));
-            }
-        }
+    /**
+     * Set the background color for different states of the button
+     */
+    private void setBackgroundColors() {
+        int[] colors = new int[] {
+                mBorderColor,                                                                           // pressed color
+                ColorUtils.setAlphaComponent(mBorderColor, (int) (mAlpha * mDisabledAlpha * 255)),      // disabled color
+                mBkgColor                                                                               // default color
+        };
 
-        /**
-         * Set up the font color states
-         */
-        static void setStatesFontColor(MaterialButton button, int defaultColor, int disabledColor, int highlightedColor) {
-            int[] colors = new int[] { highlightedColor, disabledColor, defaultColor };
-            button.setTextColor(new ColorStateList(STATES, colors));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setBackgroundTintList(new ColorStateList(STATES, colors));
         }
+    }
 
-        /**
-         * Set up the border color states
-         */
-        static void setStatesBorderColor(MaterialButton button, int borderColor, float defaultAlpha, float disabledAlpha, float pressedAlpha) {
-            int[] colors = new int[] {
-                    ColorUtils.setAlphaComponent(borderColor, (int) (defaultAlpha * pressedAlpha * 255)),
-                    ColorUtils.setAlphaComponent(borderColor, (int) (defaultAlpha * disabledAlpha * 255)),
-                    ColorUtils.setAlphaComponent(borderColor, (int) (defaultAlpha * 255))
-            };
-            button.setStrokeColor(new ColorStateList(STATES, colors));
-        }
+    private void setFontColors() {
+        int[] colors = new int[] {
+                mLabelHighLightedColor,                                                                 // pressed color
+                mLabelHighLightedColor,                                                                 // disabled color
+                mLabelColor                                                                             // default color
+        };
+
+        setTextColor(new ColorStateList(STATES, colors));
+    }
+
+    /**
+     * Normalize alpha value between 0 and 1
+     * @param alpha the alpha value to check
+     * @return the normalized value of alpha
+     */
+    static float normalizeAlphaValue(float alpha) {
+        alpha = alpha < 0 ? 0 : alpha;
+        return alpha > 1 ? 1 : alpha;
     }
 }
