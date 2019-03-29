@@ -2,6 +2,7 @@ package com.rlab.sejima.features;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -13,6 +14,8 @@ import android.view.Gravity;
 
 import com.google.android.material.button.MaterialButton;
 import com.rlab.sejima.R;
+
+import java.util.MissingResourceException;
 
 import androidx.core.graphics.ColorUtils;
 
@@ -442,11 +445,19 @@ public class MUButton extends MaterialButton {
 
     /**
      * Set the border color
-     * @param borderColor the border color as RGBA integer
+     * @param borderColorID the border color as RGBA integer
      */
-    public void setBorderColor(int borderColor) {
-        mBorderColor = borderColor;
-        setStrokeColorResource(mBorderColor);
+    public void setBorderColor(int borderColorID) {
+        int c;
+        try {
+            c = getResources().getColor(borderColorID);
+            mBorderColor = c;
+        } catch (Resources.NotFoundException e) {
+            borderColorID = R.color.colorPrimary;
+            mBorderColor = getResources().getColor(R.color.colorPrimary);
+        } finally {
+            setStrokeColorResource(borderColorID);
+        }
     }
 
     /**

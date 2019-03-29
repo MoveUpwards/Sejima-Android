@@ -26,14 +26,15 @@ public class MUButtonTests {
 
     private MUButton mMUButton;
     private float mScale;
+    private Context mContext;
 
     @Before
     public void setUp() {
-        Context context = ApplicationProvider.getApplicationContext();
-        context.setTheme(R.style.AppTheme);
-        mMUButton = new MUButton(context);
+        mContext = ApplicationProvider.getApplicationContext();
+        mContext.setTheme(R.style.AppTheme);
+        mMUButton = new MUButton(mContext);
         assertNotNull(mMUButton);
-        mScale = ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        mScale = ((float) mContext.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
 
     @Test
@@ -99,7 +100,7 @@ public class MUButtonTests {
         assertEquals(Color.CYAN, mMUButton.getBkgColor());
         // Border color
         mMUButton.setBorderColor(R.color.colorPrimary);
-        assertEquals(R.color.colorPrimary, mMUButton.getBorderColor());
+        assertEquals(mContext.getResources().getColor(R.color.colorPrimary), mMUButton.getBorderColor());
         mMUButton.setBorderWidth(15);
         assertEquals(15, mMUButton.getBorderWidth(),0);
         mMUButton.setCornerRadius(17);
@@ -114,4 +115,13 @@ public class MUButtonTests {
         });
         assertNotNull(mMUButton.getListener());
     }
+
+    @Test
+    public void notFoundBorderColorUseDefault() {
+        // Border color
+        mMUButton.setBorderColor(-4);
+        assertEquals(mContext.getResources().getColor(R.color.colorPrimary), mMUButton.getBorderColor());
+    }
+
+
 }
