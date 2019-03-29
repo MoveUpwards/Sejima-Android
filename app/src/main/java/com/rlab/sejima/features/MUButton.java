@@ -15,8 +15,6 @@ import android.view.Gravity;
 import com.google.android.material.button.MaterialButton;
 import com.rlab.sejima.R;
 
-import java.util.MissingResourceException;
-
 import androidx.core.graphics.ColorUtils;
 
 /*
@@ -131,7 +129,7 @@ public class MUButton extends MaterialButton {
         mLabelColor = attributes.getColor(R.styleable.MUButton_android_textColor, mLabelColor);
         mLabelFontSize = attributes.getDimensionPixelSize(R.styleable.MUButton_android_textSize, (int) getTextSize());
         mLabelFontWeight = attributes.getInt(R.styleable.MUButton_android_textStyle, mLabelFontWeight);
-        mLabelAlignment = attributes.getInt(R.styleable.MUButton_text_alignment, Gravity.CENTER);
+        mLabelAlignment = attributes.getInt(R.styleable.MUButton_text_alignment, mLabelAlignment);
         mLabelHighLightedColor = attributes.getColor(R.styleable.MUButton_pressed_color, mLabelHighLightedColor);
         mLabelProgressingColor = attributes.getColor(R.styleable.MUButton_progressing_color, mLabelProgressingColor);
         // Border
@@ -146,6 +144,55 @@ public class MUButton extends MaterialButton {
 
         init(context);
         attributes.recycle();
+    }
+
+    public MUButton(Context context, TypedArray attributes) {
+        super(context);
+
+        if(null != attributes){
+
+            mDisabledAlpha = attributes.hasValue(R.styleable.MUNavigationBar_disable_alpha) ?
+                    attributes.getFloat(R.styleable.MUNavigationBar_disable_alpha, mDisabledAlpha)
+                    : mDisabledAlpha;
+            mBkgColor = attributes.hasValue(R.styleable.MUNavigationBar_bkg_color) ?
+                    attributes.getColor(R.styleable.MUNavigationBar_bkg_color, mBkgColor)
+                    : mBkgColor;
+            mLabel = attributes.hasValue(R.styleable.MUNavigationBar_android_text) ?
+                    attributes.getString(R.styleable.MUNavigationBar_android_text)
+                    : mLabel;
+            mLabelColor = attributes.hasValue(R.styleable.MUNavigationBar_android_textColor) ?
+                    attributes.getColor(R.styleable.MUNavigationBar_android_textColor, mLabelColor)
+                    : mLabelColor;
+            mLabelFontSize = attributes.hasValue(R.styleable.MUNavigationBar_android_textSize) ?
+                    attributes.getDimensionPixelSize(R.styleable.MUNavigationBar_android_textSize, (int) getTextSize())
+                    : (int) getTextSize();
+            mLabelFontWeight = attributes.hasValue(R.styleable.MUNavigationBar_android_textStyle) ?
+                    attributes.getColor(R.styleable.MUNavigationBar_android_textStyle, mLabelFontWeight)
+                    : mLabelFontWeight;
+            mLabelAlignment = attributes.hasValue(R.styleable.MUNavigationBar_text_alignment) ?
+                    attributes.getInt(R.styleable.MUNavigationBar_text_alignment, mLabelAlignment)
+                    : mLabelAlignment;
+            mLabelHighLightedColor = attributes.hasValue(R.styleable.MUNavigationBar_pressed_color) ?
+                    attributes.getInt(R.styleable.MUNavigationBar_pressed_color, mLabelHighLightedColor)
+                    : mLabelHighLightedColor;
+            mLabelProgressingColor = attributes.hasValue(R.styleable.MUNavigationBar_progressing_color) ?
+                    attributes.getInt(R.styleable.MUNavigationBar_progressing_color, mLabelProgressingColor)
+                    : mLabelProgressingColor;
+            mBorderWidth = attributes.hasValue(R.styleable.MUNavigationBar_border_width) ?
+                    attributes.getDimensionPixelSize(R.styleable.MUNavigationBar_border_width, 0)
+                    : mBorderWidth;
+            mBorderColor = attributes.hasValue(R.styleable.MUNavigationBar_border_color) ?
+                    attributes.getColor(R.styleable.MUNavigationBar_border_color, mBorderColor)
+                    : mBorderColor;
+            mCornerRadius = attributes.hasValue(R.styleable.MUNavigationBar_corner_radius) ?
+                    attributes.getDimensionPixelSize(R.styleable.MUNavigationBar_corner_radius, mCornerRadius)
+                    : mBorderColor;
+            mIsLoading = attributes.hasValue(R.styleable.MUNavigationBar_is_loading) ?
+                    attributes.getBoolean(R.styleable.MUNavigationBar_is_loading, false)
+                    : mIsLoading;
+        }
+
+        init(context);
     }
 
     private void init(Context context){

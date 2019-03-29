@@ -3,12 +3,9 @@ package com.rlab.sejima.features;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -27,57 +24,9 @@ public class MUNavigationBar extends LinearLayout {
     private LinearLayout mSeparator;
 
     /**
-     * The alpha value for disabled state
-     */
-    private float mDisabledAlpha = 0.7f;
-    /**
-     * Label of the button
-     */
-    private String mLabel = "";
-    /**
-     * The label font size
-     */
-    private float mLabelFontSize;
-    /**
-     * The label font weight
-     */
-    private int mLabelFontWeight = Typeface.NORMAL;
-    /**
-     * The label font color
-     */
-    private int mLabelColor = Color.BLACK;
-    /**
-     * The label alignment
-     */
-    private int mLabelAlignment = Gravity.CENTER;
-    /**
-     * The label highlighted color
-     */
-    private int mLabelHighLightedColor = Color.BLACK;
-    /**
-     * The label progressing color
-     */
-    private int mLabelProgressingColor = Color.BLACK;
-    /**
-     * Show or hide the progress indicator
-     */
-    private boolean mIsLoading = false;
-    /**
      * Background color
      */
     private int mBkgColor = Color.LTGRAY;
-    /**
-     * Border color
-     */
-    private int mBorderColor = Color.LTGRAY;
-    /**
-     * Border width
-     */
-    private float mBorderWidth;
-    /**
-     * Corner radius
-     */
-    private int mCornerRadius;
     /**
      * Vertical padding
      */
@@ -115,7 +64,7 @@ public class MUNavigationBar extends LinearLayout {
 
     public MUNavigationBar(Context context) {
         super(context);
-        init(context);
+        init(context, null);
     }
 
     public MUNavigationBar(Context context, AttributeSet attrs) {
@@ -126,23 +75,11 @@ public class MUNavigationBar extends LinearLayout {
         mSeparatorColor = attributes.getColor(R.styleable.MUNavigationBar_separator_color, mSeparatorColor);
         mSeparatorWidth = attributes.getDimensionPixelSize(R.styleable.MUNavigationBar_separator_width, 0);
         mSeparatorMultiplier = normalizeMultiplierValue(attributes.getFloat(R.styleable.MUNavigationBar_separator_height_multiplier, mSeparatorMultiplier));
-        mLabel = attributes.getString(R.styleable.MUNavigationBar_android_text);
-        mLabelColor = attributes.getColor(R.styleable.MUNavigationBar_android_textColor, mLabelColor);
-        mLabelFontSize = attributes.getDimensionPixelSize(R.styleable.MUNavigationBar_android_textSize, 0);
-        mLabelFontWeight = attributes.getInt(R.styleable.MUNavigationBar_android_textStyle, mLabelFontWeight);
-        mLabelAlignment = attributes.getInt(R.styleable.MUNavigationBar_text_alignment, mLabelAlignment);
-        mLabelHighLightedColor = attributes.getColor(R.styleable.MUNavigationBar_pressed_color, mLabelHighLightedColor);
-        mLabelProgressingColor= attributes.getColor(R.styleable.MUNavigationBar_progressing_color, mLabelProgressingColor);
-        mBorderWidth = attributes.getDimensionPixelSize(R.styleable.MUNavigationBar_border_width, 0);
-        mBorderColor = attributes.getColor(R.styleable.MUNavigationBar_border_color, Color.BLUE);
-        mCornerRadius = attributes.getDimensionPixelSize(R.styleable.MUNavigationBar_corner_radius, 0);
-        mIsLoading = attributes.getBoolean(R.styleable.MUNavigationBar_is_loading, mIsLoading);
         mBkgColor = attributes.getColor(R.styleable.MUNavigationBar_bkg_color, 0);
-        mDisabledAlpha = attributes.getFloat(R.styleable.MUNavigationBar_disable_alpha, mDisabledAlpha);
         mVerticalPadding = attributes.getDimensionPixelSize(R.styleable.MUButton_android_paddingVertical, 0);
         mHorizontalPadding = attributes.getDimensionPixelSize(R.styleable.MUButton_android_paddingHorizontal, 0);
 
-        init(context);
+        init(context, attributes);
         attributes.recycle();
     }
 
@@ -153,7 +90,7 @@ public class MUNavigationBar extends LinearLayout {
     }
 
 
-    private void init(Context context){
+    private void init(Context context, TypedArray attributes){
         mScale = (float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
 
         setOrientation(HORIZONTAL);
@@ -179,37 +116,15 @@ public class MUNavigationBar extends LinearLayout {
         mSeparator.setBackgroundColor(mSeparatorColor);
         addView(mSeparator, lp);
 
-        mRightButton = new MUButton(context);
+        mRightButton = new MUButton(context, attributes);
         mRightButton.setOnClickListener(v -> {
             if(mListener != null) {
                 mListener.clickOnRightButton(this);
             }
         });
         addView(mRightButton, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-        // Background
-        setBkgColor(mBkgColor);
-        // Alphas
-        setDisabledAlpha(mDisabledAlpha);
-        //Label
-        mLabel = TextUtils.isEmpty(mLabel) ? "" : mLabel;
-        setLabel(mLabel);
-        setLabelColor(mLabelColor);
-        MUButton.MUButtonUtils.setStatesFontColor(mRightButton, mLabelColor, mLabelHighLightedColor, mLabelHighLightedColor);
-        mLabelFontSize = mLabelFontSize > 0 ? mLabelFontSize : mRightButton.getTextSize();
-        mRightButton.setTextSize(TypedValue.COMPLEX_UNIT_PX, mLabelFontSize);
-        setLabelFontWeight(mLabelFontWeight);
-        setLabelAlignment(mLabelAlignment);
-        setLabelProgressingColor(mLabelProgressingColor);
-        //Border
-        setBorderWidth(mBorderWidth);
-        MUButton.MUButtonUtils.setStatesBorderColor(mRightButton, mBorderColor, 1, mDisabledAlpha, mDisabledAlpha);
-        setCornerRadius(mCornerRadius);
-        //Padding
         setVerticalPadding(mVerticalPadding);
         setHorizontalPadding(mHorizontalPadding);
-        // Is loading
-        setLoading(mIsLoading);
     }
 
     /**
@@ -589,4 +504,4 @@ public class MUNavigationBar extends LinearLayout {
         multiplier = multiplier < 0 ? 0 : multiplier;
         return multiplier > 1 ? 1 : multiplier;
     }
-}
+} // 643 - 592
