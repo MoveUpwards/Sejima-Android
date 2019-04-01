@@ -3,7 +3,7 @@ package com.rlab.sejima;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.widget.RelativeLayout;
 
 import com.rlab.sejima.features.MUTopBar;
@@ -47,7 +47,7 @@ public class MUTopBarTests {
         // Title's color
         assertEquals(mMUTopBar.getTitleColor(), Color.WHITE);
         // Title's alignment
-        assertEquals(mMUTopBar.getTitleAlignment(), RelativeLayout.ALIGN_PARENT_START);
+        assertEquals(mMUTopBar.getTitleAlignment(), Gravity.START);
         // Button img
         assertEquals(mMUTopBar.getButtonImage(), R.drawable.ic_launcher_background);
         // Button's left leading
@@ -77,7 +77,7 @@ public class MUTopBarTests {
         assertEquals(mMUTopBar.getTitleColor(), Color.BLUE);
         // Title's alignment
         mMUTopBar.setTitleAlignment(RelativeLayout.ALIGN_PARENT_END);
-        assertEquals(mMUTopBar.getTitleAlignment(), RelativeLayout.ALIGN_PARENT_END);
+        assertEquals(mMUTopBar.getTitleAlignment(), Gravity.START);
 
         // Button img
         mMUTopBar.setButtonImage(R.mipmap.ic_launcher);

@@ -3,6 +3,7 @@ package com.rlab.sejima.fragments;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -80,9 +81,9 @@ public class FragmentMUTopBar extends DefaultFragment {
                 (buttonView, isChecked) -> mMUTopBar.setButtonHidden(isChecked));
 
         // Alignment
-        view.findViewById(R.id.control_mu_topbar_left).setOnClickListener(l -> mMUTopBar.setTitleAlignment(RelativeLayout.ALIGN_PARENT_START));
-        view.findViewById(R.id.control_mu_topbar_right).setOnClickListener(l -> mMUTopBar.setTitleAlignment(RelativeLayout.ALIGN_PARENT_END));
-        view.findViewById(R.id.control_mu_topbar_center).setOnClickListener(l -> mMUTopBar.setTitleAlignment(RelativeLayout.CENTER_HORIZONTAL));
+        view.findViewById(R.id.control_mu_topbar_left).setOnClickListener(l -> mMUTopBar.setTitleAlignment(Gravity.START));
+        view.findViewById(R.id.control_mu_topbar_right).setOnClickListener(l -> mMUTopBar.setTitleAlignment(Gravity.END));
+        view.findViewById(R.id.control_mu_topbar_center).setOnClickListener(l -> mMUTopBar.setTitleAlignment(Gravity.CENTER));
 
         // RAZ
         view.findViewById(R.id.control_mu_topbar_raz).setOnClickListener(v -> {

@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -131,6 +132,7 @@ public class MUTopBar extends RelativeLayout {
      * @param leftButtonLeading the left padding of ImageButton in dp.
      */
     public void setLeftButtonLeading(float leftButtonLeading) {
+        leftButtonLeading = leftButtonLeading > 0 ? leftButtonLeading : 0;
         mLeftButtonLeading = leftButtonLeading;
         mIBLeftButton.setLayoutParams(getLeftBtnLayoutParams(mLeftButtonWidth));
     }
@@ -174,9 +176,9 @@ public class MUTopBar extends RelativeLayout {
      * @return an integer representing the horizontal alignment.
      * Must be
      * <ul>
-     * <li>RelativeLayout.ALIGN_PARENT_START</li>
-     * <li>RelativeLayout.ALIGN_PARENT_END</li>
-     * <li>RelativeLayout.CENTER_HORIZONTAL</li>
+     * <li>Gravity.START</li>
+     * <li>Gravity.END</li>
+     * <li>Gravity.CENTER</li>
      * </ul>
      */
     public int getTitleAlignment() {
@@ -188,23 +190,17 @@ public class MUTopBar extends RelativeLayout {
      * @param titleAlignment the integer representing the horizontal alignment.
      * Must be
      * <ul>
-     * <li>RelativeLayout.ALIGN_PARENT_START</li>
-     * <li>RelativeLayout.ALIGN_PARENT_END</li>
-     * <li>RelativeLayout.CENTER_HORIZONTAL</li>
+     * <li>Gravity.START</li>
+     * <li>Gravity.END</li>
+     * <li>Gravity.CENTER</li>
      * </ul>
      */
     public void setTitleAlignment(int titleAlignment) {
-        LayoutParams ll = (LayoutParams) mTVLabel.getLayoutParams();
-        ll.removeRule(mTitleAlignment);
-
-        if (titleAlignment == RelativeLayout.ALIGN_PARENT_START) {
-            ll.addRule(RelativeLayout.END_OF, mIBLeftButton.getId());
-        } else { // ALIGN_PARENT_END or CENTER_HORIZONTAL
-            ll.removeRule(RelativeLayout.END_OF);
-            ll.addRule(titleAlignment, RelativeLayout.TRUE);
+        if (titleAlignment != Gravity.END && titleAlignment != Gravity.CENTER) {
+            titleAlignment = Gravity.START;
         }
 
-        mTVLabel.setLayoutParams(ll);
+        mTVLabel.setGravity(titleAlignment);
         mTitleAlignment = titleAlignment;
     }
 
@@ -340,15 +336,17 @@ public class MUTopBar extends RelativeLayout {
         setButtonImage(mButtonImage);
         addView(mIBLeftButton);
 
-        LayoutParams lpTVLabel = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LayoutParams lpTVLabel = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lpTVLabel.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+        lpTVLabel.addRule(RelativeLayout.END_OF, mIBLeftButton.getId());
+
 
         mTVLabel = new TextView(context);
         mTVLabel.setLayoutParams(lpTVLabel);
         mTVLabel.setText(mTitle);
         mTVLabel.setTextColor(mTitleColor);
         mTitleFontSize = mTitleFontSize != 0 ? mTitleFontSize : DEFAULT_TITLE_SIZE_IN_SP;
-        mTVLabel.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTitleFontSize);
+        mTVLabel.setTextSize(mTitleFontSize);
         mTVLabel.setTypeface(Typeface.create(Typeface.DEFAULT, mTitleFontWeight));
         setTitleAlignment(mTitleAlignment);
         addView(mTVLabel);
