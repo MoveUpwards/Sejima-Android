@@ -246,8 +246,7 @@ public class MUHeader extends RelativeLayout {
     }
 
     public void setVerticalSpacing(int verticalSpacing) {
-        verticalSpacing = verticalSpacing > 0 ? verticalSpacing : 0;
-        mVerticalSpacing = verticalSpacing;
+        mVerticalSpacing = Math.max(0, verticalSpacing);
         mTVDetail.setPadding(0, mVerticalSpacing, 0, 0);
     }
 

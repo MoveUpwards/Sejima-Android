@@ -25,7 +25,7 @@ public class FragmentMUButton extends DefaultFragment {
 
     @Override
     int layoutId() {
-        return R.layout.fragment_mu_avatar;
+        return R.layout.fragment_mu_button;
     }
 
     @Override
@@ -36,8 +36,8 @@ public class FragmentMUButton extends DefaultFragment {
         int alignment = mMUButton.getLabelAlignment();
         int cornerRadius = mMUButton.getCornerRadius();
         float borderWidth = mMUButton.getBorderWidth();
-        float hPad = mMUButton.getHorizontalPadding();
-        float vPad = mMUButton.getVerticalPadding();
+        int hPad = mMUButton.getHorizontalPadding();
+        int vPad = mMUButton.getVerticalPadding();
 
         mMUButton.setListener(button ->
                 Toast.makeText(getContext(), "Click on button", Toast.LENGTH_SHORT).show());
@@ -57,9 +57,9 @@ public class FragmentMUButton extends DefaultFragment {
 
         // Label size
         view.findViewById(R.id.control_mu_button_title_less).setOnClickListener(
-                l -> mMUButton.setLabelFontSize((mMUButton.getLabelFontWeight() - 1)));
+                l -> mMUButton.setLabelFontSize((mMUButton.getLabelFontSize() - 1)));
         view.findViewById(R.id.control_mu_button_title_more).setOnClickListener(
-                l -> mMUButton.setLabelFontSize((mMUButton.getLabelFontWeight()  + 1)));
+                l -> mMUButton.setLabelFontSize((mMUButton.getLabelFontSize()  + 1)));
 
         // Alignment
         view.findViewById(R.id.control_mu_button_left).setOnClickListener(
@@ -95,7 +95,7 @@ public class FragmentMUButton extends DefaultFragment {
 
         // Border color
         ((Switch) view.findViewById(R.id.control_mu_button_border_color)).setOnCheckedChangeListener(
-                (buttonView, isChecked) -> mMUButton.setBkgColor(isChecked ?
+                (buttonView, isChecked) -> mMUButton.setBorderColor(isChecked ?
                         getResources().getColor(R.color.colorAccent) :
                         getResources().getColor(R.color.colorPrimaryDark)));
 
@@ -113,15 +113,15 @@ public class FragmentMUButton extends DefaultFragment {
 
         // Horizontal padding
         view.findViewById(R.id.control_mu_button_horizontal_less).setOnClickListener(l ->
-                mMUButton.setHorizontalPadding((mMUButton.getHorizontalPadding() - 1)));
+                mMUButton.setHorizontalPadding((int) (mMUButton.getHorizontalPadding() - 1)));
         view.findViewById(R.id.control_mu_button_horizontal_more).setOnClickListener(l ->
-                mMUButton.setHorizontalPadding((mMUButton.getHorizontalPadding() + 1)));
+                mMUButton.setHorizontalPadding((int) (mMUButton.getHorizontalPadding() + 1)));
 
         // Vertical padding
-        view.findViewById(R.id.control_mu_button_horizontal_less).setOnClickListener(l ->
-                mMUButton.setVerticalPadding((mMUButton.getVerticalPadding() - 1)));
-        view.findViewById(R.id.control_mu_button_horizontal_more).setOnClickListener(l ->
-                mMUButton.setVerticalPadding((mMUButton.getVerticalPadding() + 1)));
+        view.findViewById(R.id.control_mu_button_vertical_less).setOnClickListener(l ->
+                mMUButton.setVerticalPadding((int) (mMUButton.getVerticalPadding() - 1)));
+        view.findViewById(R.id.control_mu_button_vertical_more).setOnClickListener(l ->
+                mMUButton.setVerticalPadding((int) (mMUButton.getVerticalPadding() + 1)));
 
         // RAZ
         view.findViewById(R.id.control_mu_button_raz).setOnClickListener(v -> {

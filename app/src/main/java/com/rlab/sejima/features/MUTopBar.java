@@ -8,7 +8,6 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -132,8 +131,7 @@ public class MUTopBar extends RelativeLayout {
      * @param leftButtonLeading the left padding of ImageButton in dp.
      */
     public void setLeftButtonLeading(float leftButtonLeading) {
-        leftButtonLeading = leftButtonLeading > 0 ? leftButtonLeading : 0;
-        mLeftButtonLeading = leftButtonLeading;
+        mLeftButtonLeading = Math.max(0, leftButtonLeading);
         mIBLeftButton.setLayoutParams(getLeftBtnLayoutParams(mLeftButtonWidth));
     }
 

@@ -3,7 +3,6 @@ package com.rlab.sejima;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.util.DisplayMetrics;
 import android.view.Gravity;
 
 import com.rlab.sejima.features.MUButton;
@@ -24,7 +23,6 @@ import static org.junit.Assert.assertTrue;
 public class MUButtonTests {
 
     private MUButton mMUButton;
-    private float mScale;
 
     @Before
     public void setUp() {
@@ -32,7 +30,6 @@ public class MUButtonTests {
         context.setTheme(R.style.AppTheme);
         mMUButton = new MUButton(context);
         assertNotNull(mMUButton);
-        mScale = ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
 
     @Test
@@ -59,8 +56,8 @@ public class MUButtonTests {
         assertEquals(0, mMUButton.getBorderWidth(),0);
         assertEquals(0, mMUButton.getCornerRadius(),0);
         // Padding
-        assertEquals(0, mMUButton.getHorizontalPadding(),0);
-        assertEquals(0, mMUButton.getVerticalPadding(),0);
+        assertEquals(18, mMUButton.getHorizontalPadding(),0);
+        assertEquals(18, mMUButton.getVerticalPadding(),0);
         // Listener
         assertNotNull(mMUButton.getListener());
     }
@@ -79,7 +76,7 @@ public class MUButtonTests {
         mMUButton.setLabel("c");
         assertEquals("c", mMUButton.getLabel());
         mMUButton.setLabelFontSize(12);
-        assertEquals(12 * mScale, mMUButton.getLabelFontSize(), 0);
+        assertEquals(12, mMUButton.getLabelFontSize(), 0);
         mMUButton.setLabelFontWeight(Typeface.BOLD);
         assertEquals(Typeface.BOLD, mMUButton.getLabelFontWeight());
         mMUButton.setLabelColor(Color.BLUE);

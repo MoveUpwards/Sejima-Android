@@ -13,9 +13,7 @@ import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 
 import com.rlab.sejima.R;
@@ -121,10 +119,6 @@ public class MUAvatar extends AppCompatImageView {
      * The current corner radius (=1000) in case of circle border
      */
     private float mCornerRadius;
-    /**
-     * The scale used to convert px in dp
-     */
-    private float mScale;
 
     /**
      * Default constructor
@@ -156,7 +150,6 @@ public class MUAvatar extends AppCompatImageView {
     }
 
     private void init(Context context) {
-        mScale = (float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
 
         setImageDrawable(mImage);
         setScaleType(ScaleType.CENTER_CROP);
@@ -463,8 +456,7 @@ public class MUAvatar extends AppCompatImageView {
      * @param borderWidth the border width in pixels
      */
     public void setBorderWidth(float borderWidth) {
-        borderWidth = borderWidth >= 0 ? borderWidth : 0;
-        mBorderWidth = borderWidth * mScale;
+        mBorderWidth = Math.max(0, borderWidth);
         invalidate();
     }
 
@@ -495,7 +487,7 @@ public class MUAvatar extends AppCompatImageView {
      * Set the corner radius
      */
     public void setCornerRadius(float cornerRadius) {
-        cornerRadius = cornerRadius >= 0 ? cornerRadius : 0;
+        cornerRadius = Math.max(0, cornerRadius);
         mCornerRadius = mBorderType == SQUARE_BORDER ? cornerRadius : 1000;
         invalidate();
     }

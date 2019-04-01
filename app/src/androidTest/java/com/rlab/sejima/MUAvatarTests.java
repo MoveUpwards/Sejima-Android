@@ -23,7 +23,6 @@ public class MUAvatarTests {
 
 
     private MUAvatar mMUAvatar;
-    private float mScale;
     private Context mContext;
 
     @Before
@@ -32,7 +31,6 @@ public class MUAvatarTests {
         mContext = ApplicationProvider.getApplicationContext();
         mMUAvatar = new MUAvatar(mContext);
         assertNotNull(mMUAvatar);
-        mScale = ((float) mContext.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
 
     @Test
@@ -43,7 +41,7 @@ public class MUAvatarTests {
         // Border color
         assertEquals(mMUAvatar.getBorderColor(), Color.BLACK);
         // Border width
-        assertEquals(mMUAvatar.getBorderWidth(), MUAvatar.DEFAULT_BORDER_WIDTH_IN_DP  * mScale, 0);
+        assertEquals(mMUAvatar.getBorderWidth(), MUAvatar.DEFAULT_BORDER_WIDTH_IN_DP, 0);
         // Border type
         assertEquals(mMUAvatar.getBorderType(), MUAvatar.SQUARE_BORDER, 0);
         // Corner radius
@@ -67,7 +65,7 @@ public class MUAvatarTests {
         assertEquals(mMUAvatar.getBorderColor(), Color.RED);
         // Border width
         mMUAvatar.setBorderWidth(12);
-        assertEquals(mMUAvatar.getBorderWidth(), 12  * mScale, 0);
+        assertEquals(mMUAvatar.getBorderWidth(), 12 , 0);
         // Corner radius
         mMUAvatar.setCornerRadius(15);
         assertEquals(mMUAvatar.getCornerRadius(), 15, 0);
