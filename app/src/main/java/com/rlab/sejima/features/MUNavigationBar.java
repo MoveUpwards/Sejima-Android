@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.rlab.sejima.R;
 
@@ -29,11 +30,11 @@ public class MUNavigationBar extends LinearLayout {
     /**
      * Vertical padding
      */
-    private float mVerticalPadding;
+    private float mVerticalPadding = 18;
     /**
      * Horizontal padding
      */
-    private float mHorizontalPadding;
+    private float mHorizontalPadding = 18;
     /**
      * The drawable image of the ImageButton
      */
@@ -70,8 +71,6 @@ public class MUNavigationBar extends LinearLayout {
         mSeparatorWidth = attributes.getDimensionPixelSize(R.styleable.MUNavigationBar_separator_width, 0);
         mSeparatorMultiplier = normalizeMultiplierValue(attributes.getFloat(R.styleable.MUNavigationBar_separator_height_multiplier, mSeparatorMultiplier));
         mBkgColor = attributes.getColor(R.styleable.MUNavigationBar_bkg_color, 0);
-        mVerticalPadding = attributes.getDimensionPixelSize(R.styleable.MUButton_android_paddingVertical, 0);
-        mHorizontalPadding = attributes.getDimensionPixelSize(R.styleable.MUButton_android_paddingHorizontal, 0);
 
         init(context, attributes);
         attributes.recycle();
@@ -291,6 +290,7 @@ public class MUNavigationBar extends LinearLayout {
      * @param bkgColor the color as RGBA integer
      */
     public void setBkgColor(int bkgColor) {
+        setBackgroundColor(bkgColor);
         mRightButton.setBkgColor(bkgColor);
     }
 

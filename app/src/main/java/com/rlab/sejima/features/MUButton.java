@@ -26,7 +26,7 @@ import androidx.core.graphics.ColorUtils;
 public class MUButton extends RelativeLayout {
 
 
-    public int DEFAULT_TEXT_SIZE = 21;
+//    public int DEFAULT_TEXT_SIZE = 21;
     /**
      * OnCLickListener to handle clicks
      */
@@ -50,7 +50,7 @@ public class MUButton extends RelativeLayout {
     /**
      * The label font size
      */
-    private float mLabelFontSize;
+    private float mLabelFontSize = 21;
     /**
      * The label font weight
      */
@@ -136,7 +136,7 @@ public class MUButton extends RelativeLayout {
         // Label
         mLabel = attributes.getString(R.styleable.MUButton_android_text);
         mLabelColor = attributes.getColor(R.styleable.MUButton_android_textColor, mLabelColor);
-        mLabelFontSize = attributes.getDimensionPixelSize(R.styleable.MUButton_android_textSize, DEFAULT_TEXT_SIZE);
+        mLabelFontSize = attributes.getDimensionPixelSize(R.styleable.MUButton_android_textSize, (int) mLabelFontSize);
         mLabelFontWeight = attributes.getInt(R.styleable.MUButton_android_textStyle, mLabelFontWeight);
         mLabelAlignment = attributes.getInt(R.styleable.MUButton_text_alignment, mLabelAlignment);
         mLabelHighLightedColor = attributes.getColor(R.styleable.MUButton_pressed_color, mLabelHighLightedColor);
@@ -173,7 +173,7 @@ public class MUButton extends RelativeLayout {
                     attributes.getColor(R.styleable.MUNavigationBar_android_textColor, mLabelColor)
                     : mLabelColor;
             mLabelFontSize = attributes.hasValue(R.styleable.MUNavigationBar_android_textSize) ?
-                    attributes.getDimensionPixelSize(R.styleable.MUNavigationBar_android_textSize, DEFAULT_TEXT_SIZE)
+                    attributes.getDimensionPixelSize(R.styleable.MUNavigationBar_android_textSize, (int) mLabelFontSize)
                     : mLabelFontSize;
             mLabelFontWeight = attributes.hasValue(R.styleable.MUNavigationBar_android_textStyle) ?
                     attributes.getColor(R.styleable.MUNavigationBar_android_textStyle, mLabelFontWeight)
@@ -199,6 +199,12 @@ public class MUButton extends RelativeLayout {
             mIsLoading = attributes.hasValue(R.styleable.MUNavigationBar_is_loading) ?
                     attributes.getBoolean(R.styleable.MUNavigationBar_is_loading, false)
                     : mIsLoading;
+            mHorizontalPadding = attributes.hasValue(R.styleable.MUNavigationBar_android_paddingHorizontal) ?
+                    attributes.getDimensionPixelSize(R.styleable.MUNavigationBar_android_paddingHorizontal, mHorizontalPadding)
+                    : mHorizontalPadding;
+            mVerticalPadding = attributes.hasValue(R.styleable.MUNavigationBar_android_paddingVertical) ?
+                    attributes.getDimensionPixelSize(R.styleable.MUNavigationBar_android_paddingVertical, mVerticalPadding)
+                    : mVerticalPadding;
         }
 
         init(context);

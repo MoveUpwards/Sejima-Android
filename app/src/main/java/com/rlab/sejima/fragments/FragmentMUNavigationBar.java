@@ -44,7 +44,7 @@ public class FragmentMUNavigationBar extends DefaultFragment {
 
         // Bkg color
         ((Switch) view.findViewById(R.id.control_mu_navbar_bkg_color)).setOnCheckedChangeListener((buttonView, isChecked) ->
-                mMUNavigationBar.setBkgColor(isChecked ? getResources().getColor(R.color.colorAccent) : Color.TRANSPARENT));
+                mMUNavigationBar.setBkgColor(getResources().getColor(isChecked ? R.color.colorAccent : R.color.colorPrimary)));
 
         // Drawable
         ((Switch) view.findViewById(R.id.control_mu_navbar_image)).setOnCheckedChangeListener((buttonView, isChecked) ->
@@ -52,7 +52,7 @@ public class FragmentMUNavigationBar extends DefaultFragment {
 
         // Separator color
         ((Switch) view.findViewById(R.id.control_mu_navbar_separator_color)).setOnCheckedChangeListener((buttonView, isChecked) ->
-                mMUNavigationBar.setSeparatorColor(isChecked ? getResources().getColor(R.color.colorPrimary) : Color.BLACK));
+                mMUNavigationBar.setSeparatorColor(isChecked ? getResources().getColor(R.color.colorPrimaryDark) : Color.BLACK));
 
         // Separator width
         view.findViewById(R.id.control_mu_navbar_separator_less).setOnClickListener(l ->

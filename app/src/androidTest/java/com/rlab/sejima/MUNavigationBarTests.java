@@ -3,7 +3,6 @@ package com.rlab.sejima;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.util.DisplayMetrics;
 import android.view.Gravity;
 
 import com.rlab.sejima.features.MUNavigationBar;
@@ -25,16 +24,13 @@ import static org.junit.Assert.assertTrue;
 public class MUNavigationBarTests {
 
     private MUNavigationBar mMUNavigationBar;
-    private float mScale;
-    private Context mContext;
 
     @Before
     public void setUp() {
-        mContext = ApplicationProvider.getApplicationContext();
-        mContext.setTheme(R.style.AppTheme);
-        mMUNavigationBar = new MUNavigationBar(mContext);
+        Context context = ApplicationProvider.getApplicationContext();
+        context.setTheme(R.style.AppTheme);
+        mMUNavigationBar = new MUNavigationBar(context);
         assertNotNull(mMUNavigationBar);
-        mScale = ((float) mContext.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
 
     @Test
@@ -59,8 +55,8 @@ public class MUNavigationBarTests {
         assertEquals(0, mMUNavigationBar.getBorderWidth(),0);
         assertEquals(0, mMUNavigationBar.getCornerRadius(),0);
         // Padding
-        assertEquals(0, mMUNavigationBar.getHorizontalPadding(),0);
-        assertEquals(0, mMUNavigationBar.getVerticalPadding(),0);
+        assertEquals(18, mMUNavigationBar.getHorizontalPadding(),0);
+        assertEquals(18, mMUNavigationBar.getVerticalPadding(),0);
         // Separator
         assertEquals(Color.BLACK, mMUNavigationBar.getSeparatorColor(),0);
         assertEquals(0, mMUNavigationBar.getSeparatorWidth(),0);
@@ -79,7 +75,7 @@ public class MUNavigationBarTests {
         mMUNavigationBar.setLabel("c");
         assertEquals("c", mMUNavigationBar.getLabel());
         mMUNavigationBar.setLabelFontSize(12);
-        assertEquals(12 * mScale, mMUNavigationBar.getLabelFontSize(), 0);
+        assertEquals(12, mMUNavigationBar.getLabelFontSize(), 0);
         mMUNavigationBar.setLabelFontWeight(Typeface.BOLD);
         assertEquals(Typeface.BOLD, mMUNavigationBar.getLabelFontWeight());
         mMUNavigationBar.setLabelColor(Color.BLUE);
