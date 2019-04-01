@@ -11,6 +11,7 @@ import android.view.View;
 import com.google.android.material.navigation.NavigationView;
 import com.rlab.sejima.fragments.DefaultFragment;
 import com.rlab.sejima.fragments.FragmentMUAvatar;
+import com.rlab.sejima.fragments.FragmentMUButton;
 import com.rlab.sejima.fragments.FragmentMUHeader;
 import com.rlab.sejima.fragments.FragmentMUTopBar;
 
@@ -93,6 +94,8 @@ public class Main2Activity extends AppCompatActivity
             fragment = FragmentMUHeader.newInstance();
         } else if (id == R.id.nav_mu_topbar) {
             fragment = FragmentMUTopBar.newInstance();
+        } else if (id == R.id.nav_mu_button) {
+            fragment = FragmentMUButton.newInstance();
         } else  {
             fragment = PlaceholderFragment.newInstance(0);
         }

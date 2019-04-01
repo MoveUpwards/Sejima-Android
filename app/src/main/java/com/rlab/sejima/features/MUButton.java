@@ -31,7 +31,7 @@ public class MUButton extends RelativeLayout {
     /**
      * OnCLickListener to handle clicks
      */
-    private OnClickListener mListener = v -> { };
+    private OnClickListener mListener = v -> {};
     /**
      * The current background alpha
      */
@@ -397,12 +397,15 @@ public class MUButton extends RelativeLayout {
      * @param labelAlignment the label alignment as integer.
      * Must be one of those
      * <ul>
-     *      <li>Gravity.LEFT</li>
+     *      <li>Gravity.START</li>
      *      <li>Gravity.CENTER</li>
-     *      <li>Gravity.RIGHT</li>
+     *      <li>Gravity.END</li>
      * </ul>
      */
     public void setLabelAlignment(int labelAlignment) {
+        if (labelAlignment != Gravity.END && labelAlignment != Gravity.CENTER) {
+            labelAlignment = Gravity.START;
+        }
         mLabelAlignment = labelAlignment|Gravity.CENTER_VERTICAL;
         setGravity(mLabelAlignment);
     }

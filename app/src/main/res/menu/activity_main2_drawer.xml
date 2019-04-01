@@ -34,6 +34,10 @@
                     android:id="@+id/nav_mu_topbar"
                     android:icon="@drawable/ic_menu_manage"
                     android:title="MUTopBar" />
+                <item
+                    android:id="@+id/nav_mu_button"
+                    android:icon="@drawable/ic_menu_manage"
+                    android:title="MUButton" />
             </group>
         </menu>
     </item>

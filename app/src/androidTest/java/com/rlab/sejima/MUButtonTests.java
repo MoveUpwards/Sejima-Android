@@ -25,15 +25,14 @@ public class MUButtonTests {
 
     private MUButton mMUButton;
     private float mScale;
-    private Context mContext;
 
     @Before
     public void setUp() {
-        mContext = ApplicationProvider.getApplicationContext();
-        mContext.setTheme(R.style.AppTheme);
-        mMUButton = new MUButton(mContext);
+        Context context = ApplicationProvider.getApplicationContext();
+        context.setTheme(R.style.AppTheme);
+        mMUButton = new MUButton(context);
         assertNotNull(mMUButton);
-        mScale = ((float) mContext.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        mScale = ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
 
     @Test
@@ -53,7 +52,6 @@ public class MUButtonTests {
         assertEquals(Color.BLACK, mMUButton.getProgressingColor());
         // Is loading
         assertFalse(mMUButton.isLoading());
-//        assertEquals(mMUButton.getProgressBar().getVisibility(), GONE);
         // Bkg color
         assertEquals(Color.LTGRAY, mMUButton.getBkgColor());
         // Border color
@@ -112,8 +110,7 @@ public class MUButtonTests {
         mMUButton.setVerticalPadding(18);
         assertEquals(18, mMUButton.getVerticalPadding(),0);
         // Listener
-        mMUButton.setListener(v -> {
-        });
+        mMUButton.setListener(v -> {});
         assertNotNull(mMUButton.getListener());
     }
 }
