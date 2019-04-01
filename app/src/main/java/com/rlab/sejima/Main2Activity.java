@@ -90,6 +90,8 @@ public class Main2Activity extends AppCompatActivity
             fragment = FragmentMUAvatar.newInstance();
         } else if (id == R.id.nav_mu_header) {
             fragment = FragmentMUHeader.newInstance();
+        } else if (id == R.id.nav_mu_topbar) {
+            fragment = FragmentMUHeader.newInstance();
         } else  {
             fragment = PlaceholderFragment.newInstance(0);
         }

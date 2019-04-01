@@ -19,7 +19,7 @@
             <!--android:title="Tools" />-->
     <!--</group>-->
 
-    <item android:title="Communicate">
+    <item android:title="MUComponents">
         <menu>
             <group android:checkableBehavior="single">
                 <item
@@ -30,6 +30,10 @@
                     android:id="@+id/nav_mu_avatar"
                     android:icon="@drawable/ic_menu_manage"
                     android:title="MUAvatar" />
+                <item
+                    android:id="@+id/nav_mu_topbar"
+                    android:icon="@drawable/ic_menu_manage"
+                    android:title="MUTopBar" />
             </group>
         </menu>
     </item>
