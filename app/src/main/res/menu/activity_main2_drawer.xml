@@ -23,6 +23,10 @@
         <menu>
             <group android:checkableBehavior="single">
                 <item
+                    android:id="@+id/nav_mu_horizontalpager"
+                    android:icon="@drawable/ic_menu_manage"
+                    android:title="MUHorizontalPager" />
+                <item
                     android:id="@+id/nav_mu_header"
                     android:icon="@drawable/ic_menu_manage"
                     android:title="MUHeader" />

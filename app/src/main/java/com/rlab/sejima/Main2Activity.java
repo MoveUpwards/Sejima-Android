@@ -1,34 +1,31 @@
 package com.rlab.sejima;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import android.view.LayoutInflater;
-import android.view.View;
-
 import com.google.android.material.navigation.NavigationView;
-import com.rlab.sejima.fragments.DefaultFragment;
+import com.google.android.material.snackbar.Snackbar;
 import com.rlab.sejima.fragments.FragmentMUAvatar;
 import com.rlab.sejima.fragments.FragmentMUButton;
 import com.rlab.sejima.fragments.FragmentMUHeader;
+import com.rlab.sejima.fragments.FragmentMUHorizontalPager;
 import com.rlab.sejima.fragments.FragmentMUNavigationBar;
 import com.rlab.sejima.fragments.FragmentMUTopBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.ViewGroup;
 
 public class Main2Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -50,8 +47,10 @@ public class Main2Activity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        loadFragment(FragmentMUHorizontalPager.newInstance());
     }
 
     @Override
@@ -65,31 +64,14 @@ public class Main2Activity extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main2, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         Fragment fragment = null;
 
-        if (id == R.id.nav_mu_avatar) {
+        if (id == R.id.nav_mu_horizontalpager) {
+            fragment = FragmentMUHorizontalPager.newInstance();
+        } else if (id == R.id.nav_mu_avatar) {
             fragment = FragmentMUAvatar.newInstance();
         } else if (id == R.id.nav_mu_header) {
             fragment = FragmentMUHeader.newInstance();
@@ -103,20 +85,24 @@ public class Main2Activity extends AppCompatActivity
             fragment = PlaceholderFragment.newInstance(0);
         }
 
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.frame_layout, fragment);
-        ft.commit();
+        loadFragment(fragment);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
+    private void loadFragment(Fragment fragment){
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.frame_layout, fragment);
+        ft.commit();
+    }
+
     public static class PlaceholderFragment extends Fragment {
 
         private static String COMPONENT = "component-to-launch";
 
-        public static PlaceholderFragment newInstance(int component){
+        static PlaceholderFragment newInstance(int component){
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle bundle = new Bundle();
             bundle.putInt(COMPONENT, component);
@@ -127,8 +113,7 @@ public class Main2Activity extends AppCompatActivity
         @Nullable
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.activity_main, container, false);
-            return rootView;
+            return inflater.inflate(R.layout.activity_main, container, false);
         }
     }
 }
