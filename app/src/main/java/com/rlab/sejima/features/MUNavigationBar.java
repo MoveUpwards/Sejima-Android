@@ -5,7 +5,6 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -57,11 +56,6 @@ public class MUNavigationBar extends LinearLayout {
      */
     private MUNavigationBarListener mListener;
 
-    /**
-     * The scale to convert pixels into dp
-     */
-    private float mScale;
-
     public MUNavigationBar(Context context) {
         super(context);
         init(context, null);
@@ -91,7 +85,6 @@ public class MUNavigationBar extends LinearLayout {
 
 
     private void init(Context context, TypedArray attributes){
-        mScale = (float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
 
         setOrientation(HORIZONTAL);
         setBackgroundColor(mBkgColor);
@@ -112,7 +105,7 @@ public class MUNavigationBar extends LinearLayout {
 
         mSeparator = new LinearLayout(context);
         LayoutParams lp = new LayoutParams((int) mSeparatorWidth, ViewGroup.LayoutParams.MATCH_PARENT);
-        lp.setMargins((int) (5 * mScale),0, (int) (5 * mScale),0);
+        lp.setMargins(5,0, 5,0);
         mSeparator.setBackgroundColor(mSeparatorColor);
         addView(mSeparator, lp);
 
@@ -137,7 +130,7 @@ public class MUNavigationBar extends LinearLayout {
 
 
     /**
-     * Set tthe current label
+     * Set the current label
      * @param label the label as String
      */
     public void setLabel(String label) {
@@ -362,7 +355,8 @@ public class MUNavigationBar extends LinearLayout {
      * @param verticalPadding the vertical padding value in pixels
      */
     public void setVerticalPadding(float verticalPadding) {
-        mVerticalPadding = verticalPadding;
+        mVerticalPadding = Math.max(0, verticalPadding);
+        mRightButton.setVerticalPadding((int) mVerticalPadding);
     }
 
     /**
@@ -378,7 +372,9 @@ public class MUNavigationBar extends LinearLayout {
      * @param horizontalPadding the horizontal padding value in pixels
      */
     public void setHorizontalPadding(float horizontalPadding) {
-        mHorizontalPadding = horizontalPadding;
+        mHorizontalPadding = Math.max(0, horizontalPadding);
+        mRightButton.setHorizontalPadding((int) mHorizontalPadding);
+
     }
 
     /**
@@ -457,7 +453,7 @@ public class MUNavigationBar extends LinearLayout {
      */
     private void updateSeparatorParams(int newWidth, int newHeight){
         LayoutParams lp = new LayoutParams(newWidth, newHeight);
-        lp.setMargins((int) (5 * mScale),0, (int) (5 * mScale),0);
+        lp.setMargins(5,0, 5,0);
         mSeparator.setLayoutParams(lp);
         invalidate();
     }
@@ -474,7 +470,7 @@ public class MUNavigationBar extends LinearLayout {
      * Attached a listener to handle user clicks
      * @param listener the interface listener
      */
-    public void setListener(MUNavigationBarListener listener) {
+    public void setMUNavigationBarListener(MUNavigationBarListener listener) {
         mListener = listener;
     }
 
@@ -501,7 +497,7 @@ public class MUNavigationBar extends LinearLayout {
      * @return the normalized value of multiplier
      */
     static float normalizeMultiplierValue(float multiplier) {
-        multiplier = multiplier < 0 ? 0 : multiplier;
-        return multiplier > 1 ? 1 : multiplier;
+        multiplier = Math.max(multiplier,0);
+        return Math.min(multiplier, 1);
     }
 } // 643 - 592

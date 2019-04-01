@@ -13,6 +13,7 @@ import com.rlab.sejima.fragments.DefaultFragment;
 import com.rlab.sejima.fragments.FragmentMUAvatar;
 import com.rlab.sejima.fragments.FragmentMUButton;
 import com.rlab.sejima.fragments.FragmentMUHeader;
+import com.rlab.sejima.fragments.FragmentMUNavigationBar;
 import com.rlab.sejima.fragments.FragmentMUTopBar;
 
 import androidx.annotation.NonNull;
@@ -96,6 +97,8 @@ public class Main2Activity extends AppCompatActivity
             fragment = FragmentMUTopBar.newInstance();
         } else if (id == R.id.nav_mu_button) {
             fragment = FragmentMUButton.newInstance();
+        } else if (id == R.id.nav_mu_navigationbar) {
+            fragment = FragmentMUNavigationBar.newInstance();
         } else  {
             fragment = PlaceholderFragment.newInstance(0);
         }

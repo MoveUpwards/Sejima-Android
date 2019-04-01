@@ -569,7 +569,7 @@ public class MUButton extends RelativeLayout {
      */
     public void setVerticalPadding(int verticalPadding) {
         mVerticalPadding = Math.max(verticalPadding, 0);
-        mButton.setPadding(mButton.getPaddingLeft(), (int) (verticalPadding / 2), mButton.getPaddingRight(),  (int) (verticalPadding / 2));
+        mButton.setPadding(mButton.getPaddingLeft(), (verticalPadding / 2), mButton.getPaddingRight(),  (verticalPadding / 2));
     }
 
     /**

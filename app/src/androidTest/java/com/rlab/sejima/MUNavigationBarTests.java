@@ -6,7 +6,6 @@ import android.graphics.Typeface;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 
-import com.rlab.sejima.features.MUButton;
 import com.rlab.sejima.features.MUNavigationBar;
 
 import org.junit.Before;
@@ -117,7 +116,7 @@ public class MUNavigationBarTests {
         mMUNavigationBar.setSeparatorMultiplier(3);
         assertEquals(1, mMUNavigationBar.getSeparatorMultiplier(),0);
         // Listener
-        mMUNavigationBar.setListener(new MUNavigationBar.MUNavigationBarListener() {
+        mMUNavigationBar.setMUNavigationBarListener(new MUNavigationBar.MUNavigationBarListener() {
             @Override
             public void clickOnLeftButton(MUNavigationBar muNavigationBar) {
 
