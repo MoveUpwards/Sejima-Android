@@ -8,7 +8,6 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,10 +30,6 @@ public class MUTopBar extends RelativeLayout {
      */
     public final static int DEFAULT_BUTTON_WIDTH_IN_SP = 40;
 
-    /**
-     * The scale used to convert px in dp
-     */
-    private float mScale;
     /**
      * The TextView to display the title
      */
@@ -133,10 +128,10 @@ public class MUTopBar extends RelativeLayout {
 
     /**
      * Set the left padding of ImageButton
-     * @param leftButtonLeading the left padding of ImageButton in pixels.
+     * @param leftButtonLeading the left padding of ImageButton in dp.
      */
     public void setLeftButtonLeading(float leftButtonLeading) {
-        mLeftButtonLeading = leftButtonLeading * mScale;
+        mLeftButtonLeading = leftButtonLeading;
         mIBLeftButton.setLayoutParams(getLeftBtnLayoutParams(mLeftButtonWidth));
     }
 
@@ -150,10 +145,10 @@ public class MUTopBar extends RelativeLayout {
 
     /**
      * Set the left button width of ImageButton
-     * @param leftButtonWidth the left button width in pixels.
+     * @param leftButtonWidth the left button width in dp.
      */
     public void setLeftButtonWidth(float leftButtonWidth) {
-        mLeftButtonWidth = leftButtonWidth * mScale;
+        mLeftButtonWidth = leftButtonWidth;
         updateImageWidth(mLeftButtonWidth);
     }
 
@@ -223,11 +218,11 @@ public class MUTopBar extends RelativeLayout {
 
     /**
      * Set the font size
-     * @param titleFontSize the title font size in pixels.
+     * @param titleFontSize the title font size in dp.
      */
     public void setTitleFontSize(float titleFontSize) {
-        mTitleFontSize = titleFontSize * mScale;
-        mTVLabel.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTitleFontSize);
+        mTitleFontSize = titleFontSize;
+        mTVLabel.setTextSize(mTitleFontSize);
     }
 
     /**
@@ -274,7 +269,7 @@ public class MUTopBar extends RelativeLayout {
 
     /**
      * Get the code color of the title.
-     * @return the code color as RGBA integer.
+     * @return the code color as ARGB integer.
      */
     public int getTitleColor() {
         return mTitleColor;
@@ -282,7 +277,7 @@ public class MUTopBar extends RelativeLayout {
 
     /**
      * Set the color of the text
-     * @param titleColor the title color as RGBA integer.
+     * @param titleColor the title color as ARGB integer.
      */
     public void setTitleColor(int titleColor) {
         mTitleColor = titleColor;
@@ -335,12 +330,10 @@ public class MUTopBar extends RelativeLayout {
      * @param context the view context
      */
     private void init(Context context) {
-        mScale = (float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
-
         LayoutParams lpRoot = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         setLayoutParams(lpRoot);
 
-        mLeftButtonWidth = mLeftButtonWidth != 0 ? mLeftButtonWidth : (int) (DEFAULT_BUTTON_WIDTH_IN_SP * mScale);
+        mLeftButtonWidth = mLeftButtonWidth != 0 ? mLeftButtonWidth : DEFAULT_BUTTON_WIDTH_IN_SP;
         mIBLeftButton = new ImageButton(context);
         mIBLeftButton.setId(View.generateViewId());
         mIBLeftButton.setLayoutParams(getLeftBtnLayoutParams(mLeftButtonWidth));
@@ -354,7 +347,7 @@ public class MUTopBar extends RelativeLayout {
         mTVLabel.setLayoutParams(lpTVLabel);
         mTVLabel.setText(mTitle);
         mTVLabel.setTextColor(mTitleColor);
-        mTitleFontSize = mTitleFontSize != 0 ? mTitleFontSize : DEFAULT_TITLE_SIZE_IN_SP * mScale;
+        mTitleFontSize = mTitleFontSize != 0 ? mTitleFontSize : DEFAULT_TITLE_SIZE_IN_SP;
         mTVLabel.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTitleFontSize);
         mTVLabel.setTypeface(Typeface.create(Typeface.DEFAULT, mTitleFontWeight));
         setTitleAlignment(mTitleAlignment);

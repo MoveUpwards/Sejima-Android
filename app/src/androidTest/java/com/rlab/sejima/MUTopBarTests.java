@@ -25,14 +25,12 @@ import static org.junit.Assert.assertTrue;
 public class MUTopBarTests {
 
     private MUTopBar mMUTopBar;
-    private float mScale;
 
     @Before
     public void setUp() {
         Context context = ApplicationProvider.getApplicationContext();
         mMUTopBar = new MUTopBar(context);
         assertNotNull(mMUTopBar);
-        mScale = ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
 
     @Test
@@ -42,7 +40,7 @@ public class MUTopBarTests {
         // Title
         assertEquals(mMUTopBar.getTitle(), "");
         // Title's size
-        defaultSize = MUTopBar.DEFAULT_TITLE_SIZE_IN_SP * mScale;
+        defaultSize = MUTopBar.DEFAULT_TITLE_SIZE_IN_SP;
         assertEquals(mMUTopBar.getTitleFontSize(), defaultSize, 0);
         // Title's font weight
         assertEquals(mMUTopBar.getTitleFontWeight(), Typeface.NORMAL);
@@ -55,7 +53,7 @@ public class MUTopBarTests {
         // Button's left leading
         assertEquals(mMUTopBar.getLeftButtonLeading(), 0, 0);
         // Button's width
-        defaultSize = MUTopBar.DEFAULT_BUTTON_WIDTH_IN_SP * mScale;
+        defaultSize = MUTopBar.DEFAULT_BUTTON_WIDTH_IN_SP;
         assertEquals(mMUTopBar.getLeftButtonWidth(), defaultSize, 0);
         // Button's visibility
         assertFalse(mMUTopBar.isButtonHidden());
@@ -70,7 +68,7 @@ public class MUTopBarTests {
         assertEquals(mMUTopBar.getTitle(), "CUSTOM");
         // Title's size
         mMUTopBar.setTitleFontSize(25);
-        assertEquals(mMUTopBar.getTitleFontSize(), 25 * mScale, 0);
+        assertEquals(mMUTopBar.getTitleFontSize(), 25, 0);
         // Title's font weight
         mMUTopBar.setTitleFontWeight(Typeface.BOLD);
         assertEquals(mMUTopBar.getTitleFontWeight(), Typeface.BOLD);
@@ -86,10 +84,10 @@ public class MUTopBarTests {
         assertEquals(mMUTopBar.getButtonImage(), R.mipmap.ic_launcher);
         // Button's left leading
         mMUTopBar.setLeftButtonLeading(25);
-        assertEquals(mMUTopBar.getLeftButtonLeading(), mScale * 25, 0);
+        assertEquals(mMUTopBar.getLeftButtonLeading(), 25, 0);
         // Button's width
         mMUTopBar.setLeftButtonWidth(25);
-        assertEquals(mMUTopBar.getLeftButtonWidth(), mScale * 25, 0);
+        assertEquals(mMUTopBar.getLeftButtonWidth(), 25, 0);
         // Button's visibility
         mMUTopBar.setButtonHidden(true);
         assertTrue(mMUTopBar.isButtonHidden());

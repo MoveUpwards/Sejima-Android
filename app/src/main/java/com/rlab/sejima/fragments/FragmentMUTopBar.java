@@ -9,16 +9,12 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rlab.sejima.R;
 import com.rlab.sejima.features.MUTopBar;
 
 public class FragmentMUTopBar extends DefaultFragment {
-
-
-    private boolean mShowButton = true;
-    private MUTopBar.MUTopBarClickListener mClickListener;
-
 
     private MUTopBar mMUTopBar;
 
@@ -38,6 +34,9 @@ public class FragmentMUTopBar extends DefaultFragment {
         float defaultLeading = mMUTopBar.getLeftButtonLeading();
         float btnWidth = mMUTopBar.getLeftButtonWidth();
         int alignment = mMUTopBar.getTitleAlignment();
+
+        mMUTopBar.setMUTopBarClickListener(() ->
+                Toast.makeText(getContext(), "Click on MUTopBar", Toast.LENGTH_SHORT).show());
 
         // Title
         EditText etTitle = view.findViewById(R.id.control_mu_topbar_et_title);
