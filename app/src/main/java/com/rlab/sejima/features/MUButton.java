@@ -25,8 +25,7 @@ import androidx.core.graphics.ColorUtils;
  */
 public class MUButton extends RelativeLayout {
 
-
-//    public int DEFAULT_TEXT_SIZE = 21;
+    
     /**
      * OnCLickListener to handle clicks
      */
@@ -214,16 +213,17 @@ public class MUButton extends RelativeLayout {
 
         mButton = new MaterialButton(context);
         mButton.setId(View.generateViewId());
-        addView(mButton);
+        LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        addView(mButton, lp);
 
         mProgressBar = new ProgressBar(context);
         mProgressBar.setIndeterminate(true);
-        LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.addRule(RelativeLayout.ALIGN_END, mButton.getId());
-        lp.addRule(RelativeLayout.ALIGN_START, mButton.getId());
-        lp.addRule(RelativeLayout.ALIGN_TOP, mButton.getId());
-        lp.addRule(RelativeLayout.ALIGN_BOTTOM, mButton.getId());
-        addView(mProgressBar, lp);
+        LayoutParams lp2 = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp2.addRule(RelativeLayout.ALIGN_END, mButton.getId());
+        lp2.addRule(RelativeLayout.ALIGN_START, mButton.getId());
+        lp2.addRule(RelativeLayout.ALIGN_TOP, mButton.getId());
+        lp2.addRule(RelativeLayout.ALIGN_BOTTOM, mButton.getId());
+        addView(mProgressBar, lp2);
 
         // Background
         setBkgColor(mBkgColor);

@@ -26,6 +26,7 @@ public class MUHorizontalPager extends ViewPager {
     private MUHorizontalPager mRootView;
     private MyPagerAdapter mMyPagerAdapter;
     private MUHorizontalPagerListener mMUHorizontalPagerListener;
+    private MUPageControl.MUPageControlListener mMUPageControlListener;
 
     /**
      * Default constructor
@@ -71,6 +72,9 @@ public class MUHorizontalPager extends ViewPager {
                 mCurrentIndex = position;
                 if (null !=  mMUHorizontalPagerListener){
                     mMUHorizontalPagerListener.scrolledTo(mRootView, position);
+                }
+                if (null !=  mMUPageControlListener){
+                    mMUPageControlListener.clickOnIndex(null, position);
                 }
             }
 
@@ -158,6 +162,22 @@ public class MUHorizontalPager extends ViewPager {
      */
     public void setMUHorizontalPagerListener(MUHorizontalPagerListener myListener) {
         mMUHorizontalPagerListener = myListener;
+    }
+
+    /**
+     * Get the attached {@link com.rlab.sejima.features.MUPageControl.MUPageControlListener}
+     * @return the attached PageCOntrolListener attached; null if not
+     */
+    public MUPageControl.MUPageControlListener getMUPageControlListener() {
+        return mMUPageControlListener;
+    }
+
+    /**+
+     * Attach a {@link com.rlab.sejima.features.MUPageControl.MUPageControlListener}
+     * @param MUPageControlListener the listener for page control
+     */
+    public void setMUPageControlListener(MUPageControl.MUPageControlListener MUPageControlListener) {
+        mMUPageControlListener = MUPageControlListener;
     }
 
     /**
