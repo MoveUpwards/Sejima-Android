@@ -3,8 +3,6 @@ package com.rlab.sejima;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
 import android.util.DisplayMetrics;
 import android.widget.RelativeLayout;
 
@@ -13,6 +11,10 @@ import com.rlab.sejima.features.MUHeader;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -25,7 +27,7 @@ public class MUHeaderTests {
 
     @Before
     public void setUp() {
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = ApplicationProvider.getApplicationContext();
         mMUHeader = new MUHeader(context);
         mScale = (float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT;
         assertNotNull(mMUHeader);

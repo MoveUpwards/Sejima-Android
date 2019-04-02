@@ -7,6 +7,7 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+
     <com.rlab.sejima.features.MUHeader
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -73,11 +74,69 @@
 
     <com.rlab.sejima.features.MUAvatar
         android:id="@+id/muavatar"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         app:border_type="circle"
         app:border_width="1dp"
         android:src="@drawable/avatar"/>
+
+    <LinearLayout style="@style/Separator" />
+
+    <com.rlab.sejima.features.MUButton
+        android:id="@+id/mu_button"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        app:border_alpha="1"
+        app:cornerRadius="5dp"
+        app:strokeColor="@color/colorPrimaryDark"
+        app:strokeWidth="2dp"
+        app:text_alignment="center" />
+
+    <LinearLayout style="@style/Separator" />
+
+    <com.rlab.sejima.features.MUNavigationBar
+        android:id="@+id/mu_navbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_launcher"
+        android:text="@string/title"
+        app:bkg_color="@color/colorPrimary"
+        android:layout_margin="5dp"
+        app:border_width="2dp"
+        app:separator_color="@color/colorAccent"
+        app:separator_height_multiplier="0.8"
+        app:separator_width="2dp"
+        app:progressing_color="#f00"
+        app:text_alignment="start" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="border width"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btn_5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="sep. height"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btn_6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="loading"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
 
     <LinearLayout style="@style/Separator" />
 

@@ -3,8 +3,6 @@ package com.rlab.sejima;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
 import android.util.DisplayMetrics;
 import android.widget.RelativeLayout;
 
@@ -13,6 +11,9 @@ import com.rlab.sejima.features.MUTopBar;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -28,7 +29,7 @@ public class MUTopBarTests {
 
     @Before
     public void setUp() {
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = ApplicationProvider.getApplicationContext();
         mMUTopBar = new MUTopBar(context);
         assertNotNull(mMUTopBar);
         mScale = ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);

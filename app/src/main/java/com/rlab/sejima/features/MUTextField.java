@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.support.v7.widget.AppCompatEditText;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -19,6 +18,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.rlab.sejima.R;
+
+import androidx.appcompat.widget.AppCompatEditText;
 
 public class MUTextField extends RelativeLayout {
 
@@ -175,7 +176,7 @@ public class MUTextField extends RelativeLayout {
         LayoutParams lpEVInput = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lpEVInput.addRule(mAlignment, RelativeLayout.TRUE);
         lpEVInput.addRule(RelativeLayout.BELOW, mTVLabel.getId());
-        mETInput = new android.support.v7.widget.AppCompatEditText(context){
+        mETInput = new AppCompatEditText(context){
             @Override
             protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
                 super.onFocusChanged(focused, direction, previouslyFocusedRect);
@@ -279,7 +280,7 @@ public class MUTextField extends RelativeLayout {
 
     /**
      * Get the label's color
-     * @return the label's color as RGBA int
+     * @return the label's color as ARGB int
      */
     public int getLabelColor() {
         return mLabelColor;
@@ -287,7 +288,7 @@ public class MUTextField extends RelativeLayout {
 
     /**
      * Set the label's color
-     * @param labelColor the label color as as RGBA int
+     * @param labelColor the label color as as ARGB int
      */
     public void setLabelColor(int labelColor) {
         mLabelColor = labelColor;
@@ -382,7 +383,7 @@ public class MUTextField extends RelativeLayout {
 
     /**
      * Get the input field's color
-     * @return the input field's color as RGBA integer
+     * @return the input field's color as ARGB integer
      */
     public int getFieldColor() {
         return mFieldColor;
@@ -390,7 +391,7 @@ public class MUTextField extends RelativeLayout {
 
     /**
      * Set the input field's color
-     * @param fieldColor the color as RGBA integer
+     * @param fieldColor the color as ARGB integer
      */
     public void setFieldColor(int fieldColor) {
         mFieldColor = fieldColor;
@@ -534,7 +535,7 @@ public class MUTextField extends RelativeLayout {
 
     /**
      * Get the color of the placeholder's text
-     * @return the color as RGBA integer
+     * @return the color as ARGB integer
      */
     public int getPlaceHolderFontColor() {
         return mPlaceHolderFontColor;
@@ -542,7 +543,7 @@ public class MUTextField extends RelativeLayout {
 
     /**
      * Set the placeholder's text color
-     * @param placeHolderFontColor the color as RGBA integer
+     * @param placeHolderFontColor the color as ARGB integer
      */
     public void setPlaceHolderFontColor(int placeHolderFontColor) {
         mPlaceHolderFontColor = placeHolderFontColor;
@@ -567,7 +568,7 @@ public class MUTextField extends RelativeLayout {
 
     /**
      * Get the input field's underline color
-     * @return the color as RGBA integer
+     * @return the color as ARGB integer
      */
     public int getUnderlineColor() {
         return mUnderlineColor;
@@ -575,7 +576,7 @@ public class MUTextField extends RelativeLayout {
 
     /**
      * Set the input field's underline color
-     * @param underlineColor the color as RGBA integer
+     * @param underlineColor the color as ARGB integer
      */
     public void setUnderlineColor(int underlineColor) {
         mUnderlineColor = underlineColor;

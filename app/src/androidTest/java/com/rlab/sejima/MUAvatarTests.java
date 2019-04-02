@@ -3,8 +3,6 @@ package com.rlab.sejima;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
 import android.util.DisplayMetrics;
 
 import com.rlab.sejima.features.MUAvatar;
@@ -12,12 +10,15 @@ import com.rlab.sejima.features.MUAvatar;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+
+import androidx.test.core.app.ApplicationProvider;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-@RunWith(AndroidJUnit4.class)
+@RunWith(JUnit4.class)
 public class MUAvatarTests {
 
 
@@ -27,7 +28,8 @@ public class MUAvatarTests {
 
     @Before
     public void setUp() {
-        mContext = InstrumentationRegistry.getTargetContext();
+
+        mContext = ApplicationProvider.getApplicationContext();
         mMUAvatar = new MUAvatar(mContext);
         assertNotNull(mMUAvatar);
         mScale = ((float) mContext.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);

@@ -1,17 +1,20 @@
 package com.rlab.sejima;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.AppCompatImageView;
 import android.text.InputType;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.rlab.sejima.features.MUAvatar;
+import com.rlab.sejima.features.MUButton;
+import com.rlab.sejima.features.MUNavigationBar;
 import com.rlab.sejima.features.MUTextField;
 import com.rlab.sejima.features.MUTopBar;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.AppCompatImageView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
         MUTextField.MUTextFieldListener, MUAvatar.MUAvatarClickListener {
@@ -24,6 +27,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * The MUTextField to be tested
      */
     private MUTextField mMUTextField;
+    /**
+     * The MUAvatar to be tested
+     */
+    private MUNavigationBar mMUNavBar;
 
     /**
      * A flag to update security of MUTextField
@@ -38,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private int keyboardType = InputType.TYPE_CLASS_TEXT;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +55,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btn_1).setOnClickListener(this);
         findViewById(R.id.btn_2).setOnClickListener(this);
         findViewById(R.id.btn_3).setOnClickListener(this);
+        findViewById(R.id.btn_4).setOnClickListener(this);
+        findViewById(R.id.btn_5).setOnClickListener(this);
+        findViewById(R.id.btn_6).setOnClickListener(this);
+        findViewById(R.id.mu_button).setOnClickListener(this);
 
         MUTopBar mMUTopBar = findViewById(R.id.mu_topbar);
         mMUTopBar.setMUTopBarClickListener(() -> {
@@ -53,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
         mMUTextField = findViewById(R.id.mutf1);
+        mMUNavBar = findViewById(R.id.mu_navbar);
 
         MUAvatar mMUAvatar = findViewById(R.id.muavatar);
         mMUAvatar.setPlaceholderImage(getResources().getDrawable(R.mipmap.ic_launcher));
@@ -80,19 +94,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         InputType.TYPE_CLASS_NUMBER : InputType.TYPE_CLASS_TEXT;
                 mMUTextField.setKeyboardType(keyboardType);
                 break;
+            case R.id.btn_4:
+                // Border width
+                mMUNavBar.setBorderWidth((float) (mMUNavBar.getBorderWidth() * 1.1));
+                break;
+            case R.id.btn_5:
+                // Separator height
+                mMUNavBar.setSeparatorMultiplier((float) (mMUNavBar.getSeparatorMultiplier() * 0.9));
+                break;
+            case R.id.btn_6:
+                // Loading
+                mMUNavBar.setLoading(!mMUNavBar.isLoading());
+                break;
+            case R.id.mu_button:
+                MUButton b = (MUButton) v;
+                b.setLoading(!b.isLoading());
+                Toast.makeText(getApplicationContext(), "Click on MUButton", Toast.LENGTH_SHORT).show();
+                break;
         }
-    }
-
-    @Override
-    public void isSelecting(AppCompatEditText textField) {
-    }
-
-    @Override
-    public void focusLost(AppCompatEditText textField) {
-    }
-
-    @Override
-    public void textUpdated(AppCompatEditText textField) {
     }
 
     @Override
@@ -101,5 +120,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ((MUAvatar) imageView).setBorderType(bAvatar ? MUAvatar.ROUND_BORDER : MUAvatar.SQUARE_BORDER);
         ((MUAvatar) imageView).setCornerRadius(bAvatar ? -1 : 25);
         bAvatar = !bAvatar;
+    }
+
+    @Override
+    public void focusLost(AppCompatEditText textField) {
+
+    }
+
+    @Override
+    public void isSelecting(AppCompatEditText textField) {
+
+    }
+
+    @Override
+    public void textUpdated(AppCompatEditText textField) {
+
     }
 }

@@ -12,6 +12,19 @@
         <enum name="end" value="21"/>
         <enum name="center" value="14"/>
     </attr>
+    <attr name="corner_radius" format="dimension"/>
+    <attr name="pressed_color" format="color"/>
+    <attr name="progressing_color" format="color"/>
+    <attr name="border_width" format="dimension"/>
+    <attr name="disable_alpha" format="float"/>
+    <attr name="border_color" format="color"/>
+    <attr name="is_loading" format="boolean"/>
+    <attr name="bkg_color" format="color"/>
+    <attr name="text_alignment" format="enum">
+        <enum name="start" value="3"/>
+        <enum name="center" value="17"/>
+        <enum name="end" value="5"/>
+    </attr>
 
     <declare-styleable name="MUHeader">
         <attr name="title"/>
@@ -19,7 +32,6 @@
         <attr name="title_weight"/>
         <attr name="title_color"/>
         <attr name="alignment"/>
-
         <attr name="detail" format="string"/>
         <attr name="detail_size" format="dimension"/>
         <attr name="detail_color" format="color"/>
@@ -70,15 +82,58 @@
     </declare-styleable>
 
     <declare-styleable name="MUAvatar">
-        <attr name="corner_radius" format="dimension"/>
+        <attr name="corner_radius"/>
         <attr name="android:src"/>
-        <attr name="border_width" format="dimension"/>
-        <attr name="border_color" format="color"/>
-        <attr name="bkg_color" format="color"/>
+        <attr name="border_width"/>
+        <attr name="border_color"/>
+        <attr name="bkg_color"/>
         <attr name="border_type" format="enum">
             <enum name="square" value="0"/>
             <enum name="circle" value="1"/>
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="MUButton">
+        <attr name="android:alpha"/>
+        <attr name="android:text"/>
+        <attr name="android:textColor"/>
+        <attr name="android:textSize"/>
+        <attr name="android:textStyle"/>
+        <attr name="strokeColor"/>
+        <attr name="strokeWidth"/>
+        <attr name="cornerRadius"/>
+        <attr name="bkg_color"/>
+        <attr name="disable_alpha"/>
+        <attr name="text_alignment"/>
+        <attr name="pressed_color"/>
+        <attr name="progressing_color"/>
+        <attr name="is_loading"/>
+        <attr name="border_alpha" format="float"/>
+        <attr name="android:paddingVertical"/>
+        <attr name="android:paddingHorizontal"/>
+    </declare-styleable>
+
+    <declare-styleable name="MUNavigationBar">
+        <attr name="android:src"/>
+        <attr name="separator_color" format="color"/>
+        <attr name="separator_width" format="dimension"/>
+        <attr name="separator_height_multiplier" format="float"/>
+        <attr name="android:text"/>
+        <attr name="android:textColor"/>
+        <attr name="android:textSize"/>
+        <attr name="android:textStyle"/>
+        <attr name="text_alignment"/>
+        <attr name="pressed_color"/>
+        <attr name="progressing_color"/>
+        <attr name="border_width"/>
+        <attr name="border_color"/>
+        <attr name="corner_radius"/>
+        <attr name="is_loading"/>
+        <attr name="bkg_color"/>
+        <attr name="disable_alpha"/>
+        <attr name="android:paddingVertical"/>
+        <attr name="android:paddingHorizontal"/>
+    </declare-styleable>
+
 
 </resources>
