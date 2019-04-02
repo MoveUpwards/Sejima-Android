@@ -3,12 +3,115 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.rlab.sejima.features.MUHorizontalPager
-        android:id="@+id/mu_horizontalepager"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp">
+        android:layout_height="200dp"
+        android:padding="20dp"
+        android:background="@color/colorPrimary">
 
-    </com.rlab.sejima.features.MUHorizontalPager>
+        <com.rlab.sejima.features.MUHorizontalPager
+            android:id="@+id/mu_horizontalpager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"/>
+
+    </RelativeLayout>
+
+    <LinearLayout style="@style/Separator"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Navigation"/>
+
+                <Button
+                    android:id="@+id/control_mu_horizontalpager_previous"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="previous"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/control_mu_horizontalpager_next"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="next"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:text="Horizontal margins"/>
+
+                <Button
+                    android:id="@+id/control_mu_horizontalpager_margin_less"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="-"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/control_mu_horizontalpager_margin_more"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="+"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:text="Listener Off / On"/>
+
+                <Switch
+                    android:id="@+id/control_mu_horizontalpager_listener"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout style="@style/Separator"/>
+
+            <Button
+                android:id="@+id/control_mu_horizontalpager_raz"
+                android:layout_width="match_parent"
+                android:text="Default values"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
 
 </LinearLayout>

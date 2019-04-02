@@ -25,6 +25,11 @@ public class FragmentMUAvatar extends DefaultFragment {
     }
 
     @Override
+    String title() {
+        return "MUAvatar";
+    }
+
+    @Override
     void initView(View view) {
         mMUAvatar = view.findViewById(R.id.mu_avatar);
         float cornerRadius = mMUAvatar.getCornerRadius();

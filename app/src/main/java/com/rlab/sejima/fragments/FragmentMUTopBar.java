@@ -29,6 +29,11 @@ public class FragmentMUTopBar extends DefaultFragment {
     }
 
     @Override
+    String title() {
+        return "MUTopBar";
+    }
+
+    @Override
     void initView(View view) {
         mMUTopBar = view.findViewById(R.id.mu_topbar);
         float titleSize = mMUTopBar.getTitleFontSize();

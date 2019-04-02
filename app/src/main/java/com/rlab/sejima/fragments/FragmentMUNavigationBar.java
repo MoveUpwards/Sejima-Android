@@ -22,7 +22,10 @@ public class FragmentMUNavigationBar extends DefaultFragment {
         return R.layout.fragment_mu_navigationbar;
     }
 
-    private float mSeparatorMultiplier = 1;
+    @Override
+    String title() {
+        return "MUNavigationBar";
+    }
 
     @Override
     void initView(View view) {

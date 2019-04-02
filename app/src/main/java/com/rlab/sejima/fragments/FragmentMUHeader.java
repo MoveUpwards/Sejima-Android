@@ -25,6 +25,11 @@ public class FragmentMUHeader extends DefaultFragment {
     }
 
     @Override
+    String title() {
+        return "MUHeader";
+    }
+
+    @Override
     void initView(View view) {
         mMUHeader = view.findViewById(R.id.mu_header);
         float titleSize = mMUHeader.getTitleSize();

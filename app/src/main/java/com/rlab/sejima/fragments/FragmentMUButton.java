@@ -29,6 +29,11 @@ public class FragmentMUButton extends DefaultFragment {
     }
 
     @Override
+    String title() {
+        return "MUButton";
+    }
+
+    @Override
     void initView(View view) {
         mMUButton = view.findViewById(R.id.mu_button);
 
