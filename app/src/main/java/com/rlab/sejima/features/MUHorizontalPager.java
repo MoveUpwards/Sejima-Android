@@ -3,11 +3,10 @@ package com.rlab.sejima.features;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.rlab.sejima.R;
+import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.LinkedList;
 
@@ -68,20 +67,25 @@ public class MUHorizontalPager extends ViewPager implements MUPageControl.MUPage
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        setPadding((int) mHorizontalMargins, 0, (int) mHorizontalMargins, 0);
+//        setPadding((int) mHorizontalMargins, 0, (int) mHorizontalMargins, 0);
     }
 
-    private void init(Context context){
+    private void init(Context context) {
         mRootView = this;
-        mMyPagerAdapter = new MyPagerAdapter(context);
+        mMyPagerAdapter = new MyPagerAdapter();
         setAdapter(mMyPagerAdapter);
 
-        mMyPagerAdapter.addView(new MViewObject(R.string.title, R.layout.test_pager));
-        mMyPagerAdapter.addView(new MViewObject(R.string.title, R.layout.fragment_mu_avatar));
-        mMyPagerAdapter.addView(new MViewObject(R.string.title, R.layout.test_pager));
-        mMyPagerAdapter.addView(new MViewObject(R.string.title, R.layout.fragment_mu_avatar));
-        mMyPagerAdapter.addView(new MViewObject(R.string.title, R.layout.test_pager));
-        mMyPagerAdapter.addView(new MViewObject(R.string.title, R.layout.fragment_mu_avatar));
+        TextView tv = new TextView(context);
+        tv.setText("TextView");
+
+        Button b = new Button(context);
+        b.setText("Button");
+        addViews(new View[]{tv, b}, 10);
+
+        MUHeader muHeader = new MUHeader(context);
+        muHeader.setTitle("header");
+        muHeader.setDetail("detail test");
+        addSubView(muHeader, 50f);
 
 
         addOnPageChangeListener(new OnPageChangeListener() {
@@ -109,10 +113,22 @@ public class MUHorizontalPager extends ViewPager implements MUPageControl.MUPage
         });
     }
 
-    //TODO
     private void addViews(View[] views, float margins){
-        View v = views[0];
-//        v.getLa
+        for(View v : views){
+            v.setPadding((int) margins, (int) margins, (int) margins, (int) margins);
+            mMyPagerAdapter.addView(v);
+        }
+        if(null != getMUPageControl()){
+            getMUPageControl().setNumberPages(mMyPagerAdapter.getCount());
+        }
+    }
+
+    private void addSubView(View view, float margins){
+        view.setPadding((int) margins, (int) margins, (int) margins, (int) margins);
+        mMyPagerAdapter.addView(view);
+        if(null != getMUPageControl()){
+            getMUPageControl().setNumberPages(mMyPagerAdapter.getCount());
+        }
     }
 
     /**
@@ -146,7 +162,7 @@ public class MUHorizontalPager extends ViewPager implements MUPageControl.MUPage
      */
     public void setHorizontalMargins(float horizontalMargins) {
         mHorizontalMargins = Math.max(horizontalMargins, 0);
-        invalidate();
+        getAdapter().updateMargins(horizontalMargins);
     }
 
     /**
@@ -206,82 +222,32 @@ public class MUHorizontalPager extends ViewPager implements MUPageControl.MUPage
         mMUHorizontalPagerListener = myListener;
     }
 
-    @Override
-    public void clickOnIndex(MUPageControl muPageControl, int index) {
-        this.setCurrentIndex(index, true);
-    }
-
-
-    /**
-     * Representation of a page as an object
-     */
-    public static class MViewObject {
-
-        /**
-         * The title resource id of the view
-         */
-        private int mTitleResId;
-        /**
-         * The layout resource id
-         */
-        private int mLayoutResId;
-
-        /**
-         * Constructor for pages
-         * @param titleResId title resource id of the view
-         * @param layoutResId layout resource id
-         */
-        MViewObject(int titleResId, int layoutResId) {
-            mTitleResId = titleResId;
-            mLayoutResId = layoutResId;
-        }
-
-        /**
-         * Get the resource id of the title
-         * @return the resource id of the title
-         */
-        int getTitleResId() {
-            return mTitleResId;
-        }
-
-        /**
-         * Get tje layout id for the page
-         * @return the layout resource id
-         */
-        int getLayoutResId() {
-            return mLayoutResId;
-        }
-    }
-
     /**
      * A custom adapter extending PagerAdapter
      */
     public static class MyPagerAdapter extends PagerAdapter {
 
         /**
-         * The context used to inflate the pages
-         */
-        private Context mContext;
-        /**
          * The list containing the current pages attached to the adapter
          */
-        private LinkedList<MViewObject> mViews;
+        private LinkedList<View> mViews;
 
         /**
          * Constructor of the custom adapter
-         * @param context the context used to inflate the pages
          */
-        MyPagerAdapter(Context context) {
-            mContext = context;
+        MyPagerAdapter() {
             mViews = new LinkedList<>();
         }
 
-        /**
-         * Enable to add a view to the current view pager
-         * @param view the view to attach
-         */
-        void addView(MViewObject view){
+        void addView(View view){
             mViews.add(view);
+            notifyDataSetChanged();
+        }
+
+        private void updateMargins(float newMargins){
+            for(View v : mViews){
+                v.setPadding((int) newMargins, (int) newMargins, (int) newMargins, (int) newMargins);
+            }
             notifyDataSetChanged();
         }
 
@@ -299,25 +265,18 @@ public class MUHorizontalPager extends ViewPager implements MUPageControl.MUPage
             return view == object;
         }
 
+        @NonNull
         @Override
-        public Object instantiateItem(ViewGroup collection, int position) {
-            MViewObject currentView = mViews.get(position);
-            LayoutInflater inflater = LayoutInflater.from(mContext);
-            View layout = inflater.inflate(currentView.getLayoutResId(), collection, false);
-            collection.addView(layout);
-            return layout;
+        public Object instantiateItem(@NonNull ViewGroup collection, int position) {
+            collection.addView(mViews.get(position));
+            return mViews.get(position);
         }
 
         @Override
-        public void destroyItem(ViewGroup collection, int position, Object view) {
+        public void destroyItem(@NonNull ViewGroup collection, int position, @NonNull Object view) {
             collection.removeView((View) view);
         }
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-            MViewObject currentView = mViews.get(position);
-            return mContext.getString(currentView.getTitleResId());
-        }
     }
 
     /**
@@ -332,4 +291,8 @@ public class MUHorizontalPager extends ViewPager implements MUPageControl.MUPage
         void scrolledTo(MUHorizontalPager horizontalPager, int toIndex);
     }
 
-}
+    @Override
+    public void clickOnIndex(MUPageControl muPageControl, int index) {
+        this.setCurrentIndex(index, true);
+    }
+} // 328
