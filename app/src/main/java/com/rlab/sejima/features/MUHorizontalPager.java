@@ -17,16 +17,34 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 /*
-    Created by Antoine RICHE on 01/04/2019.
+    Created by Antoine RICHE on 2019/04/01.
  */
-public class MUHorizontalPager extends ViewPager {
+public class MUHorizontalPager extends ViewPager implements MUPageControl.MUPageControlListener {
 
+    /**
+     * The current index of the view pager
+     */
     private int mCurrentIndex = 0;
+    /**
+     * The horizontal margins used for subviews
+     */
     private float mHorizontalMargins = 0;
+    /**
+     * The container view
+     */
     private MUHorizontalPager mRootView;
-    private MyPagerAdapter mMyPagerAdapter;
+    /**
+     * The listener for scroll events
+     */
     private MUHorizontalPagerListener mMUHorizontalPagerListener;
-    private MUPageControl.MUPageControlListener mMUPageControlListener;
+    /**
+     * The page adapter attached to the view pager
+     */
+    private MyPagerAdapter mMyPagerAdapter;
+    /**
+     * The page control attached to the view pager
+     */
+    private MUPageControl mMUPageControl;
 
     /**
      * Default constructor
@@ -60,6 +78,11 @@ public class MUHorizontalPager extends ViewPager {
 
         mMyPagerAdapter.addView(new MViewObject(R.string.title, R.layout.test_pager));
         mMyPagerAdapter.addView(new MViewObject(R.string.title, R.layout.fragment_mu_avatar));
+        mMyPagerAdapter.addView(new MViewObject(R.string.title, R.layout.test_pager));
+        mMyPagerAdapter.addView(new MViewObject(R.string.title, R.layout.fragment_mu_avatar));
+        mMyPagerAdapter.addView(new MViewObject(R.string.title, R.layout.test_pager));
+        mMyPagerAdapter.addView(new MViewObject(R.string.title, R.layout.fragment_mu_avatar));
+
 
         addOnPageChangeListener(new OnPageChangeListener() {
             @Override
@@ -73,8 +96,9 @@ public class MUHorizontalPager extends ViewPager {
                 if (null !=  mMUHorizontalPagerListener){
                     mMUHorizontalPagerListener.scrolledTo(mRootView, position);
                 }
-                if (null !=  mMUPageControlListener){
-                    mMUPageControlListener.clickOnIndex(null, position);
+
+                if(null != mMUPageControl){
+                    mMUPageControl.setCurrentPosition(position);
                 }
             }
 
@@ -83,6 +107,12 @@ public class MUHorizontalPager extends ViewPager {
 
             }
         });
+    }
+
+    //TODO
+    private void addViews(View[] views, float margins){
+        View v = views[0];
+//        v.getLa
     }
 
     /**
@@ -148,6 +178,18 @@ public class MUHorizontalPager extends ViewPager {
         }
     }
 
+    public MUPageControl getMUPageControl() {
+        return mMUPageControl;
+    }
+
+    public void setMUPageControl(MUPageControl MUPageControl) {
+        mMUPageControl = MUPageControl;
+        if(mMUPageControl != null){
+            mMUPageControl.setPageControlListener(this);
+            mMUPageControl.setCurrentPosition(mCurrentIndex);
+        }
+    }
+
     /**
      * Get the listener attached to the view pager
      * @return the current listener attached, null if not
@@ -164,21 +206,11 @@ public class MUHorizontalPager extends ViewPager {
         mMUHorizontalPagerListener = myListener;
     }
 
-    /**
-     * Get the attached {@link com.rlab.sejima.features.MUPageControl.MUPageControlListener}
-     * @return the attached PageCOntrolListener attached; null if not
-     */
-    public MUPageControl.MUPageControlListener getMUPageControlListener() {
-        return mMUPageControlListener;
+    @Override
+    public void clickOnIndex(MUPageControl muPageControl, int index) {
+        this.setCurrentIndex(index, true);
     }
 
-    /**+
-     * Attach a {@link com.rlab.sejima.features.MUPageControl.MUPageControlListener}
-     * @param MUPageControlListener the listener for page control
-     */
-    public void setMUPageControlListener(MUPageControl.MUPageControlListener MUPageControlListener) {
-        mMUPageControlListener = MUPageControlListener;
-    }
 
     /**
      * Representation of a page as an object

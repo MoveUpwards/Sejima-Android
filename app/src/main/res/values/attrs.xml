@@ -135,5 +135,18 @@
         <attr name="android:paddingHorizontal"/>
     </declare-styleable>
 
+    <declare-styleable name="MUPageControl">
+        <attr name="element_size" format="dimension"/>
+        <attr name="element_color" format="color"/>
+        <attr name="active_element_width" format="dimension"/>
+        <attr name="active_element_radius" format="integer"/>
+        <attr name="active_element_color" format="color"/>
+        <attr name="element_border_color" format="color"/>
+        <attr name="element_border_width" format="dimension"/>
+        <attr name="element_padding" format="dimension"/>
+        <attr name="hide_for_single_page" format="boolean"/>
+        <attr name="android:paddingHorizontal"/>
+    </declare-styleable>
+
 
 </resources>

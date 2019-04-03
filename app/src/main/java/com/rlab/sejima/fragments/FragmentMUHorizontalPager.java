@@ -1,5 +1,6 @@
 package com.rlab.sejima.fragments;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -10,7 +11,7 @@ import com.rlab.sejima.features.MUPageControl;
 
 import java.util.Locale;
 
-public class FragmentMUHorizontalPager extends DefaultFragment implements MUHorizontalPager.MUHorizontalPagerListener, MUPageControl.MUPageControlListener {
+public class FragmentMUHorizontalPager extends DefaultFragment implements MUHorizontalPager.MUHorizontalPagerListener {
 
     private MUHorizontalPager mMUHorizontalPager;
     private MUPageControl mMUPageControl;
@@ -58,28 +59,17 @@ public class FragmentMUHorizontalPager extends DefaultFragment implements MUHori
 
         view.findViewById(R.id.control_mu_horizontalpager_raz).setOnClickListener(v -> {
             mMUHorizontalPager.setHorizontalMargins(leftMargins);
-            mMUHorizontalPager.setCurrentIndex(0);
             ((Switch) view.findViewById(R.id.control_mu_horizontalpager_listener)).setChecked(false);
         });
 
-
         mMUPageControl = view.findViewById(R.id.mu_pagecontrol);
         mMUPageControl.setNumberPages(mMUHorizontalPager.getPageCount());
-        mMUPageControl.setPageControlListener(this);
-        mMUHorizontalPager.setMUPageControlListener(this);
-
-
+        mMUHorizontalPager.setMUPageControl(mMUPageControl);
     }
 
     @Override
     public void scrolledTo(MUHorizontalPager horizontalPager, int toIndex) {
         String toast = String.format(Locale.FRANCE, "Scroll to page %d", toIndex);
-        mMUPageControl.setCurrentPosition(toIndex);
         Toast.makeText(getContext(),toast, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void clickOnIndex(MUPageControl muPageControl, int index) {
-        mMUHorizontalPager.setCurrentIndex(index);
     }
 }

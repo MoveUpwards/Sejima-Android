@@ -1,39 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <LinearLayout style="@style/Separator"/>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:padding="20dp"
-        android:background="@color/colorPrimary">
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical"
+        android:padding="20dp">
 
         <com.rlab.sejima.features.MUHorizontalPager
             android:id="@+id/mu_horizontalpager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#ffffff"/>
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:background="@color/colorPrimaryDark"
-        android:gravity="center">
+            android:layout_height="200dp"
+            android:background="#ffffff" />
 
         <com.rlab.sejima.features.MUPageControl
             android:id="@+id/mu_pagecontrol"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark" />
 
     </LinearLayout>
-
-    <LinearLayout style="@style/Separator"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -126,8 +118,5 @@
         </LinearLayout>
 
     </ScrollView>
-
-
-
 
 </LinearLayout>
