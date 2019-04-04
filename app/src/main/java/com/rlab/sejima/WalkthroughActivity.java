@@ -51,6 +51,7 @@ public class WalkthroughActivity extends AppCompatActivity implements MUHorizont
         }
 
         mMUHorizontalPager.addViews(pages, 10);
+        scrolledTo(mMUHorizontalPager, 0);
     }
 
     @Override

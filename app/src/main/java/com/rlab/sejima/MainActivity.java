@@ -88,10 +88,13 @@ public class MainActivity extends AppCompatActivity
                     fragment = FragmentMUTopBar.newInstance();
                     break;
                 case R.id.nav_mu_navigationbar:
+                    fragment = FragmentMUNavigationBar.newInstance();
+                    break;
+                case R.id.nav_mu_button:
                     fragment = FragmentMUButton.newInstance();
                     break;
                 default:
-                    fragment = PlaceholderFragment.newInstance(0);
+                    fragment = null;
                     break;
             }
             loadFragment(fragment);
@@ -100,25 +103,6 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         }
 
-
-
-//        if (id == R.id.nav_mu_horizontalpager) {
-//            fragment = FragmentMUHorizontalPager.newInstance();
-//        } else if (id == R.id.nav_mu_avatar) {
-//            fragment = FragmentMUAvatar.newInstance();
-//        } else if (id == R.id.nav_mu_header) {
-//            fragment = FragmentMUHeader.newInstance();
-//        } else if (id == R.id.nav_mu_topbar) {
-//            fragment = FragmentMUTopBar.newInstance();
-//        } else if (id == R.id.nav_mu_button) {
-//            fragment = FragmentMUButton.newInstance();
-//        } else if (id == R.id.nav_mu_navigationbar) {
-//            fragment = FragmentMUNavigationBar.newInstance();
-//        } else if (id == nav_tibtop_walkthrough) {
-//            fragment = PlaceholderFragment.newInstance(0);
-//            //
-//        }
-
         return true;
     }
 
@@ -126,24 +110,5 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frame_layout, fragment);
         ft.commit();
-    }
-
-    public static class PlaceholderFragment extends Fragment {
-
-        private static String COMPONENT = "component-to-launch";
-
-        static PlaceholderFragment newInstance(int component){
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle bundle = new Bundle();
-            bundle.putInt(COMPONENT, component);
-            fragment.setArguments(bundle);
-            return fragment;
-        }
-
-        @Nullable
-        @Override
-        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.activity_main, container, false);
-        }
     }
 }

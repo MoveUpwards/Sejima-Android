@@ -28,7 +28,6 @@
             android:layout_height="wrap_content"
             app:title="@string/title"
             app:title_color="@color/colorAccent"
-            app:title_size="14dp"
             app:detail="@string/detail"
             android:layout_marginEnd="5dp"
             app:detail_color="#fff"/>
@@ -54,7 +53,6 @@
                 app:strokeColor="@color/colorAccent"
                 app:pressed_color="#000"
                 app:bkg_color="#0000"
-                android:textSize="12sp"
                 android:paddingVertical="2dp"
                 android:textColor="@color/colorAccent"/>
 

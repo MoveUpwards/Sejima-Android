@@ -23,7 +23,7 @@ import androidx.core.graphics.ColorUtils;
 /*
     Created by Antoine RICHE on 2019/04/02.
  */
-public class MUPageControl extends LinearLayout {
+public class MUPageControl extends LinearLayout implements MUViewHelper{
 
     private int mNumberPages = 1;
     private int mCurrentPosition = -1;
@@ -33,7 +33,7 @@ public class MUPageControl extends LinearLayout {
     /**
      * The element size
      */
-    private int mElementSize = 15;
+    private int mElementSize = (int) pixelsToDensity(getResources().getDisplayMetrics(), 10);
     /**
      * The unactive element color
      */
@@ -41,7 +41,7 @@ public class MUPageControl extends LinearLayout {
     /**
      * The active element width
      */
-    private int mActiveElementWidth = 20;
+    private int mActiveElementWidth = (int) (1.5 * mElementSize);
     /**
      * The active element width
      */
@@ -61,7 +61,7 @@ public class MUPageControl extends LinearLayout {
     /**
      * The padding between elements
      */
-    private int mElementPadding = 4;
+    private int mElementPadding = (int) pixelsToDensity(getResources().getDisplayMetrics(), 2);
     /**
      * The hideForSingleElement value
      */

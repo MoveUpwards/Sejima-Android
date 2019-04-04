@@ -28,7 +28,7 @@ public class MUHeader extends RelativeLayout {
     /**
      * The default size of title
      */
-    public final static int DEFAULT_TITLE_SIZE_IN_SP = 34;
+    public final static int DEFAULT_TITLE_SIZE_IN_SP = 24;
     /**
      * The default size of detail
      */
