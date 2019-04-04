@@ -111,7 +111,7 @@ public class MUHeader extends RelativeLayout {
         // Deal with detail's attributes
         s = a.getString(R.styleable.MUHeader_detail);
         mDetail = TextUtils.isEmpty(s) ? mDetail : s.toString();
-        mDetailColor = a.getColor(R.styleable.MUHeader_detail_color, mTitleColor);
+        mDetailColor = a.getColor(R.styleable.MUHeader_detail_color, mDetailColor);
         mDetailSize = a.getDimensionPixelSize(R.styleable.MUHeader_detail_size, 0);
         mDetailWeight = a.getInt(R.styleable.MUHeader_detail_weight, mDetailWeight);
 

@@ -75,18 +75,19 @@ public class MUHorizontalPager extends ViewPager implements MUPageControl.MUPage
         mMyPagerAdapter = new MyPagerAdapter();
         setAdapter(mMyPagerAdapter);
 
-        TextView tv = new TextView(context);
-        tv.setText("TextView");
+        if(isInEditMode()){
+            TextView tv = new TextView(context);
+            tv.setText("TextView");
 
-        Button b = new Button(context);
-        b.setText("Button");
-        addViews(new View[]{tv, b}, 10);
+            Button b = new Button(context);
+            b.setText("Button");
+            addViews(new View[]{tv, b}, 10);
 
-        MUHeader muHeader = new MUHeader(context);
-        muHeader.setTitle("header");
-        muHeader.setDetail("detail test");
-        addSubView(muHeader, 50f);
-
+            MUHeader muHeader = new MUHeader(context);
+            muHeader.setTitle("header");
+            muHeader.setDetail("detail test");
+            addSubView(muHeader, 50f);
+        }
 
         addOnPageChangeListener(new OnPageChangeListener() {
             @Override
@@ -113,7 +114,7 @@ public class MUHorizontalPager extends ViewPager implements MUPageControl.MUPage
         });
     }
 
-    private void addViews(View[] views, float margins){
+    public void addViews(View[] views, float margins){
         for(View v : views){
             v.setPadding((int) margins, (int) margins, (int) margins, (int) margins);
             mMyPagerAdapter.addView(v);
@@ -201,6 +202,7 @@ public class MUHorizontalPager extends ViewPager implements MUPageControl.MUPage
     public void setMUPageControl(MUPageControl MUPageControl) {
         mMUPageControl = MUPageControl;
         if(mMUPageControl != null){
+            mMUPageControl.setNumberPages(getPageCount());
             mMUPageControl.setPageControlListener(this);
             mMUPageControl.setCurrentPosition(mCurrentIndex);
         }

@@ -63,7 +63,6 @@ public class FragmentMUHorizontalPager extends DefaultFragment implements MUHori
         });
 
         mMUPageControl = view.findViewById(R.id.mu_pagecontrol);
-        mMUPageControl.setNumberPages(mMUHorizontalPager.getPageCount());
         mMUHorizontalPager.setMUPageControl(mMUPageControl);
     }
 

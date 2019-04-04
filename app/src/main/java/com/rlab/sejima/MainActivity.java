@@ -1,5 +1,6 @@
 package com.rlab.sejima;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -69,26 +70,55 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         Fragment fragment = null;
 
-        if (id == R.id.nav_mu_horizontalpager) {
-            fragment = FragmentMUHorizontalPager.newInstance();
-        } else if (id == R.id.nav_mu_avatar) {
-            fragment = FragmentMUAvatar.newInstance();
-        } else if (id == R.id.nav_mu_header) {
-            fragment = FragmentMUHeader.newInstance();
-        } else if (id == R.id.nav_mu_topbar) {
-            fragment = FragmentMUTopBar.newInstance();
-        } else if (id == R.id.nav_mu_button) {
-            fragment = FragmentMUButton.newInstance();
-        } else if (id == R.id.nav_mu_navigationbar) {
-            fragment = FragmentMUNavigationBar.newInstance();
-        } else  {
-            fragment = PlaceholderFragment.newInstance(0);
+        if(R.id.nav_tibtop_walkthrough == id){
+            startActivity(new Intent(this, WalkthroughActivity.class));
+            finish();
+        } else {
+            switch(id){
+                case R.id.nav_mu_horizontalpager:
+                    fragment = FragmentMUHorizontalPager.newInstance();
+                    break;
+                case R.id.nav_mu_avatar:
+                    fragment = FragmentMUAvatar.newInstance();
+                    break;
+                case R.id.nav_mu_header:
+                    fragment = FragmentMUHeader.newInstance();
+                    break;
+                case R.id.nav_mu_topbar:
+                    fragment = FragmentMUTopBar.newInstance();
+                    break;
+                case R.id.nav_mu_navigationbar:
+                    fragment = FragmentMUButton.newInstance();
+                    break;
+                default:
+                    fragment = PlaceholderFragment.newInstance(0);
+                    break;
+            }
+            loadFragment(fragment);
+
+            DrawerLayout drawer = findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
         }
 
-        loadFragment(fragment);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+
+//        if (id == R.id.nav_mu_horizontalpager) {
+//            fragment = FragmentMUHorizontalPager.newInstance();
+//        } else if (id == R.id.nav_mu_avatar) {
+//            fragment = FragmentMUAvatar.newInstance();
+//        } else if (id == R.id.nav_mu_header) {
+//            fragment = FragmentMUHeader.newInstance();
+//        } else if (id == R.id.nav_mu_topbar) {
+//            fragment = FragmentMUTopBar.newInstance();
+//        } else if (id == R.id.nav_mu_button) {
+//            fragment = FragmentMUButton.newInstance();
+//        } else if (id == R.id.nav_mu_navigationbar) {
+//            fragment = FragmentMUNavigationBar.newInstance();
+//        } else if (id == nav_tibtop_walkthrough) {
+//            fragment = PlaceholderFragment.newInstance(0);
+//            //
+//        }
+
         return true;
     }
 

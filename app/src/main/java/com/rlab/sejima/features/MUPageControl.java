@@ -3,8 +3,10 @@ package com.rlab.sejima.features;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -101,10 +103,18 @@ public class MUPageControl extends LinearLayout {
     private void init(){
         setWillNotDraw(false);
         setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        setOrientation(HORIZONTAL);
         setGravity(Gravity.CENTER);
         setNumberPages(mNumberPages);
         updateVisibility();
+    }
+
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        Log.e(getClass().getCanonicalName(), "1. height ? " + getLayoutParams().height);
+        getLayoutParams().height = mElementSize * 2;
+        Log.e(getClass().getCanonicalName(), "2. height ? " + getLayoutParams().height);
     }
 
     /**
@@ -147,9 +157,6 @@ public class MUPageControl extends LinearLayout {
         currentPosition = Math.max(0, currentPosition);
         currentPosition = Math.min(currentPosition, mNumberPages - 1);
         updateSelection(currentPosition);
-//        if(mPageControlListener != null){
-//            updateSelection(currentPosition);
-//        }
     }
 
     /**
