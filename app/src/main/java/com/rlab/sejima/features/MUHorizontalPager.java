@@ -29,10 +29,6 @@ public class MUHorizontalPager extends ViewPager implements MUPageControl.MUPage
      */
     private float mHorizontalMargins = 0;
     /**
-     * The container view
-     */
-    private MUHorizontalPager mRootView;
-    /**
      * The listener for scroll events
      */
     private MUHorizontalPagerListener mMUHorizontalPagerListener;
@@ -64,14 +60,8 @@ public class MUHorizontalPager extends ViewPager implements MUPageControl.MUPage
         init(context);
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-//        setPadding((int) mHorizontalMargins, 0, (int) mHorizontalMargins, 0);
-    }
 
     private void init(Context context) {
-        mRootView = this;
         mMyPagerAdapter = new MyPagerAdapter();
         setAdapter(mMyPagerAdapter);
 
@@ -89,17 +79,18 @@ public class MUHorizontalPager extends ViewPager implements MUPageControl.MUPage
             addSubView(muHeader, 50f);
         }
 
+        MUHorizontalPager horizontalPager = this;
         addOnPageChangeListener(new OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+                //TODO: select page when scrolling is more than half the page
             }
 
             @Override
             public void onPageSelected(int position) {
                 mCurrentIndex = position;
                 if (null !=  mMUHorizontalPagerListener){
-                    mMUHorizontalPagerListener.scrolledTo(mRootView, position);
+                    mMUHorizontalPagerListener.scrolledTo(horizontalPager, position);
                 }
 
                 if(null != mMUPageControl){
@@ -109,7 +100,6 @@ public class MUHorizontalPager extends ViewPager implements MUPageControl.MUPage
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
     }
@@ -139,6 +129,11 @@ public class MUHorizontalPager extends ViewPager implements MUPageControl.MUPage
     @Override
     public MyPagerAdapter getAdapter() {
         return mMyPagerAdapter;
+    }
+
+    public void setAdapter(@Nullable MyPagerAdapter adapter) {
+        super.setAdapter(adapter);
+        mMyPagerAdapter = adapter;
     }
 
     /**
