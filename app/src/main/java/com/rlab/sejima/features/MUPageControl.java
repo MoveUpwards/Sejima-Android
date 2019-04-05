@@ -6,7 +6,6 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -23,12 +22,12 @@ import androidx.core.graphics.ColorUtils;
 /*
     Created by Antoine RICHE on 2019/04/02.
  */
-public class MUPageControl extends LinearLayout implements MUViewHelper{
+public class MUPageControl extends LinearLayout implements MUViewHelper {
 
     private int mNumberPages = 1;
     private int mCurrentPosition = -1;
     private MUPageControlListener mPageControlListener;
-    private Map<Integer, IndicatorButton> mHMButtons = new LinkedHashMap<>();
+    private final Map<Integer, IndicatorButton> mHMButtons = new LinkedHashMap<>();
 
     /**
      * The element size
@@ -112,9 +111,7 @@ public class MUPageControl extends LinearLayout implements MUViewHelper{
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        Log.e(getClass().getCanonicalName(), "1. height ? " + getLayoutParams().height);
         getLayoutParams().height = mElementSize * 2;
-        Log.e(getClass().getCanonicalName(), "2. height ? " + getLayoutParams().height);
     }
 
     /**
@@ -154,8 +151,7 @@ public class MUPageControl extends LinearLayout implements MUViewHelper{
      * @param currentPosition the index of the current page
      */
     public void setCurrentPosition(int currentPosition) {
-        currentPosition = Math.max(0, currentPosition);
-        currentPosition = Math.min(currentPosition, mNumberPages - 1);
+        currentPosition = normalizeIntValue(currentPosition, 0, mNumberPages - 1);
         updateSelection(currentPosition);
     }
 
@@ -329,7 +325,7 @@ public class MUPageControl extends LinearLayout implements MUViewHelper{
     }
 
 
-    private OnClickListener mListener = v -> {
+    private final OnClickListener mListener = v -> {
         if(v instanceof IndicatorButton) {
             int position = ((IndicatorButton) v).getPosition();
             updateSelection(position);
@@ -352,16 +348,16 @@ public class MUPageControl extends LinearLayout implements MUViewHelper{
     private class IndicatorButton extends MaterialButton {
 
         private final int[][] STATES = new int[][]{new int[] { android.R.attr.state_pressed }, new int[] {}};
-        private int mPosition;
+        private final int mPosition;
 
-        public IndicatorButton(Context context, int position) {
+        IndicatorButton(Context context, int position) {
             super(context);
             setSelected(false);
             mPosition = position;
             setOnClickListener(mListener);
         }
 
-        public int getPosition() {
+        int getPosition() {
             return mPosition;
         }
 

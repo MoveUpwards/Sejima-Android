@@ -36,7 +36,7 @@ public class MUHeader extends RelativeLayout {
     /**
      * The default size of vertical spacing
      */
-    public final static int DEFAULT_VERTICAL_SPACING_IN_SP = 8;
+    private final static int DEFAULT_VERTICAL_SPACING_IN_SP = 8;
 
     /**
      * The current title
@@ -234,7 +234,7 @@ public class MUHeader extends RelativeLayout {
         mAlignment = alignment;
     }
 
-    public void setUpTextView(TextView tv, String text, int color, float size, int typeface){
+    private void setUpTextView(TextView tv, String text, int color, float size, int typeface){
         tv.setText(text);
         tv.setTextColor(color);
         tv.setTextSize(size);

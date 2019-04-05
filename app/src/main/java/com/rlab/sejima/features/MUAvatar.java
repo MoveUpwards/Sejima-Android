@@ -27,7 +27,7 @@ import androidx.appcompat.widget.AppCompatImageView;
     credits: https://github.com/hdodenhof/CircleImageView
  */
 
-public class MUAvatar extends AppCompatImageView {
+public class MUAvatar extends AppCompatImageView implements MUViewHelper {
 
     /**
      * Static fields to determinate the border type
@@ -126,7 +126,7 @@ public class MUAvatar extends AppCompatImageView {
      */
     public MUAvatar(Context context) {
         super(context);
-        init(context);
+        init();
     }
 
     /**
@@ -145,11 +145,11 @@ public class MUAvatar extends AppCompatImageView {
         mBorderType = attributes.getInt(R.styleable.MUAvatar_border_type, mBorderType);
         mImage = attributes.getDrawable(R.styleable.MUAvatar_android_src);
 
-        init(context);
+        init();
         attributes.recycle();
     }
 
-    private void init(Context context) {
+    private void init() {
 
         setImageDrawable(mImage);
         setScaleType(ScaleType.CENTER_CROP);
@@ -456,7 +456,7 @@ public class MUAvatar extends AppCompatImageView {
      * @param borderWidth the border width in pixels
      */
     public void setBorderWidth(float borderWidth) {
-        mBorderWidth = Math.max(0, borderWidth);
+        mBorderWidth = normalizeFloatValue(borderWidth, 0, borderWidth);
         invalidate();
     }
 
@@ -487,13 +487,13 @@ public class MUAvatar extends AppCompatImageView {
      * Set the corner radius
      */
     public void setCornerRadius(float cornerRadius) {
-        cornerRadius = Math.max(0, cornerRadius);
+        cornerRadius = normalizeFloatValue(cornerRadius, 0, 100);
         mCornerRadius = mBorderType == SQUARE_BORDER ? cornerRadius : 1000;
         invalidate();
     }
 
     /**
-     * Determinates if the touch event is in the circle zone
+     * Determine if the touch event is in the circle zone
      * @param x the x coordinate of touch
      * @param y the y coordinate of touch
      * @return true if the touch occurred in the circle, false otherwise

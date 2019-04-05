@@ -1,8 +1,9 @@
 package com.rlab.sejima.fragments;
 
-import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rlab.sejima.R;
@@ -14,11 +15,6 @@ import java.util.Locale;
 public class FragmentMUHorizontalPager extends DefaultFragment implements MUHorizontalPager.MUHorizontalPagerListener {
 
     private MUHorizontalPager mMUHorizontalPager;
-    private MUPageControl mMUPageControl;
-
-
-    public FragmentMUHorizontalPager(){
-    }
 
     public static FragmentMUHorizontalPager newInstance(){
         return new FragmentMUHorizontalPager();
@@ -62,13 +58,25 @@ public class FragmentMUHorizontalPager extends DefaultFragment implements MUHori
             ((Switch) view.findViewById(R.id.control_mu_horizontalpager_listener)).setChecked(false);
         });
 
-        mMUPageControl = view.findViewById(R.id.mu_pagecontrol);
-        mMUHorizontalPager.setMUPageControl(mMUPageControl);
+        MUPageControl MUPageControl = view.findViewById(R.id.mu_pagecontrol);
+        mMUHorizontalPager.setMUPageControl(MUPageControl);
+
+        initMUHorizontalPager();
     }
 
     @Override
     public void scrolledTo(MUHorizontalPager horizontalPager, int toIndex) {
         String toast = String.format(Locale.FRANCE, "Scroll to page %d", toIndex);
         Toast.makeText(getContext(),toast, Toast.LENGTH_SHORT).show();
+    }
+
+    private void initMUHorizontalPager(){
+        TextView tv = new TextView(getContext());
+        tv.setText(getString(R.string.app_name));
+        mMUHorizontalPager.addSubView(tv, 12);
+
+        LinearLayout ll = new LinearLayout(getContext());
+        ll.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        mMUHorizontalPager.addSubView(ll, 0);
     }
 }

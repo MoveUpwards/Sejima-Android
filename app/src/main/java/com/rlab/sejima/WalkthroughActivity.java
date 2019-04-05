@@ -29,9 +29,8 @@ public class WalkthroughActivity extends AppCompatActivity implements MUHorizont
         mMUHorizontalPager = findViewById(R.id.mu_horizontalpager);
         mMUHeader = findViewById(R.id.page_header);
         mMUButton = findViewById(R.id.mu_button);
-        mMUButton.setOnClickListener(v -> {
-            mMUHorizontalPager.setCurrentIndex(mMUHorizontalPager.getCurrentIndex() + 1);
-        });
+        mMUButton.setOnClickListener(v ->
+            mMUHorizontalPager.setCurrentIndex(mMUHorizontalPager.getCurrentIndex() + 1));
 
         initPager();
         mMUHorizontalPager.setMUPageControl(findViewById(R.id.mu_pagecontrol));
@@ -44,7 +43,7 @@ public class WalkthroughActivity extends AppCompatActivity implements MUHorizont
         View[] pages = new View[mHEADERS.length];
 
         for(int i = 0 ; i < mHEADERS.length ; i++){
-            myLayout = inflater.inflate(R.layout.walkthrough_default_page, null, false);
+            myLayout = inflater.inflate(R.layout.walkthrough_default_page, mMUHorizontalPager, false);
             ((ImageView) myLayout.findViewById(R.id.page_image)).setImageDrawable(getResources().getDrawable(
                     i % 2 == 0 ? R.drawable.avatar : R.mipmap.ic_launcher));
             pages[i] = myLayout;
@@ -59,11 +58,6 @@ public class WalkthroughActivity extends AppCompatActivity implements MUHorizont
 
         mMUHeader.setTitle(mHEADERS[toIndex].split(";;")[0]);
         mMUHeader.setDetail(mHEADERS[toIndex].split(";;")[1]);
-
-        if(toIndex == mMUHorizontalPager.getPageCount() - 1){
-            mMUButton.setLabel("GO");
-        } else {
-            mMUButton.setLabel("Next");
-        }
+        mMUButton.setLabel( (toIndex == mMUHorizontalPager.getPageCount() - 1) ? "GO" : "Next");
     }
 }

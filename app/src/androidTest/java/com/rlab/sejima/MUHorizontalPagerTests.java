@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.rlab.sejima.features.MUHorizontalPager;
-import com.rlab.sejima.features.MUPageControl;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +20,7 @@ import static org.junit.Assert.assertNull;
 @RunWith(AndroidJUnit4.class)
 public class MUHorizontalPagerTests {
 
-    MUHorizontalPager mMUHorizontalPager;
+    private MUHorizontalPager mMUHorizontalPager;
 
     @Before
     public void setUp() {
@@ -57,7 +56,6 @@ public class MUHorizontalPagerTests {
 
     @Test
     public void navigate() {
-
         Context c = ApplicationProvider.getApplicationContext();
         mMUHorizontalPager.addViews(new View[]{ new TextView(c), new TextView(c) }, 14);
         mMUHorizontalPager.setCurrentIndex(1);

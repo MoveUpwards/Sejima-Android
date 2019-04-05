@@ -1,12 +1,13 @@
 package com.rlab.sejima.features;
 
 import android.content.Context;
-import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.rlab.sejima.R;
 
 import java.util.LinkedList;
 
@@ -67,15 +68,15 @@ public class MUHorizontalPager extends ViewPager implements MUPageControl.MUPage
 
         if(isInEditMode()){
             TextView tv = new TextView(context);
-            tv.setText("TextView");
+            tv.setText(context.getString(R.string.app_name));
 
             Button b = new Button(context);
-            b.setText("Button");
+            b.setText(context.getString(R.string.app_name));
             addViews(new View[]{tv, b}, 10);
 
             MUHeader muHeader = new MUHeader(context);
-            muHeader.setTitle("header");
-            muHeader.setDetail("detail test");
+            muHeader.setTitle(context.getString(R.string.title));
+            muHeader.setDetail(context.getString(R.string.detail));
             addSubView(muHeader, 50f);
         }
 
@@ -114,7 +115,7 @@ public class MUHorizontalPager extends ViewPager implements MUPageControl.MUPage
         }
     }
 
-    private void addSubView(View view, float margins){
+    public void addSubView(View view, float margins){
         view.setPadding((int) margins, (int) margins, (int) margins, (int) margins);
         mMyPagerAdapter.addView(view);
         if(null != getMUPageControl()){
@@ -227,7 +228,7 @@ public class MUHorizontalPager extends ViewPager implements MUPageControl.MUPage
         /**
          * The list containing the current pages attached to the adapter
          */
-        private LinkedList<View> mViews;
+        private final LinkedList<View> mViews;
 
         /**
          * Constructor of the custom adapter

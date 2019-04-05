@@ -12,9 +12,6 @@ public class FragmentMUAvatar extends DefaultFragment {
 
     private MUAvatar mMUAvatar;
 
-    public FragmentMUAvatar(){
-    }
-
     public static FragmentMUAvatar newInstance(){
         return new FragmentMUAvatar();
     }

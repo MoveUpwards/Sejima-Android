@@ -19,7 +19,7 @@ import com.rlab.sejima.R;
 
 // Created by Antoine RICHE on 20/03/2019.
 
-public class MUTopBar extends RelativeLayout {
+public class MUTopBar extends RelativeLayout implements MUViewHelper {
 
     /**
      * The default size of title
@@ -131,7 +131,7 @@ public class MUTopBar extends RelativeLayout {
      * @param leftButtonLeading the left padding of ImageButton in dp.
      */
     public void setLeftButtonLeading(float leftButtonLeading) {
-        mLeftButtonLeading = Math.max(0, leftButtonLeading);
+        mLeftButtonLeading =  normalizeFloatValue(0, leftButtonLeading, leftButtonLeading);
         mIBLeftButton.setLayoutParams(getLeftBtnLayoutParams(mLeftButtonWidth));
     }
 

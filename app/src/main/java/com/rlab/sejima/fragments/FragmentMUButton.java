@@ -16,9 +16,6 @@ public class FragmentMUButton extends DefaultFragment {
 
     private MUButton mMUButton;
 
-    public FragmentMUButton(){
-    }
-
     public static FragmentMUButton newInstance(){
         return new FragmentMUButton();
     }
@@ -118,15 +115,15 @@ public class FragmentMUButton extends DefaultFragment {
 
         // Horizontal padding
         view.findViewById(R.id.control_mu_button_horizontal_less).setOnClickListener(l ->
-                mMUButton.setHorizontalPadding((int) (mMUButton.getHorizontalPadding() - 1)));
+                mMUButton.setHorizontalPadding((mMUButton.getHorizontalPadding() - 1)));
         view.findViewById(R.id.control_mu_button_horizontal_more).setOnClickListener(l ->
-                mMUButton.setHorizontalPadding((int) (mMUButton.getHorizontalPadding() + 1)));
+                mMUButton.setHorizontalPadding((mMUButton.getHorizontalPadding() + 1)));
 
         // Vertical padding
         view.findViewById(R.id.control_mu_button_vertical_less).setOnClickListener(l ->
-                mMUButton.setVerticalPadding((int) (mMUButton.getVerticalPadding() - 1)));
+                mMUButton.setVerticalPadding((mMUButton.getVerticalPadding() - 1)));
         view.findViewById(R.id.control_mu_button_vertical_more).setOnClickListener(l ->
-                mMUButton.setVerticalPadding((int) (mMUButton.getVerticalPadding() + 1)));
+                mMUButton.setVerticalPadding((mMUButton.getVerticalPadding() + 1)));
 
         // RAZ
         view.findViewById(R.id.control_mu_button_raz).setOnClickListener(v -> {

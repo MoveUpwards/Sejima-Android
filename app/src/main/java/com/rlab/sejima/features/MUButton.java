@@ -23,7 +23,7 @@ import androidx.core.graphics.ColorUtils;
 /*
     Created by Antoine RICHE on 27/03/2019.
  */
-public class MUButton extends RelativeLayout {
+public class MUButton extends RelativeLayout implements MUViewHelper {
 
     
     /**
@@ -619,16 +619,15 @@ public class MUButton extends RelativeLayout {
     /**
      * Static fields representing states; used for convenience only
      */
-    static final int[] STATE_PRESSED = new int[] { android.R.attr.state_pressed };
-    static final int[] STATE_DISABLED = new int[] { -android.R.attr.state_enabled };
-    static final int[] STATE_DEFAULT = new int[] {};
-    static final int[][] STATES = new int[][]{STATE_PRESSED, STATE_DISABLED, STATE_DEFAULT};
+    private static final int[] STATE_PRESSED = new int[] { android.R.attr.state_pressed };
+    private static final int[] STATE_DISABLED = new int[] { -android.R.attr.state_enabled };
+    private static final int[] STATE_DEFAULT = new int[] {};
+    private static final int[][] STATES = new int[][]{STATE_PRESSED, STATE_DISABLED, STATE_DEFAULT};
 
     /**
      * Set the background color for different states of the button
      */
-    private void
-    setBackgroundColors() {
+    private void setBackgroundColors() {
         int[] colors = new int[] {
                 mBorderColor,                                                                           // pressed color
                 ColorUtils.setAlphaComponent(mBorderColor, (int) (mAlpha * mDisabledAlpha * 255)),      // disabled color
@@ -651,15 +650,5 @@ public class MUButton extends RelativeLayout {
         };
 
         mButton.setTextColor(new ColorStateList(STATES, colors));
-    }
-
-    /**
-     * Normalize alpha value between 0 and 1
-     * @param alpha the alpha value to check
-     * @return the normalized value of alpha
-     */
-    static float normalizeAlphaValue(float alpha) {
-        alpha = Math.max(0, alpha);
-        return Math.min(alpha, 1);
     }
 }

@@ -3,21 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-
-        <item
-            android:id="@+id/nav_tibtop_walkthrough"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="TibTop Walkthrough" />
-        <!--<item-->
-            <!--android:id="@+id/nav_slideshow"-->
-            <!--android:icon="@drawable/ic_menu_slideshow"-->
-            <!--android:title="Slideshow" />-->
-        <!--<item-->
-            <!--android:id="@+id/nav_manage"-->
-            <!--android:icon="@drawable/ic_menu_manage"-->
-            <!--android:title="Tools" />-->
-    </group>
+    <item
+        android:id="@+id/nav_tibtop_walkthrough"
+        android:icon="@drawable/ic_menu_gallery"
+        android:title="TibTop Walkthrough" />
 
     <item android:title="MUComponents">
         <menu>

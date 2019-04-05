@@ -10,14 +10,13 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.rlab.sejima.R;
 
 /*
     Created by Antoine RICHE on 28/03/2019.
  */
-public class MUNavigationBar extends LinearLayout {
+public class MUNavigationBar extends LinearLayout implements MUViewHelper {
 
     private MUButton mRightButton;
     private ImageButton mLeftButton;
@@ -491,13 +490,4 @@ public class MUNavigationBar extends LinearLayout {
         void clickOnRightButton(MUNavigationBar muNavigationBar);
     }
 
-    /**
-     * Normalize multiplier value between 0 and 1
-     * @param multiplier the alpha value to check
-     * @return the normalized value of multiplier
-     */
-    static float normalizeMultiplierValue(float multiplier) {
-        multiplier = Math.max(multiplier,0);
-        return Math.min(multiplier, 1);
-    }
 } // 643 - 592

@@ -1,7 +1,6 @@
 package com.rlab.sejima.fragments;
 
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.Switch;
 import android.widget.Toast;
