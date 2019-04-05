@@ -1,0 +1,23 @@
+<resources>
+    <public name="title" type="string"/>
+    <public name="detail" type="string"/>
+    <public name="app_name" type="string"/>
+
+    <string name="app_name">Sejima</string>
+
+    <string name="title">TITLE</string>
+    <string name="detail">Detail</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <string-array name="walkthrough">
+        <item>Step 1;;Welcome</item>
+        <item>Step 2;;This is</item>
+        <item>Step 3;;An amazing</item>
+        <item>Step 4;;Walkthrough</item>
+    </string-array>
+
+</resources>

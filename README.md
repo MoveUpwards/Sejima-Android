@@ -1,1 +1,0 @@
-# Sejima-Android
