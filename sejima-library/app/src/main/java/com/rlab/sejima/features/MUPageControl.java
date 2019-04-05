@@ -44,7 +44,7 @@ public class MUPageControl extends LinearLayout implements MUViewHelper {
     /**
      * The active element width
      */
-    private int mActiveElementRadius = 50;
+    private int mActiveElementRadius = mActiveElementWidth / 2;
     /**
      * The unactive element color
      */

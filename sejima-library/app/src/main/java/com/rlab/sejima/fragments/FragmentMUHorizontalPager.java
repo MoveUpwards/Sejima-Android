@@ -59,9 +59,8 @@ public class FragmentMUHorizontalPager extends DefaultFragment implements MUHori
         });
 
         MUPageControl MUPageControl = view.findViewById(R.id.mu_pagecontrol);
-        mMUHorizontalPager.setMUPageControl(MUPageControl);
-
         initMUHorizontalPager();
+        mMUHorizontalPager.setMUPageControl(MUPageControl);
     }
 
     @Override
