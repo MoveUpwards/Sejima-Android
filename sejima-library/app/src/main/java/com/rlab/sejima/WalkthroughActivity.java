@@ -55,7 +55,6 @@ public class WalkthroughActivity extends AppCompatActivity implements MUHorizont
 
     @Override
     public void scrolledTo(MUHorizontalPager horizontalPager, int toIndex) {
-
         mMUHeader.setTitle(mHEADERS[toIndex].split(";;")[0]);
         mMUHeader.setDetail(mHEADERS[toIndex].split(";;")[1]);
         mMUButton.setLabel( (toIndex == mMUHorizontalPager.getPageCount() - 1) ? "GO" : "Next");

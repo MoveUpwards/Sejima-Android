@@ -49,19 +49,21 @@ public class MUHorizontalPager extends ViewPager implements MUPageControlListene
 
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            if(null != mMUPageControl){
-                if(position == mCurrentIndex){
-                    if(positionOffset > UPDATE_THRESHOLD){
-                        mMUPageControl.setCurrentPosition(mCurrentIndex + 1);
-                    } else {
-                        mMUPageControl.setCurrentPosition(mCurrentIndex);
-                    }
-                } else{
-                    if(positionOffset < (1 - UPDATE_THRESHOLD)){
-                        mMUPageControl.setCurrentPosition(mCurrentIndex - 1);
-                    } else {
-                        mMUPageControl.setCurrentPosition(mCurrentIndex);
-                    }
+            int neoPosition = -1;
+
+            if(position == mCurrentIndex){
+                neoPosition = positionOffset > UPDATE_THRESHOLD ? mCurrentIndex + 1 : mCurrentIndex;
+            } else{
+                neoPosition = positionOffset < (1 - UPDATE_THRESHOLD) ? mCurrentIndex - 1 : mCurrentIndex;
+            }
+
+            if(neoPosition > -1){
+                if(null != mMUPageControl){
+                    mMUPageControl.setCurrentPosition(neoPosition);
+                }
+
+                if(null != mMUHorizontalPagerListener){
+                    mMUHorizontalPagerListener.scrolledTo(getHorizontalPager(), neoPosition);
                 }
             }
         }
@@ -69,6 +71,7 @@ public class MUHorizontalPager extends ViewPager implements MUPageControlListene
         @Override
         public void onPageSelected(int position) {
             mCurrentIndex = position;
+
             if (null !=  mMUHorizontalPagerListener){
                 mMUHorizontalPagerListener.scrolledTo(getHorizontalPager(), position);
             }
