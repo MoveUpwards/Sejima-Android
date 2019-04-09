@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.rlab.sejima.R;
+import com.rlab.sejima.features.MUPageControl.MUPageControlListener;
 
 import java.util.LinkedList;
 
@@ -19,7 +20,7 @@ import androidx.viewpager.widget.ViewPager;
 /*
     Created by Antoine RICHE on 2019/04/01.
  */
-public class MUHorizontalPager extends ViewPager implements MUPageControl.MUPageControlListener {
+public class MUHorizontalPager extends ViewPager implements MUPageControlListener {
 
     /**
      * The current index of the view pager
@@ -42,6 +43,47 @@ public class MUHorizontalPager extends ViewPager implements MUPageControl.MUPage
      */
     private MUPageControl mMUPageControl;
 
+    private class MyOnPageChangeListener implements OnPageChangeListener {
+
+        private static final float UPDATE_THRESHOLD = 0.6f;
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            if(null != mMUPageControl){
+                if(position == mCurrentIndex){
+                    if(positionOffset > UPDATE_THRESHOLD){
+                        mMUPageControl.setCurrentPosition(mCurrentIndex + 1);
+                    } else {
+                        mMUPageControl.setCurrentPosition(mCurrentIndex);
+                    }
+                } else{
+                    if(positionOffset < (1 - UPDATE_THRESHOLD)){
+                        mMUPageControl.setCurrentPosition(mCurrentIndex - 1);
+                    } else {
+                        mMUPageControl.setCurrentPosition(mCurrentIndex);
+                    }
+                }
+            }
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            mCurrentIndex = position;
+            if (null !=  mMUHorizontalPagerListener){
+                mMUHorizontalPagerListener.scrolledTo(getHorizontalPager(), position);
+            }
+
+            if(null != mMUPageControl){
+                mMUPageControl.setCurrentPosition(position);
+            }
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+        }
+    }
+
+
     /**
      * Default constructor
      * @param context the view context
@@ -61,6 +103,9 @@ public class MUHorizontalPager extends ViewPager implements MUPageControl.MUPage
         init(context);
     }
 
+    private MUHorizontalPager getHorizontalPager(){
+        return this;
+    }
 
     private void init(Context context) {
         mMyPagerAdapter = new MyPagerAdapter();
@@ -80,29 +125,7 @@ public class MUHorizontalPager extends ViewPager implements MUPageControl.MUPage
             addSubView(muHeader, 50f);
         }
 
-        MUHorizontalPager horizontalPager = this;
-        addOnPageChangeListener(new OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                //TODO: select page when scrolling is more than half the page
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                mCurrentIndex = position;
-                if (null !=  mMUHorizontalPagerListener){
-                    mMUHorizontalPagerListener.scrolledTo(horizontalPager, position);
-                }
-
-                if(null != mMUPageControl){
-                    mMUPageControl.setCurrentPosition(position);
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });
+        addOnPageChangeListener(new MyOnPageChangeListener());
     }
 
     public void addViews(View[] views, float margins){
@@ -293,4 +316,4 @@ public class MUHorizontalPager extends ViewPager implements MUPageControl.MUPage
     public void clickOnIndex(MUPageControl muPageControl, int index) {
         this.setCurrentIndex(index, true);
     }
-} // 328
+}

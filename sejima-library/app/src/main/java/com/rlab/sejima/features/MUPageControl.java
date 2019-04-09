@@ -5,6 +5,9 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.RectF;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RoundRectShape;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.ViewGroup;
@@ -30,9 +33,13 @@ public class MUPageControl extends LinearLayout implements MUViewHelper {
     private final Map<Integer, IndicatorButton> mHMButtons = new LinkedHashMap<>();
 
     /**
-     * The element size
+     * The element width
      */
-    private int mElementSize = (int) pixelsToDensity(getResources().getDisplayMetrics(), 10);
+    private int mElementWidth = (int) pixelsToDensity(getResources().getDisplayMetrics(), 10);
+    /**
+     * The element height
+     */
+    private int mElementHeight = (int) pixelsToDensity(getResources().getDisplayMetrics(), 10);
     /**
      * The unactive element color
      */
@@ -40,11 +47,11 @@ public class MUPageControl extends LinearLayout implements MUViewHelper {
     /**
      * The active element width
      */
-    private int mActiveElementWidth = (int) (1.5 * mElementSize);
+    private int mActiveElementWidth = mElementWidth;
     /**
      * The active element width
      */
-    private int mActiveElementRadius = mActiveElementWidth / 2;
+    private int mActiveElementRadius = mActiveElementWidth * 2;
     /**
      * The unactive element color
      */
@@ -84,15 +91,15 @@ public class MUPageControl extends LinearLayout implements MUViewHelper {
         super(context, attrs);
 
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.MUPageControl);
-        mElementSize = attributes.getDimensionPixelSize(R.styleable.MUPageControl_element_size, mElementSize);
+        mElementWidth = attributes.getDimensionPixelSize(R.styleable.MUPageControl_element_width, mElementWidth);
+        mElementHeight = attributes.getDimensionPixelSize(R.styleable.MUPageControl_element_height, mElementHeight);
         mElementColor = attributes.getColor(R.styleable.MUPageControl_element_color, mElementColor);
         mActiveElementWidth = attributes.getDimensionPixelOffset(R.styleable.MUPageControl_active_element_width, mActiveElementWidth);
         mActiveElementRadius = attributes.getInt(R.styleable.MUPageControl_active_element_radius, mActiveElementRadius);
         mActiveElementColor = attributes.getColor(R.styleable.MUPageControl_active_element_color, mActiveElementColor);
-        mActiveElementColor = attributes.getColor(R.styleable.MUPageControl_active_element_color, mActiveElementColor);
         mBorderColor = attributes.getColor(R.styleable.MUPageControl_element_border_color, mBorderColor);
         mBorderWidth = attributes.getDimensionPixelSize(R.styleable.MUPageControl_active_element_width, mBorderWidth);
-        mElementPadding = attributes.getDimensionPixelSize(R.styleable.MUPageControl_android_paddingHorizontal, mElementPadding);
+        mElementPadding = attributes.getDimensionPixelSize(R.styleable.MUPageControl_element_padding, mElementPadding);
         mHideForSingleElementValue = attributes.getBoolean(R.styleable.MUPageControl_hide_for_single_page, mHideForSingleElementValue);
 
         init();
@@ -103,7 +110,11 @@ public class MUPageControl extends LinearLayout implements MUViewHelper {
         setWillNotDraw(false);
         setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         setGravity(Gravity.CENTER);
-        setNumberPages(mNumberPages);
+        if(isInEditMode()){
+            setNumberPages(2);
+        } else {
+            setNumberPages(mNumberPages);
+        }
         updateVisibility();
     }
 
@@ -111,7 +122,7 @@ public class MUPageControl extends LinearLayout implements MUViewHelper {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        getLayoutParams().height = mElementSize * 2;
+        getLayoutParams().height = mElementWidth * 2;
     }
 
     /**
@@ -130,6 +141,7 @@ public class MUPageControl extends LinearLayout implements MUViewHelper {
         mHMButtons.clear();
         removeAllViews();
         mNumberPages = Math.max(numberPages, 0);
+        LinearLayout ll;
         for(int i = 0 ; i < mNumberPages ; i++){
             IndicatorButton btn = new IndicatorButton(getContext(), i);
             mHMButtons.put(i, btn);
@@ -159,16 +171,16 @@ public class MUPageControl extends LinearLayout implements MUViewHelper {
      * The element size
      * @return size of the elements in dp
      */
-    public int getElementSize() {
-        return mElementSize;
+    public int getElementWidth() {
+        return mElementWidth;
     }
 
     /**
      * Set the element size
-     * @param elementSize the size in pixels
+     * @param elementWidth the size in pixels
      */
-    public void setElementSize(int elementSize) {
-        mElementSize = elementSize;
+    public void setElementWidth(int elementWidth) {
+        mElementWidth = elementWidth;
     }
 
     /**
@@ -324,7 +336,6 @@ public class MUPageControl extends LinearLayout implements MUViewHelper {
         }
     }
 
-
     private final OnClickListener mListener = v -> {
         if(v instanceof IndicatorButton) {
             int position = ((IndicatorButton) v).getPosition();
@@ -363,17 +374,26 @@ public class MUPageControl extends LinearLayout implements MUViewHelper {
 
         public void setSelected(boolean isSelected){
             LayoutParams btnLp = isSelected ?
-                    new LayoutParams(mActiveElementWidth, 2 * mElementSize) :
-                    new LayoutParams(mElementSize, 2 * mElementSize);
+                    new LayoutParams(mActiveElementWidth, mElementHeight) :
+                    new LayoutParams(mElementWidth, mElementHeight);
             setBackgroundTintList(new ColorStateList(STATES, isSelected ?
                     new int[]{ ColorUtils.setAlphaComponent(mActiveElementColor, (int) (0.7 * 255)), mActiveElementColor } :
                     new int[]{ ColorUtils.setAlphaComponent(mElementColor, (int) (0.7 * 255)), mElementColor }
             ));
-            setCornerRadius(isSelected ? mActiveElementRadius : 120);
+
+            float radius = mActiveElementRadius;
+            float[] inner = new float[]{
+                    radius,radius,radius,radius,radius,radius,radius,radius
+            };
+            ShapeDrawable a = new ShapeDrawable(new RoundRectShape(inner, new RectF(), null));
+            setBackgroundDrawable(a);
+
+
+            setCornerRadius(mElementWidth * 2);
             setStrokeColor(ColorStateList.valueOf(mBorderColor));
             setRippleColor(ColorStateList.valueOf(Color.TRANSPARENT));
 
-            btnLp.setMargins(mElementPadding,0,mElementPadding,0);
+            btnLp.setMargins(mElementPadding / 2,0, mElementPadding / 2,0);
             setStrokeWidth(mBorderWidth);
             setLayoutParams(btnLp);
         }

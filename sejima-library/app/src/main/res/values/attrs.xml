@@ -136,7 +136,8 @@
     </declare-styleable>
 
     <declare-styleable name="MUPageControl">
-        <attr name="element_size" format="dimension"/>
+        <attr name="element_height" format="dimension"/>
+        <attr name="element_width" format="dimension"/>
         <attr name="element_color" format="color"/>
         <attr name="active_element_width" format="dimension"/>
         <attr name="active_element_radius" format="integer"/>

@@ -77,5 +77,17 @@ public class FragmentMUHorizontalPager extends DefaultFragment implements MUHori
         LinearLayout ll = new LinearLayout(getContext());
         ll.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
         mMUHorizontalPager.addSubView(ll, 0);
+
+        tv = new TextView(getContext());
+        tv.setText(getString(R.string.app_name));
+        mMUHorizontalPager.addSubView(tv, 12);
+
+        ll = new LinearLayout(getContext());
+        ll.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        mMUHorizontalPager.addSubView(ll, 0);
+
+        tv = new TextView(getContext());
+        tv.setText(getString(R.string.app_name));
+        mMUHorizontalPager.addSubView(tv, 12);
     }
 }
