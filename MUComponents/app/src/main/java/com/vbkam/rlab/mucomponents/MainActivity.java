@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        loadFragment(FragmentMUButton.newInstance());
+        loadFragment(FragmentMUHorizontalPager.newInstance());
     }
 
     @Override
@@ -59,23 +59,22 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-//        if(R.id.nav_tibtop_walkthrough == id){
-//            startActivity(new Intent(this, WalkthroughActivity.class));
-//        } else if(R.id.nav_mu_horizontalpager == id){
-//            loadFragment(FragmentMUHorizontalPager.newInstance());
-//        } else if(R.id.nav_mu_avatar == id){
-//            loadFragment(FragmentMUAvatar.newInstance());
-//        } else if(R.id.nav_mu_header == id){
-//            loadFragment(FragmentMUHeader.newInstance());
-//        } else if(R.id.nav_mu_topbar == id){
-//            loadFragment(FragmentMUTopBar.newInstance());
-//        } else if(R.id.nav_mu_navigationbar == id){
-//            loadFragment(FragmentMUNavigationBar.newInstance());
-//        } else if(R.id.nav_mu_button == id){
-//            loadFragment(FragmentMUButton.newInstance());
-//        } else {
-//            return true;
-//        }
+        if(R.id.nav_mu_horizontalpager == id){
+            loadFragment(FragmentMUHorizontalPager.newInstance());
+        } else if(R.id.nav_mu_avatar == id){
+            loadFragment(FragmentMUAvatar.newInstance());
+        }
+        else if(R.id.nav_mu_header == id){
+            loadFragment(FragmentMUHeader.newInstance());
+        } else if(R.id.nav_mu_topbar == id){
+            loadFragment(FragmentMUTopBar.newInstance());
+        } else if(R.id.nav_mu_navigationbar == id){
+            loadFragment(FragmentMUNavigationBar.newInstance());
+        } else if(R.id.nav_mu_button == id){
+            loadFragment(FragmentMUButton.newInstance());
+        } else {
+            return true;
+        }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

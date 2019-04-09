@@ -11,18 +11,13 @@
         android:padding="20dp"
         android:background="@color/colorPrimary">
 
-        <com.rlab.sejima.features.MUButton
-            android:id="@+id/mu_button"
-            android:layout_width="wrap_content"
+        <com.rlab.sejima.features.MUHeader
+            android:id="@+id/mu_header"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/app_name"
-            android:textColor="#000"
-            app:border_alpha="1"
-            app:cornerRadius="5dp"
-            app:strokeColor="@color/colorPrimaryDark"
-            app:strokeWidth="2dp"
-            app:text_alignment="center" />
+            android:background="#fff"
+            app:title="@string/title"
+            app:detail="@string/detail"/>
 
     </RelativeLayout>
 
@@ -34,7 +29,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="8dp">
 
@@ -43,14 +38,14 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/control_mu_button_et_label"
+                    android:id="@+id/control_mu_header_et_title"
                     android:layout_width="0dp"
                     android:layout_weight="3"
                     android:layout_height="wrap_content"
                     android:hint="@string/title"/>
 
                 <Button
-                    android:id="@+id/control_mu_button_label"
+                    android:id="@+id/control_mu_header_title"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:text="Apply"
@@ -66,10 +61,10 @@
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:layout_height="wrap_content"
-                    android:text="Label color Black / Accent"/>
+                    android:text="Title color Black / Accent"/>
 
                 <Switch
-                    android:id="@+id/control_mu_button_title_color"
+                    android:id="@+id/control_mu_header_title_color"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"/>
@@ -84,10 +79,10 @@
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:layout_height="wrap_content"
-                    android:text="Label Normal / Bold"/>
+                    android:text="Title Normal / Bold"/>
 
                 <Switch
-                    android:id="@+id/control_mu_button_title_font"
+                    android:id="@+id/control_mu_header_title_font"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"/>
@@ -102,17 +97,125 @@
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:layout_height="wrap_content"
-                    android:text="Label size"/>
+                    android:text="Title size"/>
 
                 <Button
-                    android:id="@+id/control_mu_button_title_less"
+                    android:id="@+id/control_mu_header_title_less"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:text="-"
                     android:layout_height="wrap_content" />
 
                 <Button
-                    android:id="@+id/control_mu_button_title_more"
+                    android:id="@+id/control_mu_header_title_more"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="+"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/control_mu_header_et_details"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/detail"/>
+
+                <Button
+                    android:id="@+id/control_mu_header_details"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="Apply"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:text="Detail color Primary / Accent"/>
+
+                <Switch
+                    android:id="@+id/control_mu_header_details_color"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:text="Detail Normal / Bold"/>
+
+                <Switch
+                    android:id="@+id/control_mu_header_details_font"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:text="Detail size"/>
+
+                <Button
+                    android:id="@+id/control_mu_header_details_less"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="-"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/control_mu_header_details_more"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="+"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:text="Vertical spacing"/>
+
+                <Button
+                    android:id="@+id/control_mu_header_vertical_less"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="-"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/control_mu_header_vertical_more"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:text="+"
@@ -131,260 +234,30 @@
                     android:text="Alignment"/>
 
                 <Button
-                    android:id="@+id/control_mu_button_left"
+                    android:id="@+id/control_mu_header_left"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:text="start"
+                    android:text="left"
                     android:layout_height="wrap_content" />
 
                 <Button
-                    android:id="@+id/control_mu_button_center"
+                    android:id="@+id/control_mu_header_center"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:text="center"
                     android:layout_height="wrap_content" />
 
                 <Button
-                    android:id="@+id/control_mu_button_right"
+                    android:id="@+id/control_mu_header_right"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:text="end"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content"
-                    android:text="Alpha 1.0 / 0.5"/>
-
-                <Switch
-                    android:id="@+id/control_mu_button_alpha"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content"
-                    android:text="Disabled alpha 0.7 / 0.3"/>
-
-                <Switch
-                    android:id="@+id/control_mu_button_disabled_alpha"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content"
-                    android:text="Press color Black / Accent"/>
-
-                <Switch
-                    android:id="@+id/control_mu_button_pressed_color"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content"
-                    android:text="Progressing color Black / Accent"/>
-
-                <Switch
-                    android:id="@+id/control_mu_button_progressing_color"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content"
-                    android:text="Loading"/>
-
-                <Switch
-                    android:id="@+id/control_mu_button_loading"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content"
-                    android:text="Background color Primary / Gray"/>
-
-                <Switch
-                    android:id="@+id/control_mu_button_background"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content"
-                    android:text="Corner radius"/>
-
-                <Button
-                    android:id="@+id/control_mu_button_radius_less"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:text="-"
-                    android:layout_height="wrap_content" />
-
-                <Button
-                    android:id="@+id/control_mu_button_radius_more"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:text="+"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content"
-                    android:text="Border width"/>
-
-                <Button
-                    android:id="@+id/control_mu_button_border_less"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:text="-"
-                    android:layout_height="wrap_content" />
-
-                <Button
-                    android:id="@+id/control_mu_button_border_more"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:text="+"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content"
-                    android:text="Border Dark / Accent"/>
-
-                <Switch
-                    android:id="@+id/control_mu_button_border_color"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content"
-                    android:text="Horizontal padding"/>
-
-                <Button
-                    android:id="@+id/control_mu_button_horizontal_less"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:text="-"
-                    android:layout_height="wrap_content" />
-
-                <Button
-                    android:id="@+id/control_mu_button_horizontal_more"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:text="+"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content"
-                    android:text="Vertical padding"/>
-
-                <Button
-                    android:id="@+id/control_mu_button_vertical_less"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:text="-"
-                    android:layout_height="wrap_content" />
-
-                <Button
-                    android:id="@+id/control_mu_button_vertical_more"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:text="+"
+                    android:text="right"
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
 
             <Button
-                android:id="@+id/control_mu_button_raz"
+                android:id="@+id/control_mu_header_raz"
                 android:layout_width="match_parent"
                 android:text="Default values"
                 android:layout_height="wrap_content" />
@@ -392,5 +265,6 @@
         </LinearLayout>
 
     </ScrollView>
+
 
 </LinearLayout>
