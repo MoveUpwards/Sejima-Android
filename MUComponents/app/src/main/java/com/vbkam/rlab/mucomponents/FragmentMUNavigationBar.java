@@ -11,13 +11,13 @@ public class FragmentMUNavigationBar extends DefaultFragment {
 
     private MUNavigationBar mMUNavigationBar;
 
-    public static com.rlab.sejima.fragments.FragmentMUNavigationBar newInstance(){
-        return new com.rlab.sejima.fragments.FragmentMUNavigationBar();
+    public static FragmentMUNavigationBar newInstance(){
+        return new FragmentMUNavigationBar();
     }
 
     @Override
     int layoutId() {
-        return com.rlab.sejima.R.layout.fragment_mu_navigationbar;
+        return R.layout.fragment_mu_navigationbar;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class FragmentMUNavigationBar extends DefaultFragment {
 
     @Override
     void initView(View view) {
-        mMUNavigationBar = view.findViewById(com.rlab.sejima.R.id.mu_navbar);
+        mMUNavigationBar = view.findViewById(R.id.mu_navbar);
         float sepWidth = mMUNavigationBar.getSeparatorWidth();
         float sepMul = mMUNavigationBar.getSeparatorMultiplier();
 
@@ -44,40 +44,40 @@ public class FragmentMUNavigationBar extends DefaultFragment {
         });
 
         // Bkg color
-        ((Switch) view.findViewById(com.rlab.sejima.R.id.control_mu_navbar_bkg_color)).setOnCheckedChangeListener((buttonView, isChecked) ->
-                mMUNavigationBar.setBkgColor(getResources().getColor(isChecked ? com.rlab.sejima.R.color.colorAccent : com.rlab.sejima.R.color.colorPrimary)));
+        ((Switch) view.findViewById(R.id.control_mu_navbar_bkg_color)).setOnCheckedChangeListener((buttonView, isChecked) ->
+                mMUNavigationBar.setBkgColor(getResources().getColor(isChecked ? R.color.colorAccent : R.color.colorPrimary)));
 
         // Drawable
-        ((Switch) view.findViewById(com.rlab.sejima.R.id.control_mu_navbar_image)).setOnCheckedChangeListener((buttonView, isChecked) ->
-                mMUNavigationBar.setImgDrawable(getResources().getDrawable(isChecked ? com.rlab.sejima.R.drawable.ic_launcher_background : com.rlab.sejima.R.drawable.avatar)));
+        ((Switch) view.findViewById(R.id.control_mu_navbar_image)).setOnCheckedChangeListener((buttonView, isChecked) ->
+                mMUNavigationBar.setImgDrawable(getResources().getDrawable(isChecked ? R.drawable.ic_launcher_background : R.drawable.avatar)));
 
         // Separator color
-        ((Switch) view.findViewById(com.rlab.sejima.R.id.control_mu_navbar_separator_color)).setOnCheckedChangeListener((buttonView, isChecked) ->
-                mMUNavigationBar.setSeparatorColor(isChecked ? getResources().getColor(com.rlab.sejima.R.color.colorPrimaryDark) : Color.BLACK));
+        ((Switch) view.findViewById(R.id.control_mu_navbar_separator_color)).setOnCheckedChangeListener((buttonView, isChecked) ->
+                mMUNavigationBar.setSeparatorColor(isChecked ? getResources().getColor(R.color.colorPrimaryDark) : Color.BLACK));
 
         // Separator width
-        view.findViewById(com.rlab.sejima.R.id.control_mu_navbar_separator_less).setOnClickListener(l ->
+        view.findViewById(R.id.control_mu_navbar_separator_less).setOnClickListener(l ->
                 mMUNavigationBar.setSeparatorWidth((mMUNavigationBar.getSeparatorWidth() - 1)));
-        view.findViewById(com.rlab.sejima.R.id.control_mu_navbar_separator_more).setOnClickListener(l ->
+        view.findViewById(R.id.control_mu_navbar_separator_more).setOnClickListener(l ->
                 mMUNavigationBar.setSeparatorWidth((mMUNavigationBar.getSeparatorWidth() + 1)));
 
         // Separator width
-        view.findViewById(com.rlab.sejima.R.id.control_mu_navbar_separator_less).setOnClickListener(l ->
+        view.findViewById(R.id.control_mu_navbar_separator_less).setOnClickListener(l ->
                 mMUNavigationBar.setSeparatorWidth((mMUNavigationBar.getSeparatorWidth() - 1)));
-        view.findViewById(com.rlab.sejima.R.id.control_mu_navbar_separator_more).setOnClickListener(l ->
+        view.findViewById(R.id.control_mu_navbar_separator_more).setOnClickListener(l ->
                 mMUNavigationBar.setSeparatorWidth((mMUNavigationBar.getSeparatorWidth() + 1)));
 
         // Separator multiplier
-        view.findViewById(com.rlab.sejima.R.id.control_mu_navbar_separator_multi_less).setOnClickListener(l ->
+        view.findViewById(R.id.control_mu_navbar_separator_multi_less).setOnClickListener(l ->
                 mMUNavigationBar.setSeparatorMultiplier((mMUNavigationBar.getSeparatorMultiplier() - 0.1f)));
-        view.findViewById(com.rlab.sejima.R.id.control_mu_navbar_separator_multi_more).setOnClickListener(l ->
+        view.findViewById(R.id.control_mu_navbar_separator_multi_more).setOnClickListener(l ->
                 mMUNavigationBar.setSeparatorMultiplier((mMUNavigationBar.getSeparatorMultiplier() + 0.1f)));
 
         // RAZ
-        view.findViewById(com.rlab.sejima.R.id.control_mu_topbar_raz).setOnClickListener(v -> {
-            ((Switch) view.findViewById(com.rlab.sejima.R.id.control_mu_navbar_bkg_color)).setChecked(false);
-            ((Switch) view.findViewById(com.rlab.sejima.R.id.control_mu_navbar_image)).setChecked(false);
-            ((Switch) view.findViewById(com.rlab.sejima.R.id.control_mu_navbar_separator_color)).setChecked(false);
+        view.findViewById(R.id.control_mu_topbar_raz).setOnClickListener(v -> {
+            ((Switch) view.findViewById(R.id.control_mu_navbar_bkg_color)).setChecked(false);
+            ((Switch) view.findViewById(R.id.control_mu_navbar_image)).setChecked(false);
+            ((Switch) view.findViewById(R.id.control_mu_navbar_separator_color)).setChecked(false);
             mMUNavigationBar.setSeparatorWidth(sepWidth);
             mMUNavigationBar.setSeparatorMultiplier(sepMul);
         });

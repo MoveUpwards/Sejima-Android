@@ -15,8 +15,6 @@ abstract class DefaultFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //            mParam1 = getArguments().getString(ARG_PARAM1);
-        //            mParam2 = getArguments().getString(ARG_PARAM2);
     }
 
     @Override
