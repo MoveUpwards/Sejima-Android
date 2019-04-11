@@ -474,6 +474,22 @@ public class MUNavigationBar extends LinearLayout implements MUViewHelper {
     }
 
     /**
+     * Get the current font style
+     * @return the resource id of the font style
+     */
+    public int getFontStyle() {
+        return mRightButton.getFontStyle();
+    }
+
+    /**
+     * Set the font style
+     * @param fontStyle the resource id of the font style
+     */
+    public void setFontStyle(int fontStyle) {
+        mRightButton.setFontStyle(fontStyle);
+    }
+
+    /**
      * Interface to handle user clicks
      */
     public interface MUNavigationBarListener {

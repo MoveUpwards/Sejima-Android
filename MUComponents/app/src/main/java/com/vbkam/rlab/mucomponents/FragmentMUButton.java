@@ -3,6 +3,7 @@ package com.vbkam.rlab.mucomponents;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -123,6 +124,9 @@ public class FragmentMUButton extends DefaultFragment {
                 mMUButton.setVerticalPadding((mMUButton.getVerticalPadding() - 1)));
         view.findViewById(R.id.control_mu_button_vertical_more).setOnClickListener(l ->
                 mMUButton.setVerticalPadding((mMUButton.getVerticalPadding() + 1)));
+
+        mMUButton.setFontStyle(R.style.Header);
+        mMUButton.setOnClickListener(l -> Log.e(getClass().getCanonicalName(), "click"));
 
         // RAZ
         view.findViewById(R.id.control_mu_button_raz).setOnClickListener(v -> {

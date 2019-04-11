@@ -55,8 +55,7 @@ public class MainActivity extends AppCompatActivity
             loadFragment(FragmentMUHorizontalPager.newInstance());
         } else if(R.id.nav_mu_avatar == id){
             loadFragment(FragmentMUAvatar.newInstance());
-        }
-        else if(R.id.nav_mu_header == id){
+        } else if(R.id.nav_mu_header == id){
             loadFragment(FragmentMUHeader.newInstance());
         } else if(R.id.nav_mu_topbar == id){
             loadFragment(FragmentMUTopBar.newInstance());

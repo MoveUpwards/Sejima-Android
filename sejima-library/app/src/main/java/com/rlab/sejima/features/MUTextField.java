@@ -109,6 +109,16 @@ public class MUTextField extends RelativeLayout {
     private MUTextFieldListener mTFListener;
 
     /**
+     * The title's font style
+     */
+    private int mLabelFontStyle = -1;
+
+    /**
+     * The field's font style
+     */
+    private int mFieldFontStyle = -1;
+
+    /**
      * Default constructor
      * @param context the view context
      */
@@ -132,14 +142,16 @@ public class MUTextField extends RelativeLayout {
         mLabelColor = attributes.getColor(R.styleable.MUTextField_title_color, mLabelColor);
         mLabelFontSize = attributes.getDimensionPixelSize(R.styleable.MUTextField_title_size, 0);
         mLabelFontWeight = attributes.getInt(R.styleable.MUTextField_title_weight, mLabelFontWeight);
-        mAlignment = attributes.getInt(R.styleable.MUTextField_alignment, mAlignment);
+        mLabelFontStyle = attributes.getResourceId(R.styleable.MUTextField_title_font_style, mLabelFontStyle);
 
         s = attributes.getString(R.styleable.MUTextField_field);
         mField = TextUtils.isEmpty(s) ? mField : s;
         mFieldColor = attributes.getColor(R.styleable.MUTextField_field_color, mFieldColor);
         mFieldFontSize = attributes.getDimensionPixelSize(R.styleable.MUTextField_field_size, 0);
         mFieldFontWeight = attributes.getInt(R.styleable.MUTextField_field_weight, mFieldFontWeight);
+        mFieldFontStyle = attributes.getResourceId(R.styleable.MUTextField_field_font_style, mFieldFontStyle);
 
+        mAlignment = attributes.getInt(R.styleable.MUTextField_alignment, mLabelFontStyle);
         mIsSecure   = attributes.getBoolean(R.styleable.MUTextField_is_secure, false);
         mIsEditable = attributes.getBoolean(R.styleable.MUTextField_android_editable, true);
         mAutoCorrection = attributes.getBoolean(R.styleable.MUTextField_auto_correct, true);
@@ -225,6 +237,9 @@ public class MUTextField extends RelativeLayout {
         addView(mETInput);
 
         setAlignment(mAlignment);
+
+        setLabelFontStyle(mLabelFontStyle);
+        setFieldFontStyle(mFieldFontStyle);
     }
 
     /**
@@ -581,6 +596,42 @@ public class MUTextField extends RelativeLayout {
     public void setUnderlineColor(int underlineColor) {
         mUnderlineColor = underlineColor;
         mETInput.getBackground().setColorFilter(mUnderlineColor, PorterDuff.Mode.SRC_IN);
+    }
+
+    /**
+     * Get the current font style for the label
+     * @return the resource id of the font style
+     */
+    public int getLabelFontStyle() {
+        return mLabelFontStyle;
+    }
+
+    /**
+     * Set the font style for the label
+     * @param fontStyle the resource id of the font style
+     */
+    public void setLabelFontStyle(int fontStyle) {
+        //TODO check the style existence
+        mLabelFontStyle = fontStyle;
+        mTVLabel.setTextAppearance(getContext(), mLabelFontStyle);
+    }
+
+    /**
+     * Get the current font style for the field
+     * @return the resource id of the font style
+     */
+    public int getFieldFontStyle() {
+        return mFieldFontStyle;
+    }
+
+    /**
+     * Set the font style for the field
+     * @param fontStyle the resource id of the font style
+     */
+    public void setFieldFontStyle(int fontStyle) {
+        //TODO check the style existence
+        mFieldFontStyle = fontStyle;
+        mETInput.setTextAppearance(getContext(), mFieldFontStyle);
     }
 
     /**

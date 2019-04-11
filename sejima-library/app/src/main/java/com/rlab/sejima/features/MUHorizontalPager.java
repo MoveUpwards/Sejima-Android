@@ -120,12 +120,12 @@ public class MUHorizontalPager extends ViewPager implements MUPageControlListene
 
             Button b = new Button(context);
             b.setText(context.getString(R.string.app_name));
-            addViews(new View[]{tv, b}, 10);
 
             MUHeader muHeader = new MUHeader(context);
             muHeader.setTitle(context.getString(R.string.title));
             muHeader.setDetail(context.getString(R.string.detail));
-            addSubView(muHeader, 50f);
+            addViews(new View[]{tv, b, muHeader}, 10);
+            setCurrentIndex(0);
         }
 
         addOnPageChangeListener(new MyOnPageChangeListener());
@@ -214,6 +214,10 @@ public class MUHorizontalPager extends ViewPager implements MUPageControlListene
                 && currentIndex != mCurrentIndex) {
             mCurrentIndex = currentIndex;
             setCurrentItem(mCurrentIndex, autoScroll);
+
+            if(mMUPageControl != null){
+                mMUPageControl.setCurrentPosition(mCurrentIndex);
+            }
         }
     }
 
@@ -317,6 +321,6 @@ public class MUHorizontalPager extends ViewPager implements MUPageControlListene
 
     @Override
     public void clickOnIndex(MUPageControl muPageControl, int index) {
-        this.setCurrentIndex(index, true);
+        this.setCurrentIndex(index, false);
     }
 }

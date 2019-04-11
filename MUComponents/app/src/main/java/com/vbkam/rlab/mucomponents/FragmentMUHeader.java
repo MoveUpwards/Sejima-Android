@@ -80,6 +80,8 @@ public class FragmentMUHeader extends DefaultFragment {
         view.findViewById(R.id.control_mu_header_vertical_less).setOnClickListener(l -> mMUHeader.setVerticalSpacing(mMUHeader.getVerticalSpacing() - 10));
         view.findViewById(R.id.control_mu_header_vertical_more).setOnClickListener(l -> mMUHeader.setVerticalSpacing(mMUHeader.getVerticalSpacing() + 10));
 
+        mMUHeader.setTitleFontStyle(R.style.Header);
+
         // RAZ
         view.findViewById(R.id.control_mu_header_raz).setOnClickListener(v -> {
             ((Switch) view.findViewById(R.id.control_mu_header_details_font)).setChecked(false);

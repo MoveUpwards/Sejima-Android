@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import com.google.android.material.button.MaterialButton;
 import com.rlab.sejima.R;
 
+import androidx.annotation.Nullable;
 import androidx.core.graphics.ColorUtils;
 
 /*
@@ -99,6 +100,8 @@ public class MUButton extends RelativeLayout implements MUViewHelper {
      */
     private int mHorizontalPadding = 18;
 
+    private int mFontStyle = -1;
+
     /**
      * The main button
      */
@@ -149,6 +152,8 @@ public class MUButton extends RelativeLayout implements MUViewHelper {
         mHorizontalPadding = attributes.getDimensionPixelSize(R.styleable.MUButton_android_paddingHorizontal, mVerticalPadding);
         // IsLoading
         mIsLoading = attributes.getBoolean(R.styleable.MUButton_is_loading, false);
+        // Font Style
+        mFontStyle = attributes.getResourceId(R.styleable.MUButton_font_style, mFontStyle);
 
         init(context);
         attributes.recycle();
@@ -204,6 +209,9 @@ public class MUButton extends RelativeLayout implements MUViewHelper {
             mVerticalPadding = attributes.hasValue(R.styleable.MUNavigationBar_android_paddingVertical) ?
                     attributes.getDimensionPixelSize(R.styleable.MUNavigationBar_android_paddingVertical, mVerticalPadding)
                     : mVerticalPadding;
+            mFontStyle = attributes.hasValue(R.styleable.MUNavigationBar_font_style) ?
+                    attributes.getResourceId(R.styleable.MUNavigationBar_font_style, mFontStyle)
+                    : mFontStyle;
         }
 
         init(context);
@@ -251,6 +259,8 @@ public class MUButton extends RelativeLayout implements MUViewHelper {
         //Padding
         setVerticalPadding(mVerticalPadding);
         setHorizontalPadding(mHorizontalPadding);
+        // Style
+        setFontStyle(mFontStyle);
     }
 
     @Override
@@ -273,8 +283,13 @@ public class MUButton extends RelativeLayout implements MUViewHelper {
      * @param listener the listener to attach
      */
     public void setListener(OnClickListener listener) {
-        mListener = listener;
-        super.setOnClickListener(listener);
+       setOnClickListener(listener);
+    }
+
+    @Override
+    public void setOnClickListener(@Nullable OnClickListener l) {
+        mListener = l;
+        mButton.setOnClickListener(l);
     }
 
     /**
@@ -637,6 +652,23 @@ public class MUButton extends RelativeLayout implements MUViewHelper {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mButton.setBackgroundTintList(new ColorStateList(STATES, colors));
         }
+    }
+
+    /**
+     * Get the current font style
+     * @return the resource id of the font style
+     */
+    public int getFontStyle() {
+        return mFontStyle;
+    }
+
+    /**
+     * Set the font style
+     * @param fontStyle the resource id of the font style
+     */
+    public void setFontStyle(int fontStyle) {
+        mFontStyle = fontStyle;
+        mButton.setTextAppearance(getContext(), fontStyle);
     }
 
     /**

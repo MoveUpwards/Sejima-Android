@@ -50,6 +50,10 @@ public class MUHeader extends RelativeLayout {
      * The default title's weight
      */
     private int mTitleWeight = Typeface.NORMAL;
+    /**
+     * The title's font style
+     */
+    private int mTitleFontStyle = -1;
 
     /**
      * The title's text color
@@ -72,6 +76,11 @@ public class MUHeader extends RelativeLayout {
      * The detail's text color
      */
     private int mDetailColor = Color.BLACK;
+    /**
+     * The detail's font style
+     */
+    private int mDetailFontStyle = -1;
+
     /**
      * The text's horizontal alignment
      */
@@ -107,6 +116,7 @@ public class MUHeader extends RelativeLayout {
         mTitleColor = a.getColor(R.styleable.MUHeader_title_color, mTitleColor);
         mTitleSize = a.getDimensionPixelSize(R.styleable.MUHeader_title_size, 0);
         mTitleWeight = a.getInt(R.styleable.MUHeader_title_weight, mTitleWeight);
+        mTitleFontStyle = a.getResourceId(R.styleable.MUHeader_title_font_style, mTitleFontStyle);
 
         // Deal with detail's attributes
         s = a.getString(R.styleable.MUHeader_detail);
@@ -114,6 +124,7 @@ public class MUHeader extends RelativeLayout {
         mDetailColor = a.getColor(R.styleable.MUHeader_detail_color, mDetailColor);
         mDetailSize = a.getDimensionPixelSize(R.styleable.MUHeader_detail_size, 0);
         mDetailWeight = a.getInt(R.styleable.MUHeader_detail_weight, mDetailWeight);
+        mDetailFontStyle = a.getResourceId(R.styleable.MUHeader_detail_font_style, mDetailFontStyle);
 
         mVerticalSpacing = a.getDimensionPixelSize(R.styleable.MUHeader_vertical_spacing, 0);
         mAlignment = a.getInt(R.styleable.MUHeader_alignment, mAlignment);
@@ -147,6 +158,9 @@ public class MUHeader extends RelativeLayout {
         mVerticalSpacing = mVerticalSpacing != 0 ? mVerticalSpacing : DEFAULT_VERTICAL_SPACING_IN_SP;
         mTVDetail.setPadding(0, mVerticalSpacing, 0, 0);
         addView(mTVDetail);
+
+        setTitleFontStyle(mTitleFontStyle);
+        setDetailFontStyle(mDetailFontStyle);
     }
 
     public String getTitle() {
@@ -248,6 +262,42 @@ public class MUHeader extends RelativeLayout {
     public void setVerticalSpacing(int verticalSpacing) {
         mVerticalSpacing = Math.max(0, verticalSpacing);
         mTVDetail.setPadding(0, mVerticalSpacing, 0, 0);
+    }
+
+    /**
+     * Get the current font style for the title
+     * @return the resource id of the font style
+     */
+    public int getTitleFontStyle() {
+        return mTitleFontStyle;
+    }
+
+    /**
+     * Set the font style for the title
+     * @param fontStyle the resource id of the font style
+     */
+    public void setTitleFontStyle(int fontStyle) {
+        //TODO check the style existence
+        mTitleFontStyle = fontStyle;
+        mTVTitle.setTextAppearance(getContext(), mTitleFontStyle);
+    }
+
+    /**
+     * Get the current font style for the detail
+     * @return the resource id of the font style
+     */
+    public int getDetailFontStyle() {
+        return mDetailFontStyle;
+    }
+
+    /**
+     * Set the font style for the detail
+     * @param fontStyle the resource id of the font style
+     */
+    public void setDetailFontStyle(int fontStyle) {
+        //TODO check the style existence
+        mDetailFontStyle = fontStyle;
+        mTVDetail.setTextAppearance(getContext(), mDetailFontStyle);
     }
 
 }

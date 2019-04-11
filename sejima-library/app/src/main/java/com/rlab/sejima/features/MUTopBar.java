@@ -51,6 +51,8 @@ public class MUTopBar extends RelativeLayout implements MUViewHelper {
      * The title's font weight
      */
     private int mTitleFontWeight;
+
+    private int mFontStyle = -1;
     /**
      * The title's text color
      */
@@ -113,6 +115,8 @@ public class MUTopBar extends RelativeLayout implements MUViewHelper {
         mLeftButtonWidth = attributes.getDimensionPixelSize(R.styleable.MUTopBar_topbar_img_width, 0);
         mLeftButtonLeading = attributes.getDimensionPixelSize(R.styleable.MUTopBar_topbar_btn_leading, 0);
         mButtonImage = attributes.getResourceId(R.styleable.MUTopBar_topbar_btn_img, mButtonImage);
+        // Font Style
+        mFontStyle = attributes.getResourceId(R.styleable.MUTopBar_font_style, mFontStyle);
 
         init(context);
         attributes.recycle();
@@ -348,6 +352,25 @@ public class MUTopBar extends RelativeLayout implements MUViewHelper {
         mTVLabel.setTypeface(Typeface.create(Typeface.DEFAULT, mTitleFontWeight));
         setTitleAlignment(mTitleAlignment);
         addView(mTVLabel);
+
+        setFontStyle(mFontStyle);
+    }
+
+    /**
+     * Get the current font style
+     * @return the resource id of the font style
+     */
+    public int getFontStyle() {
+        return mFontStyle;
+    }
+
+    /**
+     * Set the font style
+     * @param fontStyle the resource id of the font style
+     */
+    public void setFontStyle(int fontStyle) {
+        mFontStyle = fontStyle;
+        mTVLabel.setTextAppearance(getContext(), fontStyle);
     }
 
 

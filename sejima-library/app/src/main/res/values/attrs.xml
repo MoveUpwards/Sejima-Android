@@ -25,6 +25,8 @@
         <enum name="center" value="17"/>
         <enum name="end" value="5"/>
     </attr>
+    <attr name="font_style" format="reference"/>
+    <attr name="title_font_style" format="reference"/>
 
     <declare-styleable name="MUHeader">
         <attr name="title"/>
@@ -32,6 +34,8 @@
         <attr name="title_weight"/>
         <attr name="title_color"/>
         <attr name="alignment"/>
+        <attr name="title_font_style"/>
+        <attr name="detail_font_style" format="reference"/>
         <attr name="detail" format="string"/>
         <attr name="detail_size" format="dimension"/>
         <attr name="detail_color" format="color"/>
@@ -53,7 +57,7 @@
             <enum name="end" value="21"/>
             <enum name="center" value="14"/>
         </attr>
-
+        <attr name="font_style"/>
         <attr name="topbar_btn_img" format="reference"/>
         <attr name="topbar_img_width" format="dimension"/>
         <attr name="topbar_btn_left_padding" format="dimension"/>
@@ -66,6 +70,8 @@
         <attr name="title_weight"/>
         <attr name="title_color"/>
         <attr name="alignment"/>
+        <attr name="field_font_style" format="reference"/>
+        <attr name="title_font_style"/>
         <attr name="is_secure" format="boolean"/>
         <attr name="auto_correct" format="boolean"/>
         <attr name="android:inputType"/>
@@ -102,6 +108,7 @@
         <attr name="strokeColor"/>
         <attr name="strokeWidth"/>
         <attr name="cornerRadius"/>
+        <attr name="font_style"/>
         <attr name="bkg_color"/>
         <attr name="disable_alpha"/>
         <attr name="text_alignment"/>
@@ -123,6 +130,7 @@
         <attr name="android:textSize"/>
         <attr name="android:textStyle"/>
         <attr name="text_alignment"/>
+        <attr name="font_style"/>
         <attr name="pressed_color"/>
         <attr name="progressing_color"/>
         <attr name="border_width"/>
