@@ -27,7 +27,7 @@ import androidx.core.graphics.ColorUtils;
  */
 public class MUPageControl extends LinearLayout implements MUViewHelper {
 
-    private int mNumberPages = 1;
+    private int mNumberPages = 0;
     private int mCurrentPosition = -1;
     private MUPageControlListener mPageControlListener;
     private final Map<Integer, IndicatorButton> mHMButtons = new LinkedHashMap<>();
@@ -329,7 +329,7 @@ public class MUPageControl extends LinearLayout implements MUViewHelper {
     }
 
     private void updateVisibility(){
-        if(mNumberPages <= 1 && mHideForSingleElementValue){
+        if (mNumberPages == 0 || (mNumberPages == 1 && mHideForSingleElementValue)){
             setVisibility(GONE);
         } else {
             setVisibility(VISIBLE);
@@ -382,12 +382,9 @@ public class MUPageControl extends LinearLayout implements MUViewHelper {
             ));
 
             float radius = mActiveElementRadius;
-            float[] inner = new float[]{
-                    radius,radius,radius,radius,radius,radius,radius,radius
-            };
-            ShapeDrawable a = new ShapeDrawable(new RoundRectShape(inner, new RectF(), null));
+            float[] outer = new float[]{ radius,radius,radius,radius,radius,radius,radius,radius };
+            ShapeDrawable a = new ShapeDrawable(new RoundRectShape(outer, new RectF(), null));
             setBackgroundDrawable(a);
-
 
             setCornerRadius(mElementWidth * 2);
             setStrokeColor(ColorStateList.valueOf(mBorderColor));

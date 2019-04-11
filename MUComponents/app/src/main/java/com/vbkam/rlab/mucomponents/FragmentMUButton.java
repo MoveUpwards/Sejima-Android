@@ -126,7 +126,6 @@ public class FragmentMUButton extends DefaultFragment {
                 mMUButton.setVerticalPadding((mMUButton.getVerticalPadding() + 1)));
 
         mMUButton.setFontStyle(R.style.Header);
-        mMUButton.setOnClickListener(l -> Log.e(getClass().getCanonicalName(), "click"));
 
         // RAZ
         view.findViewById(R.id.control_mu_button_raz).setOnClickListener(v -> {

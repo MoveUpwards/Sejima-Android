@@ -220,6 +220,7 @@ public class MUButton extends RelativeLayout implements MUViewHelper {
     private void init(Context context){
 
         mButton = new MaterialButton(context);
+        mButton.setAllCaps(false);
         mButton.setId(View.generateViewId());
         LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         addView(mButton, lp);
