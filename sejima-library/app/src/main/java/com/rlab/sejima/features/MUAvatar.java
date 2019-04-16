@@ -14,6 +14,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import com.rlab.sejima.R;
@@ -188,7 +189,6 @@ public class MUAvatar extends AppCompatImageView implements MUViewHelper {
             canvas.drawRoundRect(mDrawableRect, mCornerRadius, mCornerRadius, mBkgPaint);
         }
 
-        // Deal with the drawable image
         canvas.drawRoundRect(mDrawableRect, mCornerRadius, mCornerRadius, mBitmapPaint);
 
         // Deal with the border color
@@ -255,7 +255,8 @@ public class MUAvatar extends AppCompatImageView implements MUViewHelper {
 
         try {
             Bitmap bitmap = Bitmap.createBitmap(
-                    drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(),
+                    ((int) (drawable.getIntrinsicWidth() - 2 * mBorderWidth)),
+                    ((int) (drawable.getIntrinsicHeight() - 2 * mBorderWidth)),
                     Bitmap.Config.ARGB_8888);
 
             Canvas canvas = new Canvas(bitmap);
@@ -321,6 +322,7 @@ public class MUAvatar extends AppCompatImageView implements MUViewHelper {
         mBkgPaint.setAntiAlias(true);
         mBkgPaint.setColor(mBkgColor);
 
+
         mBitmapHeight = mBitmap.getHeight();
         mBitmapWidth = mBitmap.getWidth();
 
@@ -339,7 +341,6 @@ public class MUAvatar extends AppCompatImageView implements MUViewHelper {
         int availableHeight = getHeight() - getPaddingTop() - getPaddingBottom();
 
         int sideLength = Math.min(availableWidth, availableHeight);
-        sideLength -= 1 * mBorderWidth;
         float left = getPaddingLeft() + (availableWidth - sideLength) / 2f;
         float top = getPaddingTop() + (availableHeight - sideLength) / 2f;
 
@@ -457,7 +458,7 @@ public class MUAvatar extends AppCompatImageView implements MUViewHelper {
      */
     public void setBorderWidth(float borderWidth) {
         mBorderWidth = normalizeFloatValue(borderWidth, 0, borderWidth);
-        invalidate();
+        setup();
     }
 
     /**
