@@ -60,11 +60,12 @@ public class MUButtonTests {
         assertEquals(18, mMUButton.getVerticalPadding(),0);
         // Listener
         assertNotNull(mMUButton.getListener());
+        // Style
+        mMUButton.setFontStyle(-4);
     }
 
     @Test
     public void customValues() {
-
         // Alpha
         mMUButton.setAlpha(2);
         assertEquals(1, mMUButton.getAlpha(), 0);

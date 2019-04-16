@@ -21,7 +21,7 @@ import com.rlab.sejima.R;
 
 import androidx.appcompat.widget.AppCompatEditText;
 
-public class MUTextField extends RelativeLayout {
+public class MUTextField extends RelativeLayout implements MUViewHelper {
 
     /**
      * The scale used to convert px in dp
@@ -611,9 +611,10 @@ public class MUTextField extends RelativeLayout {
      * @param fontStyle the resource id of the font style
      */
     public void setLabelFontStyle(int fontStyle) {
-        //TODO check the style existence
-        mLabelFontStyle = fontStyle;
-        mTVLabel.setTextAppearance(getContext(), mLabelFontStyle);
+        if(checkResource(getResources(), fontStyle)){
+            mLabelFontStyle = fontStyle;
+            mTVLabel.setTextAppearance(getContext(), fontStyle);
+        }
     }
 
     /**
@@ -629,9 +630,10 @@ public class MUTextField extends RelativeLayout {
      * @param fontStyle the resource id of the font style
      */
     public void setFieldFontStyle(int fontStyle) {
-        //TODO check the style existence
-        mFieldFontStyle = fontStyle;
-        mETInput.setTextAppearance(getContext(), mFieldFontStyle);
+        if(checkResource(getResources(), fontStyle)){
+            mFieldFontStyle = fontStyle;
+            mETInput.setTextAppearance(getContext(), fontStyle);
+        }
     }
 
     /**

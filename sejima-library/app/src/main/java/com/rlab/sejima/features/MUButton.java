@@ -26,7 +26,7 @@ import androidx.core.graphics.ColorUtils;
  */
 public class MUButton extends RelativeLayout implements MUViewHelper {
 
-    
+
     /**
      * OnCLickListener to handle clicks
      */
@@ -246,6 +246,8 @@ public class MUButton extends RelativeLayout implements MUViewHelper {
         setLabelAlignment(mLabelAlignment);
         setLabelFontSize(mLabelFontSize);
         setProgressingColor(mProgressingColor);
+        // Style
+        setFontStyle(mFontStyle);
         //Border
         setBorderWidth(mBorderWidth);
         setCornerRadius(mCornerRadius);
@@ -260,8 +262,6 @@ public class MUButton extends RelativeLayout implements MUViewHelper {
         //Padding
         setVerticalPadding(mVerticalPadding);
         setHorizontalPadding(mHorizontalPadding);
-        // Style
-        setFontStyle(mFontStyle);
     }
 
     @Override
@@ -284,7 +284,7 @@ public class MUButton extends RelativeLayout implements MUViewHelper {
      * @param listener the listener to attach
      */
     public void setListener(OnClickListener listener) {
-       setOnClickListener(listener);
+        setOnClickListener(listener);
     }
 
     @Override
@@ -502,7 +502,7 @@ public class MUButton extends RelativeLayout implements MUViewHelper {
     public void setLoading(boolean loading) {
         mIsLoading = loading;
         new Handler(Looper.getMainLooper()).post(() ->
-            mProgressBar.setVisibility(mIsLoading ? VISIBLE : GONE)
+                mProgressBar.setVisibility(mIsLoading ? VISIBLE : GONE)
         );
         mButton.setTextColor(mIsLoading ? Color.TRANSPARENT : mLabelColor);
     }
@@ -668,8 +668,10 @@ public class MUButton extends RelativeLayout implements MUViewHelper {
      * @param fontStyle the resource id of the font style
      */
     public void setFontStyle(int fontStyle) {
-        mFontStyle = fontStyle;
-        mButton.setTextAppearance(getContext(), fontStyle);
+        if(checkResource(getResources(), fontStyle)){
+            mFontStyle = fontStyle;
+            mButton.setTextAppearance(getContext(), fontStyle);
+        }
     }
 
     /**

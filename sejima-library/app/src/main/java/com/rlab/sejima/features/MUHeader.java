@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.rlab.sejima.R;
 
-public class MUHeader extends RelativeLayout {
+public class MUHeader extends RelativeLayout implements MUViewHelper {
 
     /**
      * The TextView for the title
@@ -277,9 +277,10 @@ public class MUHeader extends RelativeLayout {
      * @param fontStyle the resource id of the font style
      */
     public void setTitleFontStyle(int fontStyle) {
-        //TODO check the style existence
-        mTitleFontStyle = fontStyle;
-        mTVTitle.setTextAppearance(getContext(), mTitleFontStyle);
+        if(checkResource(getResources(), fontStyle)){
+            mTitleFontStyle = fontStyle;
+            mTVTitle.setTextAppearance(getContext(), fontStyle);
+        }
     }
 
     /**
@@ -295,9 +296,10 @@ public class MUHeader extends RelativeLayout {
      * @param fontStyle the resource id of the font style
      */
     public void setDetailFontStyle(int fontStyle) {
-        //TODO check the style existence
-        mDetailFontStyle = fontStyle;
-        mTVDetail.setTextAppearance(getContext(), mDetailFontStyle);
+        if(checkResource(getResources(), fontStyle)){
+            mDetailFontStyle = fontStyle;
+            mTVDetail.setTextAppearance(getContext(), fontStyle);
+        }
     }
 
 }

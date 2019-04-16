@@ -45,7 +45,7 @@ public class MUHorizontalPager extends ViewPager implements MUPageControlListene
 
     private class MyOnPageChangeListener implements OnPageChangeListener {
 
-        private static final float UPDATE_THRESHOLD = 0.6f;
+        private static final float UPDATE_THRESHOLD = 0.55f;
 
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

@@ -1,5 +1,6 @@
 package com.rlab.sejima.features;
 
+import android.content.res.Resources;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 
@@ -39,5 +40,22 @@ interface MUViewHelper {
     default float normalizeFloatValue(float valueToNormalize, float minValue, float maxValue){
         valueToNormalize = Math.max(minValue, valueToNormalize);
         return Math.min(valueToNormalize, maxValue);
+    }
+
+    /**
+     * Check if the given resource id exists in resources
+     * @param resources the resources which contains the given id
+     * @param resId the resource id to check
+     * @return true if the resource exists, false otherwise
+     */
+    default boolean checkResource(Resources resources, int resId) {
+        if (resources != null){
+            try {
+                return resources.getResourceName(resId) != null;
+            } catch (Resources.NotFoundException ignore) {
+                return false;
+            }
+        }
+        return false;
     }
 }

@@ -369,8 +369,10 @@ public class MUTopBar extends RelativeLayout implements MUViewHelper {
      * @param fontStyle the resource id of the font style
      */
     public void setFontStyle(int fontStyle) {
-        mFontStyle = fontStyle;
-        mTVLabel.setTextAppearance(getContext(), fontStyle);
+        if(checkResource(getResources(), fontStyle)){
+            mFontStyle = fontStyle;
+            mTVLabel.setTextAppearance(getContext(), fontStyle);
+        }
     }
 
 
