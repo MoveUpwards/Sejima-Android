@@ -48,7 +48,7 @@ public class MUCard extends CardView implements MUViewHelper {
     /**
      * The background color id
      */
-    private int mBkgColor = Color.YELLOW;
+    private int mBkgColor = Color.GRAY;
     /**
      * The style of the card resource id
      */
