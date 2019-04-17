@@ -1,0 +1,10 @@
+<resources>
+    <public name="title" type="string"/>
+    <public name="detail" type="string"/>
+    <public name="app_name" type="string"/>
+
+    <string name="app_name">Sejima</string>
+
+    <string name="title">TITLE</string>
+    <string name="detail">Detail</string>
+</resources>
