@@ -1,8 +1,11 @@
 package com.rlab.sejima.features;
 
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.View;
 
 interface MUViewHelper {
 
@@ -57,5 +60,27 @@ interface MUViewHelper {
             }
         }
         return false;
+    }
+
+    /**
+     * Apply given radius to the view
+     * @param cornerRadius the corner radius to apply
+     * @param view the view to be round-cornered
+     */
+    default void applyRoundCornerToView(float cornerRadius, View view){
+        applyRoundCornerToView(cornerRadius, Color.TRANSPARENT, view);
+    }
+
+    /**
+     *Apply given radius to the view
+     * @param cornerRadius the corner radius to apply
+     * @param view the view to be round-cornered
+     * @param backgroundColor the background color of the view
+     */
+    default void applyRoundCornerToView(float cornerRadius, int backgroundColor, View view){
+        GradientDrawable borderDrawable = new GradientDrawable();
+        borderDrawable.setCornerRadius(cornerRadius);
+        borderDrawable.setColor(backgroundColor);
+        view.setBackground(borderDrawable);
     }
 }

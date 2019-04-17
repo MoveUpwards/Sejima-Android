@@ -159,6 +159,11 @@ public class MUButton extends RelativeLayout implements MUViewHelper {
         attributes.recycle();
     }
 
+    /**
+     * Constructor used when a super view contains a MUButton
+     * @param context the view context
+     * @param attributes the XML attributes of the super view
+     */
     public MUButton(Context context, TypedArray attributes) {
         super(context);
 

@@ -3,7 +3,16 @@
     <attr name="title" format="string"/>
     <attr name="title_size" format="dimension"/>
     <attr name="title_color" format="color"/>
+    <attr name="title_font_style" format="reference"/>
     <attr name="title_weight" format="enum">
+        <enum name="normal" value="0"/>
+        <enum name="bold" value="1"/>
+    </attr>
+    <attr name="detail" format="string"/>
+    <attr name="detail_size" format="dimension"/>
+    <attr name="detail_color" format="color"/>
+    <attr name="detail_font_style" format="reference"/>
+    <attr name="detail_weight" format="enum">
         <enum name="normal" value="0"/>
         <enum name="bold" value="1"/>
     </attr>
@@ -26,24 +35,19 @@
         <enum name="end" value="5"/>
     </attr>
     <attr name="font_style" format="reference"/>
-    <attr name="title_font_style" format="reference"/>
 
     <declare-styleable name="MUHeader">
         <attr name="title"/>
         <attr name="title_size"/>
         <attr name="title_weight"/>
         <attr name="title_color"/>
-        <attr name="alignment"/>
         <attr name="title_font_style"/>
-        <attr name="detail_font_style" format="reference"/>
-        <attr name="detail" format="string"/>
-        <attr name="detail_size" format="dimension"/>
-        <attr name="detail_color" format="color"/>
-        <attr name="detail_weight" format="enum">
-            <enum name="normal" value="0"/>
-            <enum name="bold" value="1"/>
-        </attr>
-
+        <attr name="alignment"/>
+        <attr name="detail"/>
+        <attr name="detail_size"/>
+        <attr name="detail_color"/>
+        <attr name="detail_font_style"/>
+        <attr name="detail_weight"/>
         <attr name="vertical_spacing" format="dimension"/>
     </declare-styleable>
 
@@ -154,6 +158,28 @@
         <attr name="element_border_width" format="dimension"/>
         <attr name="element_padding" format="dimension"/>
         <attr name="hide_for_single_page" format="boolean"/>
+        <attr name="android:paddingHorizontal"/>
+    </declare-styleable>
+
+    <declare-styleable name="MUCard">
+        <attr name="top_padding" format="dimension"/>
+        <attr name="content_left_padding" format="dimension"/>
+        <attr name="content_right_padding" format="dimension"/>
+        <attr name="content_top_padding" format="dimension"/>
+        <attr name="content_bottom_padding" format="dimension"/>
+        <attr name="border_width"/>
+        <attr name="border_color"/>
+        <attr name="corner_radius"/>
+        <attr name="title"/>
+        <attr name="title_size"/>
+        <attr name="title_color"/>
+        <attr name="title_font_style"/>
+        <attr name="alignment"/>
+        <attr name="detail"/>
+        <attr name="detail_size"/>
+        <attr name="detail_color"/>
+        <attr name="detail_font_style"/>
+        <attr name="android:background"/>
         <attr name="android:paddingHorizontal"/>
     </declare-styleable>
 
