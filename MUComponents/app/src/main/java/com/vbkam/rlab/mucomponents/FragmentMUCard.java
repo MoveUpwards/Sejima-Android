@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rlab.sejima.features.MUButton;
+import com.rlab.sejima.features.MUPinCode;
 import com.rlab.sejima.features.MUCard;
 
 import androidx.annotation.ColorInt;
@@ -43,6 +44,17 @@ public class FragmentMUCard extends DefaultFragment {
         tv.setBackgroundColor(getContext().getResources().getColor(R.color.colorPrimary));
         tv.setText("This is just a test");
         mMUCard.addContentView(tv);
+
+        final boolean[] cake = {true};
+        MUPinCode mpu = view.findViewById(R.id.mu_pincode);
+        mpu.setFontSize(25);
+
+        view.findViewById(R.id.btn).setOnClickListener(l -> {
+            mpu.setFontSize(cake[0] ? 25 : 18);
+            mpu.setCount(cake[0] ? 3 : 5);
+            cake[0] = !cake[0];
+        });
+
 //        mMUCard.setBorderWidth(5);
 //        mMUCard.setCornerRadius(50);
 //        mMUCard.setBorderColor(Color.BLUE);
