@@ -37,12 +37,14 @@ interface MUViewHelper {
 
     default int normalizeIntValue(int valueToNormalize, int minValue, int maxValue){
         valueToNormalize = Math.max(minValue, valueToNormalize);
-        return Math.min(valueToNormalize, maxValue);
+        valueToNormalize = Math.min(valueToNormalize, maxValue);
+        return valueToNormalize > minValue ? valueToNormalize : minValue;
     }
 
     default float normalizeFloatValue(float valueToNormalize, float minValue, float maxValue){
         valueToNormalize = Math.max(minValue, valueToNormalize);
-        return Math.min(valueToNormalize, maxValue);
+        valueToNormalize = Math.min(valueToNormalize, maxValue);
+        return valueToNormalize > minValue ? valueToNormalize : minValue;
     }
 
     /**

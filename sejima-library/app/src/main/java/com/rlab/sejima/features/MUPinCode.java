@@ -9,6 +9,7 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
@@ -26,7 +27,7 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
     /**
      * Number of characters
      */
-    private int mCount = 4;
+    private int mCount;
     /**
      * Contains the different EditText
      */
@@ -39,20 +40,26 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
      * Flag specifying if the EditText have to be resized
      */
     private boolean needResize = true;
-
+    /**
+     * The font style for EditTexts
+     */
     private int mFontStyle = -1;
-
+    /**
+     * Space between the pincode cells
+     */
     private float mCellSpacing = (int) pixelsToDensity(getResources().getDisplayMetrics(), 8);
-
+    /**
+     * Background color for pincode cells
+     */
     private int mCellColor = Color.WHITE;
-
+    /**
+     * Corner radius for pincode cells
+     */
     private float mCellCornerRadius;
     /**
      * Keyboard type
      */
     private int mKeyboardType = InputType.TYPE_NULL;
-
-    private String mCode = "";
 
     /**
      * Default constructor
@@ -79,32 +86,41 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
 
     private void init(Context context){
         setOrientation(HORIZONTAL);
-        mEditTexts = new EditText[mCount];
 
-        EditText et;
-        for (int i = 0 ; i < mEditTexts.length ; i++) {
-            et = setUpEditText(new EditText(context));
-            mEditTexts[i] = et;
-            addView(et, i);
+        // Init the EditText array
+        if(isInEditMode()){
+            setCount(4);
+        } else {
+            setCount(mCount);
         }
+
         setWillNotDraw(false);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if(needResize) {
-//            LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-//            lp.setMargins(2,0,2,0);
-            for (EditText editText : mEditTexts) {
-                //editText.setLayoutParams(lp);
+
+        for (EditText editText : mEditTexts) {
+            if(needResize) {
+                int maxWidth = 0;
+                if(getWidth() > 0){
+                    int availableWidth = getWidth() - (int) (2 * getCount() * mCellSpacing);
+                    maxWidth = availableWidth / getCount();
+                }
                 int maxDim = Math.max(editText.getWidth(), editText.getHeight());
-                editText.setWidth(maxDim);
-                editText.setHeight(maxDim);
-                applyRoundCornerToView(12, Color.BLUE, editText);
+                int dim = Math.min(maxDim, maxWidth);
+                editText.setWidth(dim);
+                editText.setHeight(dim);
+                LayoutParams lp = (LayoutParams) editText.getLayoutParams();
+                lp.width = dim;
+                lp.height = dim;
+                lp.setMargins((int) (mCellSpacing / 2),0,(int) (mCellSpacing / 2),0);
+                editText.setLayoutParams(lp);
             }
-            needResize = false;
+            applyRoundCornerToView(mCellCornerRadius, mCellColor, editText);
         }
+        needResize = false;
     }
 
     public void setFontSize(float size) {
@@ -134,28 +150,32 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
      * @param count the code length
      */
     public void setCount(int count) {
+        count = normalizeIntValue(count, 0, count);
+
         EditText[] ets = new EditText[count];
 
-        EditText et;
-
-        for (int i = 0 ; i < count ; i++){
-            if(i < mCount) {
-                ets[i] = mEditTexts[i];
-            } else {
-                et = setUpEditText(new EditText(getContext()));
-                ets[i] = et;
-                addView(et, i);
+        // If current array exists, keep old EditTexts
+        if(null != mEditTexts){                                                                     // if current array exists
+            for (int i = 0 ; i < count ; i++){
+                if(i < mEditTexts.length){
+                    ets[i] = mEditTexts[i];                                                         // get old EditTexts
+                } else {
+                    ets[i] = setUpEditText(new EditText(getContext()));                             // add new ones
+                    addView(ets[i], i);
+                }
             }
-        }
 
-        if(count < mCount){
-            for (int i = count ; i < mCount ; i++){
-                removeView(mEditTexts[i]);
+            for(int i = count ; i < mEditTexts.length ; i++){
+                removeViewAt(i);
+            }
+        } else {                                                                                    // else, create a new EditText array
+            for (int i = 0 ; i < count ; i++){
+                ets[i] = setUpEditText(new EditText(getContext()));
+                addView(ets[i], i);
             }
         }
 
         mEditTexts = ets;
-        mCount = count;
         needResize = true;
     }
 
@@ -218,6 +238,8 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
      */
     public void setCellSpacing(float cellSpacing) {
         mCellSpacing = cellSpacing;
+        needResize = true;
+        invalidate();
     }
 
     /**
@@ -234,6 +256,7 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
      */
     public void setCellColor(int cellColor) {
         mCellColor = cellColor;
+        invalidate();
     }
 
     /**
@@ -250,6 +273,7 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
      */
     public void setCellCornerRadius(float cellCornerRadius) {
         mCellCornerRadius = normalizeFloatValue(cellCornerRadius, 0, cellCornerRadius);
+        invalidate();
     }
 
     /**
@@ -276,7 +300,15 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
      * @return the current code as string
      */
     public String getCode() {
-        return mCode;
+        StringBuilder strB = new StringBuilder();
+        for (EditText editText : mEditTexts) {
+            strB.append(
+                    !TextUtils.isEmpty(editText.getText().toString()) ?
+                            editText.getText().toString() : ""
+            );
+        }
+
+        return strB.toString();
     }
 
     /**
@@ -291,16 +323,13 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
         for(int i = 0 ; i < mCount ; i++){
             mEditTexts[i].setText(code.charAt(i));
         }
-        mCode = code;
     }
 
     private EditText setUpEditText(EditText editText) {
         editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(MAX_LENGTH)});
         editText.setHint(mDefaultChar);
         editText.setTextAlignment(TEXT_ALIGNMENT_CENTER);
-//        LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-//        lp.setMargins(5,0,5,0);
-//        editText.setLayoutParams(lp);
+        editText.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         return editText;
     }
 
