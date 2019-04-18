@@ -183,5 +183,14 @@
         <attr name="android:paddingHorizontal"/>
     </declare-styleable>
 
+    <declare-styleable name="MUPinCode">
+        <attr name="font_style"/>
+        <attr name="corner_radius"/>
+        <attr name="count" format="integer"/>
+        <attr name="default_char" format="string"/>
+        <attr name="cell_spacing" format="dimension"/>
+        <attr name="cell_color" format="color"/>
+        <attr name="android:inputType"/>
+    </declare-styleable>
 
 </resources>

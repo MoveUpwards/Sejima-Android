@@ -25,7 +25,7 @@ public class FragmentMUPinCode extends DefaultFragment {
     @Override
     void initView(View view) {
         mMUPinCode = view.findViewById(R.id.mu_pincode);
-        mMUPinCode.setCount(2);
+//        mMUPinCode.setCount(2);
 
 
         // Length

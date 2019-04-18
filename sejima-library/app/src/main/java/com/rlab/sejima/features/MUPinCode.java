@@ -9,11 +9,10 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-
-import androidx.annotation.Nullable;
+import android.widget.TextView;
 
 import com.rlab.sejima.R;
 
@@ -37,10 +36,6 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
      */
     private String mDefaultChar = ".";
     /**
-     * Flag specifying if the EditText have to be resized
-     */
-    private boolean needResize = true;
-    /**
      * The font style for EditTexts
      */
     private int mFontStyle = -1;
@@ -60,6 +55,10 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
      * Keyboard type
      */
     private int mKeyboardType = InputType.TYPE_NULL;
+    /**
+     * Flag specifying if the EditText have to be resized
+     */
+    private boolean needResize = true;
 
     /**
      * Default constructor
@@ -75,10 +74,18 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
      * @param context the view context
      * @param attrs the XML attributes for the view
      */
-    public MUPinCode(Context context, @Nullable AttributeSet attrs) {
+    public MUPinCode(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.MUCard);
+        TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.MUPinCode);
+        mCount = attributes.getInteger(R.styleable.MUPinCode_count, mCount);
+        mCellCornerRadius = attributes.getDimensionPixelSize(R.styleable.MUPinCode_corner_radius, (int) mCellCornerRadius);
+        mFontStyle = attributes.getResourceId(R.styleable.MUPinCode_font_style, mFontStyle);
+        mDefaultChar = attributes.getString(R.styleable.MUPinCode_default_char);
+        mDefaultChar = !TextUtils.isEmpty(mDefaultChar) ? mDefaultChar : ".";
+        mCellSpacing = attributes.getDimensionPixelSize(R.styleable.MUPinCode_cell_spacing, (int) mCellSpacing);
+        mCellColor = attributes.getColor(R.styleable.MUPinCode_cell_color, mCellColor);
+        mKeyboardType = attributes.getInt(R.styleable.MUPinCode_android_inputType, mKeyboardType);
 
         init(context);
         attributes.recycle();
@@ -87,12 +94,17 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
     private void init(Context context){
         setOrientation(HORIZONTAL);
 
+        setDefaultChar(mDefaultChar);
+
         // Init the EditText array
-        if(isInEditMode()){
+        if(isInEditMode() && mCount == 0){
             setCount(4);
         } else {
             setCount(mCount);
         }
+
+        setFontStyle(mFontStyle);
+        setKeyboardType(mKeyboardType);
 
         setWillNotDraw(false);
     }
@@ -110,6 +122,7 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
                 }
                 int maxDim = Math.max(editText.getWidth(), editText.getHeight());
                 int dim = Math.min(maxDim, maxWidth);
+                dim = maxDim;
                 editText.setWidth(dim);
                 editText.setHeight(dim);
                 LayoutParams lp = (LayoutParams) editText.getLayoutParams();
@@ -127,14 +140,12 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
         for (EditText mEditText : mEditTexts) {
             mEditText.setTextSize(size);
         }
-        needResize = true;
     }
 
     public void setFontColor(int color) {
         for (EditText mEditText : mEditTexts) {
             mEditText.setTextColor(color);
         }
-        needResize = true;
     }
 
     /**
@@ -221,7 +232,6 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
                 }
             }
         }
-        mFontStyle = fontStyle;
     }
 
     /**
