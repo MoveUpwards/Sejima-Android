@@ -2,32 +2,90 @@ package com.rlab.sejima.features;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.os.Build;
 import android.text.InputFilter;
+import android.text.InputType;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.rlab.sejima.R;
 
-import androidx.annotation.Nullable;
-
 public class MUPinCode extends LinearLayout implements MUViewHelper {
 
+    /**
+     * Number of character for an EditText
+     */
     private static final int MAX_LENGTH = 1;
-    private int mCount = 4;
-    private EditText[] mEditTexts;
-    private String mDefaultChar = ".";
 
+    /**
+     * Number of characters
+     */
+    private int mCount;
+    /**
+     * Contains the different EditText
+     */
+    private EditText[] mEditTexts;
+    /**
+     * The default character
+     */
+    private String mDefaultChar = ".";
+    /**
+     * The font style for EditTexts
+     */
+    private int mFontStyle = -1;
+    /**
+     * Space between the pincode cells
+     */
+    private float mCellSpacing = (int) pixelsToDensity(getResources().getDisplayMetrics(), 8);
+    /**
+     * Background color for pincode cells
+     */
+    private int mCellColor = Color.WHITE;
+    /**
+     * Corner radius for pincode cells
+     */
+    private float mCellCornerRadius;
+    /**
+     * Keyboard type
+     */
+    private int mKeyboardType = InputType.TYPE_NULL;
+    /**
+     * Flag specifying if the EditText have to be resized
+     */
+    private boolean needResize = true;
+
+    /**
+     * Default constructor
+     * @param context the view context
+     */
     public MUPinCode(Context context) {
         super(context);
         init(context);
     }
 
-    public MUPinCode(Context context, @Nullable AttributeSet attrs) {
+    /**
+     * Constructor with attributes
+     * @param context the view context
+     * @param attrs the XML attributes for the view
+     */
+    public MUPinCode(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.MUCard);
+        TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.MUPinCode);
+        mCount = attributes.getInteger(R.styleable.MUPinCode_count, mCount);
+        mCellCornerRadius = attributes.getDimensionPixelSize(R.styleable.MUPinCode_corner_radius, (int) mCellCornerRadius);
+        mFontStyle = attributes.getResourceId(R.styleable.MUPinCode_font_style, mFontStyle);
+        mDefaultChar = attributes.getString(R.styleable.MUPinCode_default_char);
+        mDefaultChar = !TextUtils.isEmpty(mDefaultChar) ? mDefaultChar : ".";
+        mCellSpacing = attributes.getDimensionPixelSize(R.styleable.MUPinCode_cell_spacing, (int) mCellSpacing);
+        mCellColor = attributes.getColor(R.styleable.MUPinCode_cell_color, mCellColor);
+        mKeyboardType = attributes.getInt(R.styleable.MUPinCode_android_inputType, mKeyboardType);
 
         init(context);
         attributes.recycle();
@@ -35,19 +93,257 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
 
     private void init(Context context){
         setOrientation(HORIZONTAL);
-        mEditTexts = new EditText[mCount];
 
-        EditText et;
-        for (int i = 0 ; i < mEditTexts.length ; i++) {
-            et = new EditText(context);
-            et.setFilters(new InputFilter[]{new InputFilter.LengthFilter(MAX_LENGTH)});
-            et.setHint(mDefaultChar);
-            et.setTextAlignment(TEXT_ALIGNMENT_CENTER);
-            LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            lp.setMargins(5,0,5,0);
-            et.setLayoutParams(lp);
-            addView(et, i);
-            mEditTexts[i] = et;
+        setDefaultChar(mDefaultChar);
+
+        // Init the EditText array
+        if(isInEditMode() && mCount == 0){
+            setCount(4);
+        } else {
+            setCount(mCount);
         }
+
+        setFontStyle(mFontStyle);
+        setKeyboardType(mKeyboardType);
+
+        setWillNotDraw(false);
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+
+        for (EditText editText : mEditTexts) {
+            if(needResize) {
+                int maxWidth = 0;
+                if(getWidth() > 0){
+                    int availableWidth = getWidth() - (int) (2 * getCount() * mCellSpacing);
+                    maxWidth = availableWidth / getCount();
+                }
+                int maxDim = Math.max(editText.getWidth(), editText.getHeight());
+                int dim = Math.min(maxDim, maxWidth);
+                dim = maxDim;
+                editText.setWidth(dim);
+                editText.setHeight(dim);
+                LayoutParams lp = (LayoutParams) editText.getLayoutParams();
+                lp.width = dim;
+                lp.height = dim;
+                lp.setMargins((int) (mCellSpacing / 2),0,(int) (mCellSpacing / 2),0);
+                editText.setLayoutParams(lp);
+            }
+            applyRoundCornerToView(mCellCornerRadius, mCellColor, editText);
+        }
+        needResize = false;
+    }
+
+    public void setFontSize(float size) {
+        for (EditText mEditText : mEditTexts) {
+            mEditText.setTextSize(size);
+        }
+    }
+
+    public void setFontColor(int color) {
+        for (EditText mEditText : mEditTexts) {
+            mEditText.setTextColor(color);
+        }
+    }
+
+    /**
+     * Get the number of characters composing the code
+     * @return the pin code count
+     */
+    public int getCount() {
+        return mEditTexts.length;
+    }
+
+    /**
+     * Set the number of characters needed for the code
+     * @param count the code length
+     */
+    public void setCount(int count) {
+        count = normalizeIntValue(count, 0, count);
+
+        EditText[] ets = new EditText[count];
+
+        // If current array exists, keep old EditTexts
+        if(null != mEditTexts){                                                                     // if current array exists
+            for (int i = 0 ; i < count ; i++){
+                if(i < mEditTexts.length){
+                    ets[i] = mEditTexts[i];                                                         // get old EditTexts
+                } else {
+                    ets[i] = setUpEditText(new EditText(getContext()));                             // add new ones
+                    addView(ets[i], i);
+                }
+            }
+
+            for(int i = count ; i < mEditTexts.length ; i++){
+                removeViewAt(i);
+            }
+        } else {                                                                                    // else, create a new EditText array
+            for (int i = 0 ; i < count ; i++){
+                ets[i] = setUpEditText(new EditText(getContext()));
+                addView(ets[i], i);
+            }
+        }
+
+        mEditTexts = ets;
+        needResize = true;
+    }
+
+
+    /**
+     * Get the default character
+     * @return the default character
+     */
+    public String getDefaultChar() {
+        return mDefaultChar;
+    }
+
+    /**
+     * Set the default character
+     * @param defaultChar the default character
+     */
+    public void setDefaultChar(String defaultChar) {
+        if(!TextUtils.isEmpty(defaultChar)){
+            mDefaultChar = String.valueOf(defaultChar.charAt(0));
+        }
+    }
+
+    /**+
+     * Get the font style of pincode
+     * @return the font style resource id
+     */
+    public int getFontStyle() {
+        return mFontStyle;
+    }
+
+    /**
+     * Set the font style
+     * @param fontStyle the resource id of the font style
+     */
+    public void setFontStyle(int fontStyle) {
+        if(checkResource(getResources(), fontStyle)){
+            mFontStyle = fontStyle;
+            for (EditText editText : mEditTexts){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    editText.setTextAppearance(fontStyle);
+                } else {
+                    editText.setTextAppearance(getContext(), fontStyle);
+                }
+            }
+        }
+    }
+
+    /**
+     * Get the space between pincode cells
+     * @return the space in dp
+     */
+    public float getCellSpacing() {
+        return mCellSpacing;
+    }
+
+    /**
+     * Set the space between pincode cells
+     * @param cellSpacing the space to apply in dp
+     */
+    public void setCellSpacing(float cellSpacing) {
+        mCellSpacing = cellSpacing;
+        needResize = true;
+        invalidate();
+    }
+
+    /**
+     * Get the background color of pincode cells
+     * @return the color as ARGB integer
+     */
+    public int getCellColor() {
+        return mCellColor;
+    }
+
+    /**
+     * Set the background color of pincode cells
+     * @param cellColor the background color of pincode cells as ARGB integer
+     */
+    public void setCellColor(int cellColor) {
+        mCellColor = cellColor;
+        invalidate();
+    }
+
+    /**
+     * Get the radius corner applied to pincode cells
+     * @return the corner radius
+     */
+    public float getCellCornerRadius() {
+        return mCellCornerRadius;
+    }
+
+    /**
+     * Set the corner radius of pincode cells
+     * @param cellCornerRadius the radius of pincode cells
+     */
+    public void setCellCornerRadius(float cellCornerRadius) {
+        mCellCornerRadius = normalizeFloatValue(cellCornerRadius, 0, cellCornerRadius);
+        invalidate();
+    }
+
+    /**
+     * Get the keyboard type (number, text, mail)
+     * @return the type as integer
+     */
+    public int getKeyboardType() {
+        return mKeyboardType;
+    }
+
+    /**
+     * Switch between different mode of input
+     * @param keyboardType the input mode (number, text, mail) as integer
+     */
+    public void setKeyboardType(int keyboardType) {
+        mKeyboardType = keyboardType;
+        for (EditText editText : mEditTexts){
+            editText.setInputType(mKeyboardType);
+        }
+    }
+
+    /**
+     * Get the current code
+     * @return the current code as string
+     */
+    public String getCode() {
+        StringBuilder strB = new StringBuilder();
+        for (EditText editText : mEditTexts) {
+            strB.append(
+                    !TextUtils.isEmpty(editText.getText().toString()) ?
+                            editText.getText().toString() : ""
+            );
+        }
+
+        return strB.toString();
+    }
+
+    /**
+     * Insert the given code in the pincode
+     * @param code the code to set
+     */
+    public void setCode(String code) {
+        if(code.length() > mCount){
+            code = code.substring(0, mCount);
+        }
+
+        for(int i = 0 ; i < mCount ; i++){
+            mEditTexts[i].setText(code.charAt(i));
+        }
+    }
+
+    private EditText setUpEditText(EditText editText) {
+        editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(MAX_LENGTH)});
+        editText.setHint(mDefaultChar);
+        editText.setTextAlignment(TEXT_ALIGNMENT_CENTER);
+        editText.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+        return editText;
+    }
+
+    public interface MUPinCodeListener {
+        void didUpdate(MUPinCode muPinCode, String code);
     }
 }

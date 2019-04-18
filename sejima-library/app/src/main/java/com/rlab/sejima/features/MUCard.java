@@ -5,7 +5,6 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -16,7 +15,6 @@ import com.rlab.sejima.R;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
-import androidx.viewpager.widget.ViewPager;
 
 public class MUCard extends CardView implements MUViewHelper {
 
@@ -125,7 +123,7 @@ public class MUCard extends CardView implements MUViewHelper {
         if(isInEditMode()){
             TextView tv = new TextView(context);
             tv.setText(context.getResources().getString(R.string.app_name));
-            tv.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+            tv.setBackgroundColor(context.getResources().getColor(R.color.primary));
             addContentView(tv);
         }
 
