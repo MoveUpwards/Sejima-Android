@@ -324,6 +324,7 @@ public class MUCard extends CardView implements MUViewHelper {
      * @param cornerRadius the corner radius to be applied
      */
     public void setCornerRadius(float cornerRadius) {
+        //FIXME 120
         mCornerRadius = normalizeFloatValue(cornerRadius, 0, 120);
         setRadius(mCornerRadius);
     }
