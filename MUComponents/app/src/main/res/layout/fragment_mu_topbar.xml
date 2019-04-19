@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:title="@string/title"
+            app:topbar_title_alignment="center"
             android:background="#fff"
             app:title_color="@color/colorPrimaryDark"
             app:topbar_btn_img="@mipmap/ic_launcher"

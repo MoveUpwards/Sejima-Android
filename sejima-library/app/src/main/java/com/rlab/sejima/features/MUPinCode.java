@@ -9,6 +9,9 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -26,7 +29,7 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
     /**
      * Number of characters
      */
-    private int mCount;
+    private int mCount = 4;
     /**
      * Contains the different EditText
      */
@@ -54,11 +57,11 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
     /**
      * Keyboard type
      */
-    private int mKeyboardType = InputType.TYPE_NULL;
+    private int mKeyboardType = InputType.TYPE_CLASS_TEXT;
     /**
-     * Flag specifying if the EditText have to be resized
+     * Need resized flag
      */
-    private boolean needResize = true;
+    private boolean needResize = false;
 
     /**
      * Default constructor
@@ -93,49 +96,48 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
 
     private void init(Context context){
         setOrientation(HORIZONTAL);
+        setGravity(Gravity.CENTER);
 
         setDefaultChar(mDefaultChar);
-
-        // Init the EditText array
-        if(isInEditMode() && mCount == 0){
-            setCount(4);
-        } else {
-            setCount(mCount);
-        }
+        setCount(mCount);
 
         setFontStyle(mFontStyle);
+        setFontColor(Color.BLACK);
         setKeyboardType(mKeyboardType);
-
         setWillNotDraw(false);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        Log.e(getClass().getCanonicalName(), "onDraw");
 
-        for (EditText editText : mEditTexts) {
-            if(needResize) {
-                int maxWidth = 0;
-                if(getWidth() > 0){
-                    int availableWidth = getWidth() - (int) (2 * getCount() * mCellSpacing);
-                    maxWidth = availableWidth / getCount();
-                }
-                int maxDim = Math.max(editText.getWidth(), editText.getHeight());
-                int dim = Math.min(maxDim, maxWidth);
-                dim = maxDim;
-                editText.setWidth(dim);
-                editText.setHeight(dim);
-                LayoutParams lp = (LayoutParams) editText.getLayoutParams();
-                lp.width = dim;
-                lp.height = dim;
-                lp.setMargins((int) (mCellSpacing / 2),0,(int) (mCellSpacing / 2),0);
-                editText.setLayoutParams(lp);
-            }
+        for(EditText editText : mEditTexts){
             applyRoundCornerToView(mCellCornerRadius, mCellColor, editText);
         }
-        needResize = false;
     }
 
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        super.onLayout(changed, l, t, r, b);
+
+        if(changed || needResize){
+            int freeWidthSpace = getMeasuredWidth() - (int) (getCount() * mCellSpacing);
+            int maxWidth = freeWidthSpace / getCount();
+            int cellDim = Math.min(getMeasuredHeight(), maxWidth);
+
+            for(EditText editText : mEditTexts){
+                editText.setWidth(cellDim);
+                editText.setHeight(cellDim);
+                LayoutParams lp = (LayoutParams) editText.getLayoutParams();
+                lp.setMarginEnd((int) (mCellSpacing / 2));
+                lp.setMarginStart((int) (mCellSpacing / 2));
+                editText.setLayoutParams(lp);
+            }
+            needResize = false;
+        }
+
+    }
     public void setFontSize(float size) {
         for (EditText mEditText : mEditTexts) {
             mEditText.setTextSize(size);
@@ -162,7 +164,6 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
      */
     public void setCount(int count) {
         count = normalizeIntValue(count, 0, count);
-
         EditText[] ets = new EditText[count];
 
         // If current array exists, keep old EditTexts
@@ -179,6 +180,7 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
             for(int i = count ; i < mEditTexts.length ; i++){
                 removeViewAt(i);
             }
+            mEditTexts = ets;
         } else {                                                                                    // else, create a new EditText array
             for (int i = 0 ; i < count ; i++){
                 ets[i] = setUpEditText(new EditText(getContext()));
@@ -188,7 +190,10 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
 
         mEditTexts = ets;
         needResize = true;
+        requestLayout();
     }
+
+
 
 
     /**
@@ -249,7 +254,7 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
     public void setCellSpacing(float cellSpacing) {
         mCellSpacing = cellSpacing;
         needResize = true;
-        invalidate();
+        requestLayout();
     }
 
     /**
@@ -338,8 +343,8 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
     private EditText setUpEditText(EditText editText) {
         editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(MAX_LENGTH)});
         editText.setHint(mDefaultChar);
+        editText.setHintTextColor(Color.BLACK);
         editText.setTextAlignment(TEXT_ALIGNMENT_CENTER);
-        editText.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         return editText;
     }
 

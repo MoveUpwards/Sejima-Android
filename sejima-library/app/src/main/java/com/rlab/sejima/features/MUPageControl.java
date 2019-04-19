@@ -45,11 +45,11 @@ public class MUPageControl extends LinearLayout implements MUViewHelper {
     /**
      * The active element width
      */
-    private int mActiveElementWidth;
+    private int mActiveElementWidth = (int) pixelsToDensity(getResources().getDisplayMetrics(), 10);
     /**
      * The active element width
      */
-    private int mActiveElementRadius = mActiveElementWidth;
+    private int mActiveElementRadius;
     /**
      * The unactive element color
      */
@@ -92,11 +92,11 @@ public class MUPageControl extends LinearLayout implements MUViewHelper {
         mElementWidth = attributes.getDimensionPixelSize(R.styleable.MUPageControl_element_width, mElementWidth);
         mElementHeight = attributes.getDimensionPixelSize(R.styleable.MUPageControl_element_height, mElementHeight);
         mElementColor = attributes.getColor(R.styleable.MUPageControl_element_color, mElementColor);
-        mActiveElementWidth = attributes.getDimensionPixelOffset(R.styleable.MUPageControl_active_element_width, mElementWidth);
+        mActiveElementWidth = attributes.getDimensionPixelSize(R.styleable.MUPageControl_active_element_width, mActiveElementWidth);
         mActiveElementRadius = attributes.getInt(R.styleable.MUPageControl_active_element_radius, mActiveElementRadius);
         mActiveElementColor = attributes.getColor(R.styleable.MUPageControl_active_element_color, mActiveElementColor);
         mBorderColor = attributes.getColor(R.styleable.MUPageControl_element_border_color, mBorderColor);
-        mBorderWidth = attributes.getDimensionPixelSize(R.styleable.MUPageControl_active_element_width, mBorderWidth);
+        mBorderWidth = attributes.getDimensionPixelSize(R.styleable.MUPageControl_element_border_width, mBorderWidth);
         mElementPadding = attributes.getDimensionPixelSize(R.styleable.MUPageControl_element_padding, mElementPadding);
         mHideForSingleElementValue = attributes.getBoolean(R.styleable.MUPageControl_hide_for_single_page, mHideForSingleElementValue);
 
@@ -405,25 +405,28 @@ public class MUPageControl extends LinearLayout implements MUViewHelper {
         public void updateLayout(){
             boolean isSelected = getCurrentPosition() == this.mPosition;
 
-            GradientDrawable borderDrawable = new GradientDrawable();
-            borderDrawable.setCornerRadius(mActiveElementRadius);
+//            GradientDrawable borderDrawable = new GradientDrawable();
+//            borderDrawable.setCornerRadius(mActiveElementRadius);
+//
+//            GradientDrawable contentDrawable = new GradientDrawable();
+//            contentDrawable.setCornerRadius(mActiveElementRadius);
+//
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                borderDrawable.setColor(new ColorStateList(STATES,
+//                        new int[]{ ColorUtils.setAlphaComponent(mBorderColor, (int) (0.7 * 255)), mBorderColor }));
+//                contentDrawable.setColor(new ColorStateList(STATES, isSelected ?
+//                        new int[]{ ColorUtils.setAlphaComponent(mActiveElementColor, (int) (0.7 * 255)), mActiveElementColor } :
+//                        new int[]{ ColorUtils.setAlphaComponent(mElementColor, (int) (0.7 * 255)), mElementColor }));
+//            } else {
+//                borderDrawable.setColor(mBorderColor);
+//                contentDrawable.setColor(isSelected ? mActiveElementColor : mElementColor);
+//            }
 
-            GradientDrawable contentDrawable = new GradientDrawable();
-            contentDrawable.setCornerRadius(mActiveElementRadius);
+//            setBackground(borderDrawable);
+            applyRoundCornerToView(mActiveElementRadius, isSelected ? mActiveElementColor : mElementColor, mContentView);
+            applyRoundCornerToView(mActiveElementRadius, mBorderColor, this);
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                borderDrawable.setColor(new ColorStateList(STATES,
-                        new int[]{ ColorUtils.setAlphaComponent(mBorderColor, (int) (0.7 * 255)), mBorderColor }));
-                contentDrawable.setColor(new ColorStateList(STATES, isSelected ?
-                        new int[]{ ColorUtils.setAlphaComponent(mActiveElementColor, (int) (0.7 * 255)), mActiveElementColor } :
-                        new int[]{ ColorUtils.setAlphaComponent(mElementColor, (int) (0.7 * 255)), mElementColor }));
-            } else {
-                borderDrawable.setColor(mBorderColor);
-                contentDrawable.setColor(isSelected ? mActiveElementColor : mElementColor);
-            }
-
-            setBackground(borderDrawable);
-            mContentView.setBackground(contentDrawable);
+            //            mContentView.setBackground(contentDrawable);
 
             // Deal with the border width
             LayoutParams lp = (LayoutParams) mContentView.getLayoutParams();

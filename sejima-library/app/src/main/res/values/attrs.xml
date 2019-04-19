@@ -17,9 +17,9 @@
         <enum name="bold" value="1"/>
     </attr>
     <attr name="alignment" format="enum">
-        <enum name="start" value="20"/>
-        <enum name="end" value="21"/>
-        <enum name="center" value="14"/>
+        <enum name="start" value="8388611"/>
+        <enum name="end" value="8388613"/>
+        <enum name="center" value="17"/>
     </attr>
     <attr name="corner_radius" format="dimension"/>
     <attr name="pressed_color" format="color"/>
@@ -59,7 +59,7 @@
         <attr name="topbar_title_alignment" format="enum">
             <enum name="start" value="20"/>
             <enum name="end" value="21"/>
-            <enum name="center" value="14"/>
+            <enum name="center" value="17"/>
         </attr>
         <attr name="font_style"/>
         <attr name="topbar_btn_img" format="reference"/>

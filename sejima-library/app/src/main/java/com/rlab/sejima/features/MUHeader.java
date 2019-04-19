@@ -204,6 +204,7 @@ public class MUHeader extends RelativeLayout implements MUViewHelper {
 
         setTitleFontStyle(mTitleFontStyle);
         setDetailFontStyle(mDetailFontStyle);
+        setAlignment(mAlignment);
     }
 
     /**
