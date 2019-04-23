@@ -10,15 +10,9 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import androidx.core.widget.TextViewCompat;
 
 import com.rlab.sejima.R;
 
@@ -36,7 +30,7 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
     /**
      * Contains the different EditText
      */
-    private EditText[] mEditTexts;
+    private MUAppCompatEditText[] mEditTexts;
     /**
      * The default character
      */
@@ -61,6 +55,10 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
      * Keyboard type
      */
     private int mKeyboardType = InputType.TYPE_CLASS_TEXT;
+    /**
+     * The listener for code updates
+     */
+    private MUPinCodeListener mPinCodeListener;
 
     /**
      * Default constructor
@@ -109,7 +107,6 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        Log.e(getClass().getCanonicalName(), "onDraw");
 
         for(EditText editText : mEditTexts){
             applyRoundCornerToView(mCellCornerRadius, mCellColor, editText);
@@ -123,6 +120,8 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
         int freeWidthSpace = getMeasuredWidth() - (int) (getCount() * mCellSpacing);
         int maxWidth = freeWidthSpace / getCount();
         int cellDim = Math.min(getMeasuredHeight(), maxWidth);
+
+        //TODO: Compute max size
 
         for(EditText editText : mEditTexts){
             editText.setWidth(cellDim);
@@ -163,7 +162,7 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
      */
     public void setCount(int count) {
         count = normalizeIntValue(count, 0, count);
-        EditText[] ets = new EditText[count];
+        MUAppCompatEditText[] ets = new MUAppCompatEditText[count];
 
         // If current array exists, keep old EditTexts
         if(null != mEditTexts){                                                                     // if current array exists
@@ -171,7 +170,7 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
                 if(i < mEditTexts.length){
                     ets[i] = mEditTexts[i];                                                         // get old EditTexts
                 } else {
-                    ets[i] = setUpEditText(new EditText(getContext()));                             // add new ones
+                    ets[i] = setUpEditText(new MUAppCompatEditText(getContext()));                             // add new ones
                     addView(ets[i], i);
                 }
             }
@@ -182,7 +181,7 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
             mEditTexts = ets;
         } else {                                                                                    // else, create a new EditText array
             for (int i = 0 ; i < count ; i++){
-                ets[i] = setUpEditText(new EditText(getContext()));
+                ets[i] = setUpEditText(new MUAppCompatEditText(getContext()));
                 addView(ets[i], i);
             }
         }
@@ -337,7 +336,11 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
         }
     }
 
-    private EditText setUpEditText(EditText editText) {
+    private MUPinCode getMUPinCode(){
+        return this;
+    }
+
+    private MUAppCompatEditText setUpEditText(MUAppCompatEditText editText) {
         editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(MAX_LENGTH)});
         editText.setHint(mDefaultChar);
         editText.setHintTextColor(Color.BLACK);
@@ -345,6 +348,39 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
         editText.setTextAlignment(TEXT_ALIGNMENT_CENTER);
         editText.setGravity(Gravity.CENTER);
         return editText;
+    }
+
+    private class MUAppCompatEditText extends androidx.appcompat.widget.AppCompatEditText {
+
+        public MUAppCompatEditText(Context context) {
+            super(context);
+        }
+
+        @Override
+        protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
+            super.onTextChanged(text, start, lengthBefore, lengthAfter);
+            Log.e(getClass().getCanonicalName(), "onTextUpdated : " + text);
+            Log.e(getClass().getCanonicalName(), "mPinCodeListener == null? " + (mPinCodeListener == null));
+            if(null != mPinCodeListener){
+                mPinCodeListener.didUpdate(getMUPinCode(), getCode());
+            }
+        }
+    }
+
+    /**
+     * Get the listener for text updates
+     * @return the listener attached to the pin code, null if there is not
+     */
+    public MUPinCodeListener getMUPinCodeListener() {
+        return mPinCodeListener;
+    }
+
+    /**
+     * Attach a listener to text updates
+     * @param pinCodeListener the pincode listener
+     */
+    public void setPinCodeListener(MUPinCodeListener pinCodeListener) {
+        mPinCodeListener = pinCodeListener;
     }
 
     public interface MUPinCodeListener {
