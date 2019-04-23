@@ -9,21 +9,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="20dp"
-        android:background="@color/colorPrimaryDark">
+        android:background="@color/primaryDark">
 
         <com.rlab.sejima.features.MUPinCode
             android:id="@+id/mu_pincode"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:corner_radius="84dp"
-            app:cell_spacing="45dp"
-            app:count="3"/>
+            app:corner_radius="18dp"
+            app:cell_spacing="10dp"
+            app:count="5"/>
 
     </RelativeLayout>
 
-
-    <LinearLayout style="@style/Separator"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -110,6 +107,33 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:text="+"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Current code"/>
+
+                <Button
+                    android:id="@+id/control_mu_pincode_code"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="Get code"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/control_mu_pincode_tv_code"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:hint="current code"
+                    android:gravity="center"
                     android:layout_height="wrap_content" />
 
             </LinearLayout>

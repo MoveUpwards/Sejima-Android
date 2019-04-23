@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,8 +19,17 @@ import androidx.cardview.widget.CardView;
 
 public class MUCard extends CardView implements MUViewHelper {
 
+    /**
+     * Container for the child view
+     */
     private LinearLayout mContentView;
+    /**
+     * The main Card container
+     */
     private LinearLayout mRootView;
+    /**
+     * MUHeader attached to Card
+     */
     private MUHeader mMUHeader;
 
 

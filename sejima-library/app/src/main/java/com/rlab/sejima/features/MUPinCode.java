@@ -121,6 +121,7 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
         int maxWidth = freeWidthSpace / getCount();
         int cellDim = Math.min(getMeasuredHeight(), maxWidth);
 
+
         //TODO: Compute max size
 
         for(EditText editText : mEditTexts){
