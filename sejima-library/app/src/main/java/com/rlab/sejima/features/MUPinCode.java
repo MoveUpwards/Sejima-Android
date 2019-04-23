@@ -10,12 +10,15 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.core.widget.TextViewCompat;
 
 import com.rlab.sejima.R;
 
@@ -58,10 +61,6 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
      * Keyboard type
      */
     private int mKeyboardType = InputType.TYPE_CLASS_TEXT;
-    /**
-     * Need resized flag
-     */
-    private boolean needResize = false;
 
     /**
      * Default constructor
@@ -118,26 +117,26 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
     }
 
     @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        super.onLayout(changed, l, t, r, b);
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-        if(changed || needResize){
-            int freeWidthSpace = getMeasuredWidth() - (int) (getCount() * mCellSpacing);
-            int maxWidth = freeWidthSpace / getCount();
-            int cellDim = Math.min(getMeasuredHeight(), maxWidth);
+        int freeWidthSpace = getMeasuredWidth() - (int) (getCount() * mCellSpacing);
+        int maxWidth = freeWidthSpace / getCount();
+        int cellDim = Math.min(getMeasuredHeight(), maxWidth);
 
-            for(EditText editText : mEditTexts){
-                editText.setWidth(cellDim);
-                editText.setHeight(cellDim);
-                LayoutParams lp = (LayoutParams) editText.getLayoutParams();
-                lp.setMarginEnd((int) (mCellSpacing / 2));
-                lp.setMarginStart((int) (mCellSpacing / 2));
-                editText.setLayoutParams(lp);
-            }
-            needResize = false;
+        for(EditText editText : mEditTexts){
+            editText.setWidth(cellDim);
+            editText.setHeight(cellDim);
+            LayoutParams lp = (LayoutParams) editText.getLayoutParams();
+            lp.setMarginEnd((int) (mCellSpacing / 2));
+            lp.setMarginStart((int) (mCellSpacing / 2));
+            editText.setLayoutParams(lp);
         }
 
+        setMeasuredDimension(getMeasuredWidth(), getMeasuredHeight());
+
     }
+
     public void setFontSize(float size) {
         for (EditText mEditText : mEditTexts) {
             mEditText.setTextSize(size);
@@ -189,7 +188,6 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
         }
 
         mEditTexts = ets;
-        needResize = true;
         requestLayout();
     }
 
@@ -253,7 +251,6 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
      */
     public void setCellSpacing(float cellSpacing) {
         mCellSpacing = cellSpacing;
-        needResize = true;
         requestLayout();
     }
 
@@ -344,7 +341,9 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
         editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(MAX_LENGTH)});
         editText.setHint(mDefaultChar);
         editText.setHintTextColor(Color.BLACK);
+        editText.setTextColor(Color.BLACK);
         editText.setTextAlignment(TEXT_ALIGNMENT_CENTER);
+        editText.setGravity(Gravity.CENTER);
         return editText;
     }
 
