@@ -1,6 +1,7 @@
 package com.vbkam.rlab.mucomponents;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.widget.Switch;
 import android.widget.Toast;

@@ -22,6 +22,7 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
      * Number of character for an EditText
      */
     private static final int MAX_LENGTH = 1;
+    private int DEFAULT_SIZE = (int) pixelsToDensity(getResources().getDisplayMetrics(), 30);
 
     /**
      * Number of characters
@@ -119,10 +120,7 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
 
         int freeWidthSpace = getMeasuredWidth() - (int) (getCount() * mCellSpacing);
         int maxWidth = freeWidthSpace / getCount();
-        int cellDim = Math.min(getMeasuredHeight(), maxWidth);
-
-
-        //TODO: Compute max size
+        int cellDim = Math.max(maxWidth, DEFAULT_SIZE);
 
         for(EditText editText : mEditTexts){
             editText.setWidth(cellDim);
@@ -134,7 +132,6 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
         }
 
         setMeasuredDimension(getMeasuredWidth(), getMeasuredHeight());
-
     }
 
     public void setFontSize(float size) {
@@ -179,7 +176,6 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
             for(int i = count ; i < mEditTexts.length ; i++){
                 removeViewAt(i);
             }
-            mEditTexts = ets;
         } else {                                                                                    // else, create a new EditText array
             for (int i = 0 ; i < count ; i++){
                 ets[i] = setUpEditText(new MUAppCompatEditText(getContext()));
@@ -347,6 +343,7 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
         editText.setHintTextColor(Color.BLACK);
         editText.setTextColor(Color.BLACK);
         editText.setTextAlignment(TEXT_ALIGNMENT_CENTER);
+        editText.setPadding(0,0,0,0);
         editText.setGravity(Gravity.CENTER);
         return editText;
     }

@@ -1,18 +1,20 @@
+
 package com.rlab.sejima;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.util.TypedValue;
 import android.view.Gravity;
+
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.rlab.sejima.features.MUNavigationBar;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import androidx.test.core.app.ApplicationProvider;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -24,12 +26,12 @@ import static org.junit.Assert.assertTrue;
 public class MUNavigationBarTests {
 
     private MUNavigationBar mMUNavigationBar;
-
+    private Context mContext;
     @Before
     public void setUp() {
-        Context context = ApplicationProvider.getApplicationContext();
-        context.setTheme(R.style.AppTheme);
-        mMUNavigationBar = new MUNavigationBar(context);
+        mContext = ApplicationProvider.getApplicationContext();
+        mContext.setTheme(R.style.AppTheme);
+        mMUNavigationBar = new MUNavigationBar(mContext);
         assertNotNull(mMUNavigationBar);
     }
 
@@ -55,8 +57,8 @@ public class MUNavigationBarTests {
         assertEquals(0, mMUNavigationBar.getBorderWidth(),0);
         assertEquals(0, mMUNavigationBar.getCornerRadius(),0);
         // Padding
-        assertEquals(18, mMUNavigationBar.getHorizontalPadding(),0);
-        assertEquals(18, mMUNavigationBar.getVerticalPadding(),0);
+        assertEquals(convertDPToPixel(8), mMUNavigationBar.getHorizontalPadding(),0);
+        assertEquals(convertDPToPixel(8), mMUNavigationBar.getVerticalPadding(),0);
         // Separator
         assertEquals(Color.BLACK, mMUNavigationBar.getSeparatorColor(),0);
         assertEquals(0, mMUNavigationBar.getSeparatorWidth(),0);
@@ -126,4 +128,10 @@ public class MUNavigationBarTests {
         assertNotNull(mMUNavigationBar.getListener());
     }
 
+    private float convertDPToPixel(float dp){
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+                mContext.getResources().getDisplayMetrics());
+    }
+
 }
+

@@ -3,6 +3,7 @@ package com.rlab.sejima;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.util.TypedValue;
 import android.view.Gravity;
 
 import com.rlab.sejima.features.MUButton;
@@ -23,12 +24,13 @@ import static org.junit.Assert.assertTrue;
 public class MUButtonTests {
 
     private MUButton mMUButton;
+    private Context mContext;
 
     @Before
     public void setUp() {
-        Context context = ApplicationProvider.getApplicationContext();
-        context.setTheme(R.style.AppTheme);
-        mMUButton = new MUButton(context);
+        mContext = ApplicationProvider.getApplicationContext();
+        mContext.setTheme(R.style.AppTheme);
+        mMUButton = new MUButton(mContext);
         assertNotNull(mMUButton);
     }
 
@@ -56,8 +58,8 @@ public class MUButtonTests {
         assertEquals(0, mMUButton.getBorderWidth(),0);
         assertEquals(0, mMUButton.getCornerRadius(),0);
         // Padding
-        assertEquals(18, mMUButton.getHorizontalPadding(),0);
-        assertEquals(18, mMUButton.getVerticalPadding(),0);
+        assertEquals(convertDPToPixel(8), mMUButton.getHorizontalPadding(),0);
+        assertEquals(convertDPToPixel(8), mMUButton.getVerticalPadding(),0);
         // Listener
         assertNotNull(mMUButton.getListener());
         // Style
@@ -110,5 +112,10 @@ public class MUButtonTests {
         // Listener
         mMUButton.setListener(v -> {});
         assertNotNull(mMUButton.getListener());
+    }
+
+    private float convertDPToPixel(float dp){
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+                mContext.getResources().getDisplayMetrics());
     }
 }

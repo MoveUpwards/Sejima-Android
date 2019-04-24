@@ -115,7 +115,7 @@
         <attr name="font_style"/>
         <attr name="bkg_color"/>
         <attr name="disable_alpha"/>
-        <attr name="text_alignment"/>
+        <attr name="alignment"/>
         <attr name="pressed_color"/>
         <attr name="progressing_color"/>
         <attr name="is_loading"/>
@@ -129,11 +129,12 @@
         <attr name="separator_color" format="color"/>
         <attr name="separator_width" format="dimension"/>
         <attr name="separator_height_multiplier" format="float"/>
+        <attr name="separator_margins" format="dimension"/>
         <attr name="android:text"/>
         <attr name="android:textColor"/>
         <attr name="android:textSize"/>
         <attr name="android:textStyle"/>
-        <attr name="text_alignment"/>
+        <attr name="alignment"/>
         <attr name="font_style"/>
         <attr name="pressed_color"/>
         <attr name="progressing_color"/>
