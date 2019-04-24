@@ -64,14 +64,6 @@ interface MUViewHelper {
         return false;
     }
 
-    /**
-     * Apply given radius to the view
-     * @param cornerRadius the corner radius to apply
-     * @param view the view to be round-cornered
-     */
-    default void applyRoundCornerToView(float cornerRadius, View view){
-        applyRoundCornerToView(cornerRadius, Color.TRANSPARENT, view);
-    }
 
     /**
      *Apply given radius to the view

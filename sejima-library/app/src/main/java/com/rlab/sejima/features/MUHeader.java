@@ -2,6 +2,7 @@ package com.rlab.sejima.features;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.text.TextUtils;
@@ -26,26 +27,13 @@ public class MUHeader extends RelativeLayout implements MUViewHelper {
     private TextView mTVDetail;
 
     /**
-     * The default size of title
-     */
-    public final static int DEFAULT_TITLE_SIZE_IN_SP = 24;
-    /**
-     * The default size of detail
-     */
-    public final static int DEFAULT_DETAIL_SIZE_IN_SP = 14;
-    /**
-     * The default size of vertical spacing
-     */
-    private final static int DEFAULT_VERTICAL_SPACING_IN_SP = 8;
-
-    /**
      * The current title
      */
     private String mTitle = "";
     /**
      * The title's size
      */
-    private float mTitleSize;
+    private int mTitleSize = 24;
     /**
      * The default title's weight
      */
@@ -67,7 +55,7 @@ public class MUHeader extends RelativeLayout implements MUViewHelper {
     /**
      * The detail's size
      */
-    private float mDetailSize;
+    private int mDetailSize = 14;
     /**
      * The default detail's weight
      */
@@ -88,7 +76,7 @@ public class MUHeader extends RelativeLayout implements MUViewHelper {
     /**
      * Vertical spacing between title and detail
      */
-    private int mVerticalSpacing;
+    private int mVerticalSpacing = 8;
 
     /**
      * Default constructor
@@ -114,7 +102,7 @@ public class MUHeader extends RelativeLayout implements MUViewHelper {
         s = a.getString(R.styleable.MUHeader_title);
         mTitle = TextUtils.isEmpty(s) ? mTitle : s.toString();
         mTitleColor = a.getColor(R.styleable.MUHeader_title_color, mTitleColor);
-        mTitleSize = a.getDimensionPixelSize(R.styleable.MUHeader_title_size, 0);
+        mTitleSize = a.getDimensionPixelSize(R.styleable.MUHeader_title_size, mTitleSize);
         mTitleWeight = a.getInt(R.styleable.MUHeader_title_weight, mTitleWeight);
         mTitleFontStyle = a.getResourceId(R.styleable.MUHeader_title_font_style, mTitleFontStyle);
 
@@ -122,11 +110,11 @@ public class MUHeader extends RelativeLayout implements MUViewHelper {
         s = a.getString(R.styleable.MUHeader_detail);
         mDetail = TextUtils.isEmpty(s) ? mDetail : s.toString();
         mDetailColor = a.getColor(R.styleable.MUHeader_detail_color, mDetailColor);
-        mDetailSize = a.getDimensionPixelSize(R.styleable.MUHeader_detail_size, 0);
+        mDetailSize = a.getDimensionPixelSize(R.styleable.MUHeader_detail_size, mDetailSize);
         mDetailWeight = a.getInt(R.styleable.MUHeader_detail_weight, mDetailWeight);
         mDetailFontStyle = a.getResourceId(R.styleable.MUHeader_detail_font_style, mDetailFontStyle);
 
-        mVerticalSpacing = a.getDimensionPixelSize(R.styleable.MUHeader_vertical_spacing, 0);
+        mVerticalSpacing = a.getDimensionPixelSize(R.styleable.MUHeader_vertical_spacing, mVerticalSpacing);
         mAlignment = a.getInt(R.styleable.MUHeader_alignment, mAlignment);
 
         init(context);
@@ -150,7 +138,7 @@ public class MUHeader extends RelativeLayout implements MUViewHelper {
                     attributes.getColor(R.styleable.MUCard_title_color, mTitleColor)
                     : mTitleColor;
             mTitleSize = attributes.hasValue(R.styleable.MUCard_title_size) ?
-                    attributes.getDimensionPixelSize(R.styleable.MUCard_title_size, 0)
+                    attributes.getDimensionPixelSize(R.styleable.MUCard_title_size, mTitleSize)
                     : mTitleSize;
             mTitleFontStyle = attributes.hasValue(R.styleable.MUCard_title_font_style) ?
                     attributes.getResourceId(R.styleable.MUCard_title_font_style, mTitleFontStyle)
@@ -162,7 +150,7 @@ public class MUHeader extends RelativeLayout implements MUViewHelper {
                     attributes.getColor(R.styleable.MUCard_detail_color, mDetailColor)
                     : mDetailColor;
             mDetailSize = attributes.hasValue(R.styleable.MUCard_detail_size) ?
-                    attributes.getDimensionPixelSize(R.styleable.MUCard_detail_size, 0)
+                    attributes.getDimensionPixelSize(R.styleable.MUCard_detail_size, mDetailSize)
                     : mDetailSize;
             mDetailFontStyle = attributes.hasValue(R.styleable.MUCard_detail_font_style) ?
                     attributes.getResourceId(R.styleable.MUCard_detail_font_style, mDetailFontStyle)
@@ -177,34 +165,44 @@ public class MUHeader extends RelativeLayout implements MUViewHelper {
     }
 
     private void init(Context context) {
-
-        LayoutParams lpRoot = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        setLayoutParams(lpRoot);
-
-        LayoutParams lpTitle = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lpTitle.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-
-        mTVTitle = new TextView(context);
-        mTVTitle.setLayoutParams(lpTitle);
+        mTVTitle = setUpTextView(mTitle, mTitleColor, mTitleSize, mTitleWeight);
         mTVTitle.setId(View.generateViewId());
-        mTitleSize = mTitleSize != 0 ? mTitleSize : DEFAULT_TITLE_SIZE_IN_SP;
-        setUpTextView(mTVTitle, mTitle, mTitleColor, mTitleSize, mTitleWeight);
         addView(mTVTitle);
 
-        mTVDetail = new TextView(context);
-        LayoutParams lpDetail = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lpDetail.addRule(RelativeLayout.BELOW, mTVTitle.getId());
-        mTVDetail.setLayoutParams(lpDetail);
-        mDetailSize = mDetailSize != 0 ? mDetailSize : DEFAULT_DETAIL_SIZE_IN_SP;
-        setUpTextView(mTVDetail, mDetail, mDetailColor, mDetailSize, mDetailWeight);
-
-        mVerticalSpacing = mVerticalSpacing != 0 ? mVerticalSpacing : DEFAULT_VERTICAL_SPACING_IN_SP;
-        mTVDetail.setPadding(0, mVerticalSpacing, 0, 0);
+        mTVDetail = setUpTextView(mDetail, mDetailColor, mDetailSize, mDetailWeight);
         addView(mTVDetail);
 
         setTitleFontStyle(mTitleFontStyle);
         setDetailFontStyle(mDetailFontStyle);
         setAlignment(mAlignment);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        ViewGroup.LayoutParams lpRoot = getLayoutParams();
+        lpRoot.width = LayoutParams.MATCH_PARENT;
+        lpRoot.height = LayoutParams.WRAP_CONTENT;
+        setLayoutParams(lpRoot);
+
+        RelativeLayout.LayoutParams lpTitle = (LayoutParams) mTVTitle.getLayoutParams();
+        lpTitle.width = LayoutParams.MATCH_PARENT;
+        lpTitle.height = LayoutParams.WRAP_CONTENT;
+        lpTitle.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+        mTVTitle.setLayoutParams(lpTitle);
+
+        RelativeLayout.LayoutParams lpDetail = (LayoutParams) mTVDetail.getLayoutParams();
+        lpDetail.width = LayoutParams.MATCH_PARENT;
+        lpDetail.height = LayoutParams.WRAP_CONTENT;
+        lpDetail.addRule(RelativeLayout.BELOW, mTVTitle.getId());
+        mTVTitle.setLayoutParams(lpTitle);
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        mTVDetail.setPadding(0, mVerticalSpacing, 0, 0);
     }
 
     /**
@@ -237,7 +235,7 @@ public class MUHeader extends RelativeLayout implements MUViewHelper {
      * @param titleSize the size of header's title
      */
     public void setTitleSize(float titleSize) {
-        mTitleSize = titleSize;
+        mTitleSize = (int) titleSize;
         mTVTitle.setTextSize(mTitleSize);
     }
 
@@ -305,7 +303,7 @@ public class MUHeader extends RelativeLayout implements MUViewHelper {
      * @param detailSize the size of header's detail
      */
     public void setDetailSize(float detailSize) {
-        mDetailSize = detailSize;
+        mDetailSize = (int) detailSize;
         mTVDetail.setTextSize(mDetailSize);
     }
 
@@ -356,11 +354,13 @@ public class MUHeader extends RelativeLayout implements MUViewHelper {
         mAlignment = alignment;
     }
 
-    private void setUpTextView(TextView tv, String text, int color, float size, int typeface){
+    private TextView setUpTextView(String text, int color, float size, int typeface){
+        TextView tv = new TextView(getContext());
         tv.setText(text);
         tv.setTextColor(color);
         tv.setTextSize(size);
         tv.setTypeface(Typeface.create(Typeface.DEFAULT, typeface));
+        return tv;
     }
 
     public int getVerticalSpacing() {

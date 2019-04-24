@@ -15,8 +15,7 @@
             android:id="@+id/mu_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#fff"
-            app:alignment="center"
+            android:background="@color/colorAccent"
             app:title="@string/title"
             app:detail="@string/detail"/>
 

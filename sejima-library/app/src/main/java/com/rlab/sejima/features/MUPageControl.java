@@ -1,24 +1,20 @@
 package com.rlab.sejima.features;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import androidx.annotation.Nullable;
+
 import com.rlab.sejima.R;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-import androidx.annotation.Nullable;
-import androidx.core.graphics.ColorUtils;
 
 /*
     Created by Antoine RICHE on 2019/04/02.
@@ -389,10 +385,6 @@ public class MUPageControl extends LinearLayout implements MUViewHelper {
             setSelected(false);
         }
 
-        int getPosition() {
-            return mPosition;
-        }
-
         public void setSelected(boolean isSelected){
             LayoutParams btnLp = isSelected ?
                     new LayoutParams(mActiveElementWidth, mElementHeight) :
@@ -405,28 +397,8 @@ public class MUPageControl extends LinearLayout implements MUViewHelper {
         public void updateLayout(){
             boolean isSelected = getCurrentPosition() == this.mPosition;
 
-//            GradientDrawable borderDrawable = new GradientDrawable();
-//            borderDrawable.setCornerRadius(mActiveElementRadius);
-//
-//            GradientDrawable contentDrawable = new GradientDrawable();
-//            contentDrawable.setCornerRadius(mActiveElementRadius);
-//
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                borderDrawable.setColor(new ColorStateList(STATES,
-//                        new int[]{ ColorUtils.setAlphaComponent(mBorderColor, (int) (0.7 * 255)), mBorderColor }));
-//                contentDrawable.setColor(new ColorStateList(STATES, isSelected ?
-//                        new int[]{ ColorUtils.setAlphaComponent(mActiveElementColor, (int) (0.7 * 255)), mActiveElementColor } :
-//                        new int[]{ ColorUtils.setAlphaComponent(mElementColor, (int) (0.7 * 255)), mElementColor }));
-//            } else {
-//                borderDrawable.setColor(mBorderColor);
-//                contentDrawable.setColor(isSelected ? mActiveElementColor : mElementColor);
-//            }
-
-//            setBackground(borderDrawable);
             applyRoundCornerToView(mActiveElementRadius, isSelected ? mActiveElementColor : mElementColor, mContentView);
             applyRoundCornerToView(mActiveElementRadius, mBorderColor, this);
-
-            //            mContentView.setBackground(contentDrawable);
 
             // Deal with the border width
             LayoutParams lp = (LayoutParams) mContentView.getLayoutParams();

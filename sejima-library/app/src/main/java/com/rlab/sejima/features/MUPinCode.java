@@ -9,13 +9,16 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.rlab.sejima.R;
 
+
+// Feature
+// Should button be cleared when user click on a filled cell ?
 public class MUPinCode extends LinearLayout implements MUViewHelper {
 
     /**
@@ -35,7 +38,7 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
     /**
      * The default character
      */
-    private String mDefaultChar = ".";
+    private String mDefaultChar = "•";
     /**
      * The font style for EditTexts
      */
@@ -83,7 +86,7 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
         mCellCornerRadius = attributes.getDimensionPixelSize(R.styleable.MUPinCode_corner_radius, (int) mCellCornerRadius);
         mFontStyle = attributes.getResourceId(R.styleable.MUPinCode_font_style, mFontStyle);
         mDefaultChar = attributes.getString(R.styleable.MUPinCode_default_char);
-        mDefaultChar = !TextUtils.isEmpty(mDefaultChar) ? mDefaultChar : ".";
+        mDefaultChar = !TextUtils.isEmpty(mDefaultChar) ? mDefaultChar : "•";
         mCellSpacing = attributes.getDimensionPixelSize(R.styleable.MUPinCode_cell_spacing, (int) mCellSpacing);
         mCellColor = attributes.getColor(R.styleable.MUPinCode_cell_color, mCellColor);
         mKeyboardType = attributes.getInt(R.styleable.MUPinCode_android_inputType, mKeyboardType);
@@ -102,6 +105,8 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
         setFontStyle(mFontStyle);
         setFontColor(Color.BLACK);
         setKeyboardType(mKeyboardType);
+        setFocusable(true);
+        setFocusableInTouchMode(true);
         setWillNotDraw(false);
     }
 
@@ -168,7 +173,7 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
                 if(i < mEditTexts.length){
                     ets[i] = mEditTexts[i];                                                         // get old EditTexts
                 } else {
-                    ets[i] = setUpEditText(new MUAppCompatEditText(getContext()));                             // add new ones
+                    ets[i] = setUpEditText(new MUAppCompatEditText(getContext(), i));                             // add new ones
                     addView(ets[i], i);
                 }
             }
@@ -178,7 +183,7 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
             }
         } else {                                                                                    // else, create a new EditText array
             for (int i = 0 ; i < count ; i++){
-                ets[i] = setUpEditText(new MUAppCompatEditText(getContext()));
+                ets[i] = setUpEditText(new MUAppCompatEditText(getContext(), i));
                 addView(ets[i], i);
             }
         }
@@ -349,18 +354,33 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
         editText.setTextAlignment(TEXT_ALIGNMENT_CENTER);
         editText.setPadding(0,0,0,0);
         editText.setGravity(Gravity.CENTER);
+        editText.setCursorVisible(false);
         return editText;
     }
 
     private class MUAppCompatEditText extends androidx.appcompat.widget.AppCompatEditText {
 
-        public MUAppCompatEditText(Context context) {
+        private int mPosition;
+
+        public MUAppCompatEditText(Context context, int position) {
             super(context);
+            mPosition = position;
         }
 
         @Override
         protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
             super.onTextChanged(text, start, lengthBefore, lengthAfter);
+
+            if(lengthAfter == MAX_LENGTH) {
+                mEditTexts[mPosition].clearFocus();
+                if(mPosition < mCount - 1) {
+                    mEditTexts[mPosition + 1].requestFocus();
+                } else {
+                    InputMethodManager keyboard = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    keyboard.hideSoftInputFromWindow(mEditTexts[mPosition].getWindowToken(), 0);
+                }
+            }
+
             if(null != mPinCodeListener){
                 mPinCodeListener.didUpdate(getMUPinCode(), getCode());
             }

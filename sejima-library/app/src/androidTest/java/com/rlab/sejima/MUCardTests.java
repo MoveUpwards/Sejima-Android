@@ -22,11 +22,6 @@ public class MUCardTests {
     private MUCard mMUCard;
     private Context mContext;
 
-
-//    private float mCornerRadius = 5;
-//    private float mHeaderHorizontalPadding = (int) pixelsToDensity(getResources().getDisplayMetrics(), 24);
-//
-
     @Before
     public void setUp() {
         mContext = ApplicationProvider.getApplicationContext();

@@ -17,9 +17,9 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.rlab.sejima.R;
-
 import androidx.appcompat.widget.AppCompatEditText;
+
+import com.rlab.sejima.R;
 
 public class MUTextField extends RelativeLayout implements MUViewHelper {
 

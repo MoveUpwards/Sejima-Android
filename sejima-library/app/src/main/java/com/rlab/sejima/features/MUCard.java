@@ -7,15 +7,14 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.rlab.sejima.R;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+
+import com.rlab.sejima.R;
 
 public class MUCard extends CardView implements MUViewHelper {
 
@@ -115,10 +114,6 @@ public class MUCard extends CardView implements MUViewHelper {
 
     private void init(Context context, TypedArray attributeSet) {
         mRootView = new LinearLayout(context);
-
-        LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.setMargins((int) mBorderWidth, (int) mBorderWidth, (int) mBorderWidth, (int) mBorderWidth);
-        mRootView.setLayoutParams(lp);
         mRootView.setOrientation(LinearLayout.VERTICAL);
         addView(mRootView);
 
@@ -126,8 +121,6 @@ public class MUCard extends CardView implements MUViewHelper {
         mRootView.addView(mMUHeader);
 
         mContentView = new LinearLayout(context);
-        mContentView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        mContentView.setPadding((int) mContentLeftPadding, (int) mContentTopPadding, (int) mContentRightPadding, (int) mContentBottomPadding);
         mRootView.addView(mContentView);
 
         if(isInEditMode()){
@@ -137,25 +130,36 @@ public class MUCard extends CardView implements MUViewHelper {
             addContentView(tv);
         }
 
-        setRadius(mCornerRadius);
         setWillNotDraw(false);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        mMUHeader.setPadding((int) (mHeaderHorizontalPadding / 2), 0 , (int) (mHeaderHorizontalPadding / 2), 0);
+
+        LayoutParams rootLp = (LayoutParams) mRootView.getLayoutParams();
+        rootLp.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        rootLp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        rootLp.setMargins((int) mBorderWidth, (int) mBorderWidth, (int) mBorderWidth, (int) mBorderWidth);
+        mRootView.setLayoutParams(rootLp);
+        mRootView.setPadding((int) (mHeaderHorizontalPadding / 2), (int) mTopPadding, (int) (mHeaderHorizontalPadding / 2), 0);
+
+        ViewGroup.LayoutParams contentLp = mContentView.getLayoutParams();
+        contentLp.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        contentLp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        mContentView.setPadding((int) mContentLeftPadding, (int) mContentTopPadding, (int) mContentRightPadding, (int) mContentBottomPadding);
+        mContentView.setLayoutParams(contentLp);
+
+        setRadius(mCornerRadius);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        // Header padding
-        mMUHeader.setPadding((int) (mHeaderHorizontalPadding / 2), 0 , (int) (mHeaderHorizontalPadding / 2), 0);
-        // Border width
-        LayoutParams lp = (LayoutParams) mRootView.getLayoutParams();
-        lp.setMargins((int) mBorderWidth, (int) mBorderWidth, (int) mBorderWidth, (int) mBorderWidth);
-        mRootView.setLayoutParams(lp);
-        // Border color
         setCardBackgroundColor(mBorderColor);
-        // Background color
         applyRoundCornerToView(mCornerRadius, mBkgColor, mRootView);
-
-        mRootView.setPadding((int) (mHeaderHorizontalPadding / 2), (int) mTopPadding, (int) (mHeaderHorizontalPadding / 2), 0);
     }
 
     /**
@@ -334,8 +338,7 @@ public class MUCard extends CardView implements MUViewHelper {
      * @param cornerRadius the corner radius to be applied
      */
     public void setCornerRadius(float cornerRadius) {
-        //FIXME 120
-        mCornerRadius = normalizeFloatValue(cornerRadius, 0, 120);
+        mCornerRadius = Math.max(cornerRadius, 0);
         setRadius(mCornerRadius);
     }
 
@@ -362,8 +365,7 @@ public class MUCard extends CardView implements MUViewHelper {
      * @param headerHorizontalPadding the horizontal padding to apply in dp
      */
     public void setHeaderHorizontalPadding(float headerHorizontalPadding) {
-        //FIXME getWidth at runtime
-        mHeaderHorizontalPadding = normalizeFloatValue(headerHorizontalPadding, 0, 200);
+        mHeaderHorizontalPadding = Math.max(headerHorizontalPadding, 0);
         invalidate();
     }
 

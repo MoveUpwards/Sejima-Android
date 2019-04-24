@@ -38,7 +38,7 @@ public class MUPinCodeTests {
         mMUPinCode.setCount(4);
         assertEquals(4, mMUPinCode.getCount(), 0);
         assertEquals(InputType.TYPE_CLASS_TEXT, mMUPinCode.getKeyboardType(), 0);
-        assertEquals(".", mMUPinCode.getDefaultChar());
+        assertEquals("•", mMUPinCode.getDefaultChar());
         assertEquals(-1, mMUPinCode.getFontStyle(), 0);
         assertEquals(converted, mMUPinCode.getCellSpacing(), 0);
         assertEquals(Color.WHITE, mMUPinCode.getCellColor());
