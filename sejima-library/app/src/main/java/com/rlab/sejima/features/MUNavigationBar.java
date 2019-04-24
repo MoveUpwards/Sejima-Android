@@ -39,7 +39,7 @@ public class MUNavigationBar extends LinearLayout implements MUViewHelper {
     /**
      * Horizontal padding
      */
-    private float mHorizontalPadding =(int) pixelsToDensity(getResources().getDisplayMetrics(), 8);
+    private float mHorizontalPadding = (int) pixelsToDensity(getResources().getDisplayMetrics(), 8);
 
     /**
      * The drawable image of the ImageButton
@@ -59,6 +59,10 @@ public class MUNavigationBar extends LinearLayout implements MUViewHelper {
      * The separator height multiplier
      */
     private float mSeparatorMultiplier = 1;
+    /**
+     * The separator margins
+     */
+    private float mSeparatorMargins = (int) pixelsToDensity(getResources().getDisplayMetrics(), 8);;
 
     /**
      * The MUNavigationBarListener listener
@@ -86,6 +90,7 @@ public class MUNavigationBar extends LinearLayout implements MUViewHelper {
         mImgDrawable = attributes.getDrawable(R.styleable.MUNavigationBar_android_src);
         mSeparatorColor = attributes.getColor(R.styleable.MUNavigationBar_separator_color, mSeparatorColor);
         mSeparatorWidth = attributes.getDimensionPixelSize(R.styleable.MUNavigationBar_separator_width, (int) mSeparatorWidth);
+        mSeparatorMargins = attributes.getDimensionPixelSize(R.styleable.MUNavigationBar_separator_margins, (int) mSeparatorMargins);
         mSeparatorMultiplier = normalizeMultiplierValue(attributes.getFloat(R.styleable.MUNavigationBar_separator_height_multiplier, mSeparatorMultiplier));
         mBkgColor = attributes.getColor(R.styleable.MUNavigationBar_bkg_color, mBkgColor);
 
@@ -123,7 +128,7 @@ public class MUNavigationBar extends LinearLayout implements MUViewHelper {
         });
 
         addView(mRightButton);
-        setVerticalPadding(mVerticalPadding);
+//        setVerticalPadding(mVerticalPadding);
         setHorizontalPadding(mHorizontalPadding);
     }
 
@@ -133,12 +138,14 @@ public class MUNavigationBar extends LinearLayout implements MUViewHelper {
 
         ViewGroup.LayoutParams right = mRightButton.getLayoutParams();
         right.width = LayoutParams.MATCH_PARENT;
-        right.height = LayoutParams.MATCH_PARENT;
+        right.height = LayoutParams.WRAP_CONTENT;
         mRightButton.setLayoutParams(right);
 
-        ViewGroup.LayoutParams left = mSeparator.getLayoutParams();
+        LayoutParams left = (LayoutParams) mSeparator.getLayoutParams();
         left.width = (int) mSeparatorWidth;
         left.height = (int) (getHeight() * mSeparatorMultiplier);
+        left.setMarginStart((int) (mSeparatorMargins / 2));
+        left.setMarginEnd((int) (mSeparatorMargins / 2));
         mSeparator.setLayoutParams(left);
     }
     /**

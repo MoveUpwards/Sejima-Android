@@ -17,6 +17,7 @@
          android:layout_height="wrap_content"
          app:separator_width="2dp"
          app:separator_color="@color/colorPrimaryDark"
+         app:separator_margins="12dp"
          app:separator_height_multiplier="0.8"
          android:text="@string/app_name"/>
 
