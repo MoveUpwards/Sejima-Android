@@ -5,9 +5,9 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,12 +16,20 @@ import com.rlab.sejima.R;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
-import androidx.viewpager.widget.ViewPager;
 
 public class MUCard extends CardView implements MUViewHelper {
 
+    /**
+     * Container for the child view
+     */
     private LinearLayout mContentView;
+    /**
+     * The main Card container
+     */
     private LinearLayout mRootView;
+    /**
+     * MUHeader attached to Card
+     */
     private MUHeader mMUHeader;
 
 
@@ -48,7 +56,7 @@ public class MUCard extends CardView implements MUViewHelper {
     /**
      * The background color id
      */
-    private int mBkgColor = Color.YELLOW;
+    private int mBkgColor = Color.GRAY;
     /**
      * The style of the card resource id
      */
@@ -125,7 +133,7 @@ public class MUCard extends CardView implements MUViewHelper {
         if(isInEditMode()){
             TextView tv = new TextView(context);
             tv.setText(context.getResources().getString(R.string.app_name));
-            tv.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+            tv.setBackgroundColor(context.getResources().getColor(R.color.primary));
             addContentView(tv);
         }
 
@@ -326,6 +334,7 @@ public class MUCard extends CardView implements MUViewHelper {
      * @param cornerRadius the corner radius to be applied
      */
     public void setCornerRadius(float cornerRadius) {
+        //FIXME 120
         mCornerRadius = normalizeFloatValue(cornerRadius, 0, 120);
         setRadius(mCornerRadius);
     }

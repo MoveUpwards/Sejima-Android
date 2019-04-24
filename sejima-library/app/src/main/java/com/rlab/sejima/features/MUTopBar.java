@@ -123,6 +123,39 @@ public class MUTopBar extends RelativeLayout implements MUViewHelper {
     }
 
     /**
+     * Method called to apply attributes to the view
+     * @param context the view context
+     */
+    private void init(Context context) {
+        LayoutParams lpRoot = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        setLayoutParams(lpRoot);
+
+        mLeftButtonWidth = mLeftButtonWidth != 0 ? mLeftButtonWidth : DEFAULT_BUTTON_WIDTH_IN_SP;
+        mIBLeftButton = new ImageButton(context);
+        mIBLeftButton.setId(View.generateViewId());
+        mIBLeftButton.setLayoutParams(getLeftBtnLayoutParams(mLeftButtonWidth));
+        setButtonImage(mButtonImage);
+        addView(mIBLeftButton);
+
+        LayoutParams lpTVLabel = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lpTVLabel.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+        lpTVLabel.addRule(RelativeLayout.END_OF, mIBLeftButton.getId());
+
+
+        mTVLabel = new TextView(context);
+        mTVLabel.setLayoutParams(lpTVLabel);
+        mTVLabel.setText(mTitle);
+        mTVLabel.setTextColor(mTitleColor);
+        mTitleFontSize = mTitleFontSize != 0 ? mTitleFontSize : DEFAULT_TITLE_SIZE_IN_SP;
+        mTVLabel.setTextSize(mTitleFontSize);
+        mTVLabel.setTypeface(Typeface.create(Typeface.DEFAULT, mTitleFontWeight));
+        setTitleAlignment(mTitleAlignment);
+        addView(mTVLabel);
+
+        setFontStyle(mFontStyle);
+    }
+
+    /**
      * Get the left padding of ImageButton
      * @return the left padding of image button in dp.
      */
@@ -192,14 +225,14 @@ public class MUTopBar extends RelativeLayout implements MUViewHelper {
      * @param titleAlignment the integer representing the horizontal alignment.
      * Must be
      * <ul>
-     * <li>Gravity.START</li>
-     * <li>Gravity.END</li>
-     * <li>Gravity.CENTER</li>
+     * <li>RelativeLayout.ALIGN_PARENT_START</li>
+     * <li>RelativeLayout.ALIGN_PARENT_END</li>
+     * <li>RelativeLayout.CENTER_IN_PARENT</li>
      * </ul>
      */
     public void setTitleAlignment(int titleAlignment) {
-        if (titleAlignment != Gravity.END && titleAlignment != Gravity.CENTER) {
-            titleAlignment = Gravity.START;
+        if (titleAlignment != RelativeLayout.ALIGN_PARENT_END && titleAlignment != Gravity.CENTER) {
+            titleAlignment = RelativeLayout.ALIGN_PARENT_START;
         }
 
         mTVLabel.setGravity(titleAlignment);
@@ -321,39 +354,6 @@ public class MUTopBar extends RelativeLayout implements MUViewHelper {
             mIBLeftButton.setOnClickListener(null);
             setOnClickListener(null);
         }
-    }
-
-    /**
-     * Method called to apply attributes to the view
-     * @param context the view context
-     */
-    private void init(Context context) {
-        LayoutParams lpRoot = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        setLayoutParams(lpRoot);
-
-        mLeftButtonWidth = mLeftButtonWidth != 0 ? mLeftButtonWidth : DEFAULT_BUTTON_WIDTH_IN_SP;
-        mIBLeftButton = new ImageButton(context);
-        mIBLeftButton.setId(View.generateViewId());
-        mIBLeftButton.setLayoutParams(getLeftBtnLayoutParams(mLeftButtonWidth));
-        setButtonImage(mButtonImage);
-        addView(mIBLeftButton);
-
-        LayoutParams lpTVLabel = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lpTVLabel.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-        lpTVLabel.addRule(RelativeLayout.END_OF, mIBLeftButton.getId());
-
-
-        mTVLabel = new TextView(context);
-        mTVLabel.setLayoutParams(lpTVLabel);
-        mTVLabel.setText(mTitle);
-        mTVLabel.setTextColor(mTitleColor);
-        mTitleFontSize = mTitleFontSize != 0 ? mTitleFontSize : DEFAULT_TITLE_SIZE_IN_SP;
-        mTVLabel.setTextSize(mTitleFontSize);
-        mTVLabel.setTypeface(Typeface.create(Typeface.DEFAULT, mTitleFontWeight));
-        setTitleAlignment(mTitleAlignment);
-        addView(mTVLabel);
-
-        setFontStyle(mFontStyle);
     }
 
     /**

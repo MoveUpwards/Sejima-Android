@@ -54,7 +54,7 @@ public class MUTextField extends RelativeLayout implements MUViewHelper {
     /**
      * The text's horizontal alignment
      */
-    private int mAlignment = RelativeLayout.ALIGN_PARENT_START;
+    private int mAlignment = Gravity.START;
     /**
      * The field's text
      */
@@ -334,10 +334,10 @@ public class MUTextField extends RelativeLayout implements MUViewHelper {
         ll.addRule(alignment, RelativeLayout.TRUE);
         mTVLabel.setLayoutParams(ll);
 
-        if(RelativeLayout.ALIGN_PARENT_END == alignment){
+        if(Gravity.END == alignment){
             mETInput.setGravity(Gravity.END);
-        } else if(RelativeLayout.CENTER_HORIZONTAL == alignment){
-            mETInput.setGravity(Gravity.CENTER_HORIZONTAL);
+        } else if(Gravity.CENTER == alignment){
+            mETInput.setGravity(Gravity.CENTER);
         } else {
             mETInput.setGravity(Gravity.START);
         }

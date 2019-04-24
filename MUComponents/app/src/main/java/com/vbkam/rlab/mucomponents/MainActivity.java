@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        loadFragment(FragmentMUCard.newInstance());
+        loadFragment(FragmentMUPinCode.newInstance());
     }
 
     @Override
@@ -52,7 +52,9 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if(R.id.nav_mu_card == id){
+        if(R.id.nav_mu_pincode == id){
+            loadFragment(FragmentMUPinCode.newInstance());
+        } else  if(R.id.nav_mu_card == id){
             loadFragment(FragmentMUCard.newInstance());
         } else if(R.id.nav_mu_horizontalpager == id){
             loadFragment(FragmentMUHorizontalPager.newInstance());
