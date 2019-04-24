@@ -7,16 +7,14 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.rlab.sejima.R;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+
+import com.rlab.sejima.R;
 
 public class MUCard extends CardView implements MUViewHelper {
 
@@ -160,18 +158,8 @@ public class MUCard extends CardView implements MUViewHelper {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        // Header padding
-//        mMUHeader.setPadding((int) (mHeaderHorizontalPadding / 2), 0 , (int) (mHeaderHorizontalPadding / 2), 0);
-        // Border width
-//        LayoutParams lp = (LayoutParams) mRootView.getLayoutParams();
-//        lp.setMargins((int) mBorderWidth, (int) mBorderWidth, (int) mBorderWidth, (int) mBorderWidth);
-//        mRootView.setLayoutParams(lp);
-        // Border color
         setCardBackgroundColor(mBorderColor);
-        // Background color
         applyRoundCornerToView(mCornerRadius, mBkgColor, mRootView);
-
-//        mRootView.setPadding((int) (mHeaderHorizontalPadding / 2), (int) mTopPadding, (int) (mHeaderHorizontalPadding / 2), 0);
     }
 
     /**
@@ -350,7 +338,7 @@ public class MUCard extends CardView implements MUViewHelper {
      * @param cornerRadius the corner radius to be applied
      */
     public void setCornerRadius(float cornerRadius) {
-        mCornerRadius = normalizeFloatValue(cornerRadius, 0, getWidth());
+        mCornerRadius = Math.max(cornerRadius, 0);
         setRadius(mCornerRadius);
     }
 
@@ -377,7 +365,7 @@ public class MUCard extends CardView implements MUViewHelper {
      * @param headerHorizontalPadding the horizontal padding to apply in dp
      */
     public void setHeaderHorizontalPadding(float headerHorizontalPadding) {
-        mHeaderHorizontalPadding = normalizeFloatValue(headerHorizontalPadding, 0, getWidth());
+        mHeaderHorizontalPadding = Math.max(headerHorizontalPadding, 0);
         invalidate();
     }
 

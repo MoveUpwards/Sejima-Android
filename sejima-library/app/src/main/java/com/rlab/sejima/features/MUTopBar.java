@@ -375,7 +375,6 @@ public class MUTopBar extends RelativeLayout implements MUViewHelper {
         }
     }
 
-
     /**
      * Apply the given width on the left image button
      * @param width the width in dp.

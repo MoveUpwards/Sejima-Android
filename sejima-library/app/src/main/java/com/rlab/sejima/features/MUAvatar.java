@@ -14,14 +14,13 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
-
-import com.rlab.sejima.R;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
 import androidx.appcompat.widget.AppCompatImageView;
+
+import com.rlab.sejima.R;
 
 /*
     Created by Antoine RICHE on 26/03/2019.

@@ -40,7 +40,7 @@ public class MUHeaderTests {
         // Title's color
         assertEquals(mMUHeader.getTitleColor(), Color.BLACK);
         // Title's size
-        defaultSize = MUHeader.DEFAULT_TITLE_SIZE_IN_SP;
+        defaultSize = 24;
         assertEquals(mMUHeader.getTitleSize(), defaultSize, 0);
         // Title's font
         assertEquals(mMUHeader.getTitleWeight(), Typeface.NORMAL);
@@ -49,7 +49,7 @@ public class MUHeaderTests {
         // Detail's color
         assertEquals(mMUHeader.getDetailColor(), Color.BLACK);
         // Detail's size
-        defaultSize = MUHeader.DEFAULT_DETAIL_SIZE_IN_SP;
+        defaultSize = 14;
         assertEquals(mMUHeader.getDetailSize(), defaultSize, 0);
         // Detail's font
         assertEquals(mMUHeader.getDetailWeight(), Typeface.BOLD);

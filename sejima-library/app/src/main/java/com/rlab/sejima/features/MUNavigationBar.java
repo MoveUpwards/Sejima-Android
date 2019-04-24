@@ -62,7 +62,7 @@ public class MUNavigationBar extends LinearLayout implements MUViewHelper {
     /**
      * The separator margins
      */
-    private float mSeparatorMargins = (int) pixelsToDensity(getResources().getDisplayMetrics(), 8);;
+    private float mSeparatorMargins = (int) pixelsToDensity(getResources().getDisplayMetrics(), 8);
 
     /**
      * The MUNavigationBarListener listener
