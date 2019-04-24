@@ -27,7 +27,6 @@ public class MUPinCodeTests {
     public void setUp() {
         mContext = ApplicationProvider.getApplicationContext();
         mMUPinCode = new MUPinCode(mContext);
-        mMUPinCode.setCount(4);
         assertNotNull(mMUPinCode);
     }
 
@@ -36,9 +35,9 @@ public class MUPinCodeTests {
 
         float converted  = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8,
                 mContext.getResources().getDisplayMetrics());
-
+        mMUPinCode.setCount(4);
         assertEquals(4, mMUPinCode.getCount(), 0);
-        assertEquals(InputType.TYPE_NULL, mMUPinCode.getKeyboardType(), 0);
+        assertEquals(InputType.TYPE_CLASS_TEXT, mMUPinCode.getKeyboardType(), 0);
         assertEquals(".", mMUPinCode.getDefaultChar());
         assertEquals(-1, mMUPinCode.getFontStyle(), 0);
         assertEquals(converted, mMUPinCode.getCellSpacing(), 0);
@@ -63,5 +62,21 @@ public class MUPinCodeTests {
         assertEquals(Color.BLACK, mMUPinCode.getCellColor());
         mMUPinCode.setCellCornerRadius(18);
         assertEquals(18, mMUPinCode.getCellCornerRadius(), 0);
+    }
+
+    @Test
+    public void setCode() {
+        mMUPinCode.setCount(6);
+        assertEquals(6, mMUPinCode.getCount(), 0);
+        mMUPinCode.setCode("12345");
+        assertEquals("12345", mMUPinCode.getCode());
+    }
+
+    @Test
+    public void tooLongCode() {
+        mMUPinCode.setCount(3);
+        assertEquals(3, mMUPinCode.getCount(), 0);
+        mMUPinCode.setCode("12345");
+        assertEquals("123", mMUPinCode.getCode());
     }
 }

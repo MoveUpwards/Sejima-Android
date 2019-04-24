@@ -184,6 +184,7 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
         }
 
         mEditTexts = ets;
+        mCount = count;
         requestLayout();
     }
 
@@ -329,7 +330,10 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
         }
 
         for(int i = 0 ; i < mCount ; i++){
-            mEditTexts[i].setText(code.charAt(i));
+            String codeChar = null;
+            try { codeChar = String.valueOf(code.charAt(i)); }
+            catch (StringIndexOutOfBoundsException | ArrayIndexOutOfBoundsException e){ codeChar = ""; }
+            finally { mEditTexts[i].setText(codeChar); }
         }
     }
 
@@ -357,8 +361,6 @@ public class MUPinCode extends LinearLayout implements MUViewHelper {
         @Override
         protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
             super.onTextChanged(text, start, lengthBefore, lengthAfter);
-            Log.e(getClass().getCanonicalName(), "onTextUpdated : " + text);
-            Log.e(getClass().getCanonicalName(), "mPinCodeListener == null? " + (mPinCodeListener == null));
             if(null != mPinCodeListener){
                 mPinCodeListener.didUpdate(getMUPinCode(), getCode());
             }
