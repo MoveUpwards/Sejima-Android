@@ -115,7 +115,7 @@
         <attr name="font_style"/>
         <attr name="bkg_color"/>
         <attr name="disable_alpha"/>
-        <attr name="text_alignment"/>
+        <attr name="alignment"/>
         <attr name="pressed_color"/>
         <attr name="progressing_color"/>
         <attr name="is_loading"/>
@@ -133,7 +133,7 @@
         <attr name="android:textColor"/>
         <attr name="android:textSize"/>
         <attr name="android:textStyle"/>
-        <attr name="text_alignment"/>
+        <attr name="alignment"/>
         <attr name="font_style"/>
         <attr name="pressed_color"/>
         <attr name="progressing_color"/>

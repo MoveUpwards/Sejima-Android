@@ -13,11 +13,11 @@
 
         <com.rlab.sejima.features.MUPinCode
             android:id="@+id/mu_pincode"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:corner_radius="84dp"
-            app:cell_spacing="45dp"
+            app:corner_radius="20dp"
+            app:cell_spacing="10dp"
             app:count="3"/>
 
     </RelativeLayout>
