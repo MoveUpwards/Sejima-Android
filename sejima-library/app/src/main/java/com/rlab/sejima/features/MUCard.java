@@ -126,7 +126,7 @@ public class MUCard extends CardView implements MUViewHelper {
         if(isInEditMode()){
             TextView tv = new TextView(context);
             tv.setText(context.getResources().getString(R.string.app_name));
-            tv.setBackgroundColor(context.getResources().getColor(R.color.primary));
+            tv.setBackgroundColor(context.getResources().getColor(R.color.sejima_primary));
             addContentView(tv);
         }
 
