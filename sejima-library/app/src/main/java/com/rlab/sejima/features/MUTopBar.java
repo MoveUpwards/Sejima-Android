@@ -11,7 +11,7 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -37,7 +37,7 @@ public class MUTopBar extends RelativeLayout implements MUViewHelper {
     /**
      * The left image button
      */
-    private ImageButton mIBLeftButton;
+    private ImageView mIBLeftButton;
 
     /**
      * The current title
@@ -67,9 +67,17 @@ public class MUTopBar extends RelativeLayout implements MUViewHelper {
      */
     private int mButtonImage = R.drawable.ic_launcher_background;
     /**
-     * The left padding
+     * The left btn padding
      */
-    private float mLeftButtonLeading = 0;
+    private float mLeftButtonPadding = 0;
+    /**
+     * The right btn padding
+     */
+    private float mRightButtonPadding = 0;
+    /**
+     * The right btn padding
+     */
+    private float mLeading = 0;
     /**
      * The left button width
      */
@@ -113,7 +121,9 @@ public class MUTopBar extends RelativeLayout implements MUViewHelper {
         mTitleAlignment = attributes.getInt(R.styleable.MUTopBar_topbar_title_alignment, mTitleAlignment);
 
         mLeftButtonWidth = attributes.getDimensionPixelSize(R.styleable.MUTopBar_topbar_img_width, 0);
-        mLeftButtonLeading = attributes.getDimensionPixelSize(R.styleable.MUTopBar_topbar_btn_leading, 0);
+        mLeftButtonPadding = attributes.getDimensionPixelSize(R.styleable.MUTopBar_topbar_btn_left_padding, 0);
+        mRightButtonPadding = attributes.getDimensionPixelSize(R.styleable.MUTopBar_topbar_btn_right_padding, 0);
+        mLeading = attributes.getDimensionPixelSize(R.styleable.MUTopBar_topbar_btn_leading, 0);
         mButtonImage = attributes.getResourceId(R.styleable.MUTopBar_topbar_btn_img, mButtonImage);
         // Font Style
         mFontStyle = attributes.getResourceId(R.styleable.MUTopBar_font_style, mFontStyle);
@@ -131,9 +141,9 @@ public class MUTopBar extends RelativeLayout implements MUViewHelper {
         setLayoutParams(lpRoot);
 
         mLeftButtonWidth = mLeftButtonWidth != 0 ? mLeftButtonWidth : DEFAULT_BUTTON_WIDTH_IN_SP;
-        mIBLeftButton = new ImageButton(context);
+        mIBLeftButton = new ImageView(context);
         mIBLeftButton.setId(View.generateViewId());
-        mIBLeftButton.setLayoutParams(getLeftBtnLayoutParams(mLeftButtonWidth));
+        mIBLeftButton.setLayoutParams(getImgLayoutParams(mLeftButtonWidth));
         setButtonImage(mButtonImage);
         addView(mIBLeftButton);
 
@@ -159,17 +169,22 @@ public class MUTopBar extends RelativeLayout implements MUViewHelper {
      * Get the left padding of ImageButton
      * @return the left padding of image button in dp.
      */
-    public float getLeftButtonLeading() {
-        return mLeftButtonLeading;
+    public float getLeftButtonPadding() {
+        return mLeftButtonPadding;
     }
 
     /**
      * Set the left padding of ImageButton
-     * @param leftButtonLeading the left padding of ImageButton in dp.
+     * @param leftButtonPadding the left padding of ImageButton in dp.
      */
-    public void setLeftButtonLeading(float leftButtonLeading) {
-        mLeftButtonLeading =  normalizeFloatValue(0, leftButtonLeading, leftButtonLeading);
-        mIBLeftButton.setLayoutParams(getLeftBtnLayoutParams(mLeftButtonWidth));
+    public void setLeftButtonPadding(float leftButtonPadding) {
+        mLeftButtonPadding =  normalizeFloatValue(0, leftButtonPadding, leftButtonPadding);
+        mIBLeftButton.setLayoutParams(getImgLayoutParams(mLeftButtonWidth));
+    }
+
+    public void setRightButtonPadding(float rightButtonPadding) {
+        mRightButtonPadding =  normalizeFloatValue(0, rightButtonPadding, rightButtonPadding);
+        mIBLeftButton.setLayoutParams(getImgLayoutParams(mLeftButtonWidth));
     }
 
     /**
@@ -376,11 +391,30 @@ public class MUTopBar extends RelativeLayout implements MUViewHelper {
     }
 
     /**
+     * Hide left button image
+     */
+    public void hideImage() {
+        setImageVisibility(false);
+    }
+
+    /**
+     * Show left button image
+     */
+    public void showImage() {
+        setImageVisibility(true);
+    }
+
+    private void setImageVisibility(boolean visible) {
+        mIBLeftButton.setVisibility(visible ? VISIBLE : GONE);
+    }
+
+
+    /**
      * Apply the given width on the left image button
      * @param width the width in dp.
      */
     private void updateImageWidth(float width){
-        mIBLeftButton.setLayoutParams(getLeftBtnLayoutParams(width));
+        mIBLeftButton.setLayoutParams(getImgLayoutParams(width));
     }
 
     /**
@@ -388,11 +422,11 @@ public class MUTopBar extends RelativeLayout implements MUViewHelper {
      * @param width the width in dp.
      * @return the layout params of the left image button.
      */
-    private RelativeLayout.LayoutParams getLeftBtnLayoutParams(float width){
+    private RelativeLayout.LayoutParams getImgLayoutParams(float width){
         LayoutParams lpImBtn = new LayoutParams((int) width, (int) width);
         lpImBtn.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
         lpImBtn.addRule(RelativeLayout.ALIGN_PARENT_START, RelativeLayout.TRUE);
-        lpImBtn.setMargins((int) mLeftButtonLeading, (int) mLeftButtonLeading, (int) mLeftButtonLeading, (int) mLeftButtonLeading);
+        lpImBtn.setMargins((int) mLeftButtonPadding, (int) mLeading, (int) mRightButtonPadding, (int) mLeading);
         return lpImBtn;
     }
 

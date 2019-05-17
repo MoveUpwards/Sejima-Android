@@ -82,7 +82,7 @@ public class MUTextField extends RelativeLayout implements MUViewHelper {
     /**
      * Keyboard type
      */
-    private int mKeyboardType = InputType.TYPE_NULL;
+    private int mKeyboardType = InputType.TYPE_CLASS_TEXT;
     /**
      * Enable/disable auto-correction
      */
@@ -156,6 +156,7 @@ public class MUTextField extends RelativeLayout implements MUViewHelper {
         mIsEditable = attributes.getBoolean(R.styleable.MUTextField_android_editable, true);
         mAutoCorrection = attributes.getBoolean(R.styleable.MUTextField_auto_correct, true);
         mKeyboardType = attributes.getInt(R.styleable.MUTextField_android_inputType, mKeyboardType);
+        mUnderlineColor =  attributes.getColor(R.styleable.MUTextField_underline_color, mUnderlineColor);
 
         s = attributes.getString(R.styleable.MUTextField_android_hint);
         mPlaceHolderText = TextUtils.isEmpty(s) ? mPlaceHolderText : s;
@@ -171,9 +172,8 @@ public class MUTextField extends RelativeLayout implements MUViewHelper {
         setLayoutParams(lpRoot);
 
         // Field's label
-        LayoutParams lpTVLabel = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LayoutParams lpTVLabel = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lpTVLabel.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
-        lpTVLabel.addRule(mAlignment, RelativeLayout.TRUE);
         mTVLabel = new TextView(context);
         mTVLabel.setLayoutParams(lpTVLabel);
         mTVLabel.setId(View.generateViewId());
@@ -186,7 +186,6 @@ public class MUTextField extends RelativeLayout implements MUViewHelper {
 
         // Input field
         LayoutParams lpEVInput = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lpEVInput.addRule(mAlignment, RelativeLayout.TRUE);
         lpEVInput.addRule(RelativeLayout.BELOW, mTVLabel.getId());
         mETInput = new AppCompatEditText(context){
             @Override
@@ -329,17 +328,15 @@ public class MUTextField extends RelativeLayout implements MUViewHelper {
      * </ul>
      */
     public void setAlignment(int alignment) {
-        RelativeLayout.LayoutParams ll = (LayoutParams) mTVLabel.getLayoutParams();
-        ll.removeRule(mAlignment);
-        ll.addRule(alignment, RelativeLayout.TRUE);
-        mTVLabel.setLayoutParams(ll);
-
         if(Gravity.END == alignment){
-            mETInput.setGravity(Gravity.END);
+            mETInput.setGravity(alignment);
+            mTVLabel.setGravity(alignment);
         } else if(Gravity.CENTER == alignment){
-            mETInput.setGravity(Gravity.CENTER);
+            mETInput.setGravity(alignment);
+            mTVLabel.setGravity(alignment);
         } else {
             mETInput.setGravity(Gravity.START);
+            mTVLabel.setGravity(Gravity.START);
         }
         mAlignment = alignment;
     }
@@ -472,6 +469,14 @@ public class MUTextField extends RelativeLayout implements MUViewHelper {
      */
     public void setKeyboardType(int keyboardType) {
         mKeyboardType = keyboardType;
+
+
+
+        if((keyboardType & InputType.TYPE_MASK_VARIATION) == InputType.TYPE_TEXT_VARIATION_PASSWORD
+                || (keyboardType & InputType.TYPE_MASK_VARIATION) == InputType.TYPE_NUMBER_VARIATION_PASSWORD) {
+            setSecure(true);
+        }
+
         mETInput.setInputType(mKeyboardType);
     }
 

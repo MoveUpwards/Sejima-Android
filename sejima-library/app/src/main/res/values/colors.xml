@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#749D98</color>
-    <color name="primaryDark">#00574B</color>
-    <color name="accent">#D81B60</color>
+    <color name="sejima_primary">#749D98</color>
+    <color name="sejima_primaryDark">#00574B</color>
+    <color name="sejima_accent">#D81B60</color>
 </resources>

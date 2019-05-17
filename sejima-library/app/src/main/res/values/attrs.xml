@@ -65,6 +65,7 @@
         <attr name="topbar_btn_img" format="reference"/>
         <attr name="topbar_img_width" format="dimension"/>
         <attr name="topbar_btn_left_padding" format="dimension"/>
+        <attr name="topbar_btn_right_padding" format="dimension"/>
         <attr name="topbar_btn_leading" format="dimension"/>
     </declare-styleable>
 
@@ -85,6 +86,7 @@
         <attr name="field" format="string"/>
         <attr name="field_size" format="dimension"/>
         <attr name="field_color" format="color"/>
+        <attr name="underline_color" format="color"/>
         <attr name="field_weight" format="enum">
             <enum name="normal" value="0"/>
             <enum name="bold" value="1"/>

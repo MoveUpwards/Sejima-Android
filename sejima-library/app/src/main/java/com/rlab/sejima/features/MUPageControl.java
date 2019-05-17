@@ -37,7 +37,7 @@ public class MUPageControl extends LinearLayout implements MUViewHelper {
     /**
      * The unactive element color
      */
-    private int mElementColor = getResources().getColor(R.color.primary);
+    private int mElementColor = getResources().getColor(R.color.sejima_primary);
     /**
      * The active element width
      */
@@ -49,7 +49,7 @@ public class MUPageControl extends LinearLayout implements MUViewHelper {
     /**
      * The unactive element color
      */
-    private int mActiveElementColor = getResources().getColor(R.color.accent);
+    private int mActiveElementColor = getResources().getColor(R.color.sejima_accent);
     /**
      * The unactive element border color
      */

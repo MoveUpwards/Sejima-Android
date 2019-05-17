@@ -159,7 +159,7 @@ public class MUButton extends RelativeLayout implements MUViewHelper {
         // Label
         mLabel = attributes.getString(R.styleable.MUButton_android_text);
         mLabelColor = attributes.getColor(R.styleable.MUButton_android_textColor, mLabelColor);
-//        mLabelFontSize = attributes.getDimensionPixelSize(R.styleable.MUButton_android_textSize, (int) mLabelFontSize);
+        mLabelFontSize = attributes.getDimensionPixelSize(R.styleable.MUButton_android_textSize, (int) mLabelFontSize);
         mLabelFontWeight = attributes.getInt(R.styleable.MUButton_android_textStyle, mLabelFontWeight);
         mLabelAlignment = attributes.getInt(R.styleable.MUButton_alignment, mLabelAlignment);
         mLabelHighLightedColor = attributes.getColor(R.styleable.MUButton_pressed_color, mLabelHighLightedColor);
@@ -185,6 +185,63 @@ public class MUButton extends RelativeLayout implements MUViewHelper {
      * @param context the view context
      * @param attributes the XML attributes of the super view
      */
+
+    public void applyAttributes(Context context, TypedArray attributes) {
+        if(null != attributes){
+
+            mDisabledAlpha = attributes.hasValue(R.styleable.MUNavigationBar_disable_alpha) ?
+                    attributes.getFloat(R.styleable.MUNavigationBar_disable_alpha, mDisabledAlpha)
+                    : mDisabledAlpha;
+            mBkgColor = attributes.hasValue(R.styleable.MUNavigationBar_bkg_color) ?
+                    attributes.getColor(R.styleable.MUNavigationBar_bkg_color, mBkgColor)
+                    : mBkgColor;
+            mLabel = attributes.hasValue(R.styleable.MUNavigationBar_android_text) ?
+                    attributes.getString(R.styleable.MUNavigationBar_android_text)
+                    : mLabel;
+            mLabelColor = attributes.hasValue(R.styleable.MUNavigationBar_android_textColor) ?
+                    attributes.getColor(R.styleable.MUNavigationBar_android_textColor, mLabelColor)
+                    : mLabelColor;
+            mLabelFontSize = attributes.hasValue(R.styleable.MUNavigationBar_android_textSize) ?
+                    attributes.getDimensionPixelSize(R.styleable.MUNavigationBar_android_textSize, (int) mLabelFontSize)
+                    : mLabelFontSize;
+            mLabelFontWeight = attributes.hasValue(R.styleable.MUNavigationBar_android_textStyle) ?
+                    attributes.getColor(R.styleable.MUNavigationBar_android_textStyle, mLabelFontWeight)
+                    : mLabelFontWeight;
+            mLabelAlignment = attributes.hasValue(R.styleable.MUNavigationBar_alignment) ?
+                    attributes.getInt(R.styleable.MUNavigationBar_alignment, mLabelAlignment)
+                    : mLabelAlignment;
+            mLabelHighLightedColor = attributes.hasValue(R.styleable.MUNavigationBar_pressed_color) ?
+                    attributes.getInt(R.styleable.MUNavigationBar_pressed_color, mLabelHighLightedColor)
+                    : mLabelHighLightedColor;
+            mProgressingColor = attributes.hasValue(R.styleable.MUNavigationBar_progressing_color) ?
+                    attributes.getInt(R.styleable.MUNavigationBar_progressing_color, mProgressingColor)
+                    : mProgressingColor;
+            mBorderWidth = attributes.hasValue(R.styleable.MUNavigationBar_border_width) ?
+                    attributes.getDimensionPixelSize(R.styleable.MUNavigationBar_border_width, 0)
+                    : mBorderWidth;
+            mBorderColor = attributes.hasValue(R.styleable.MUNavigationBar_border_color) ?
+                    attributes.getColor(R.styleable.MUNavigationBar_border_color, mBorderColor)
+                    : mBorderColor;
+            mCornerRadius = attributes.hasValue(R.styleable.MUNavigationBar_corner_radius) ?
+                    attributes.getDimensionPixelSize(R.styleable.MUNavigationBar_corner_radius, mCornerRadius)
+                    : mBorderColor;
+            mIsLoading = attributes.hasValue(R.styleable.MUNavigationBar_is_loading) ?
+                    attributes.getBoolean(R.styleable.MUNavigationBar_is_loading, false)
+                    : mIsLoading;
+            mHorizontalPadding = attributes.hasValue(R.styleable.MUNavigationBar_android_paddingHorizontal) ?
+                    attributes.getDimensionPixelSize(R.styleable.MUNavigationBar_android_paddingHorizontal, mHorizontalPadding)
+                    : mHorizontalPadding;
+            mVerticalPadding = attributes.hasValue(R.styleable.MUNavigationBar_android_paddingVertical) ?
+                    attributes.getDimensionPixelSize(R.styleable.MUNavigationBar_android_paddingVertical, mVerticalPadding)
+                    : mVerticalPadding;
+            mFontStyle = attributes.hasValue(R.styleable.MUNavigationBar_font_style) ?
+                    attributes.getResourceId(R.styleable.MUNavigationBar_font_style, mFontStyle)
+                    : mFontStyle;
+        }
+
+        init(context);
+    }
+
     public MUButton(Context context, TypedArray attributes) {
         super(context);
 
@@ -246,20 +303,19 @@ public class MUButton extends RelativeLayout implements MUViewHelper {
     private void init(Context context){
 
         mButton = new MaterialButton(context);
-        mButton.setGravity(Gravity.CENTER);
-        mButton.setAllCaps(false);
+        mButton.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         mButton.setId(View.generateViewId());
+        mButton.setAllCaps(false);
         addView(mButton);
 
         mProgressBar = new ProgressBar(context);
-        mProgressBar.setIndeterminate(true);
-
-        LayoutParams lp2 = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp2.addRule(RelativeLayout.ALIGN_END, mButton.getId());
-        lp2.addRule(RelativeLayout.ALIGN_START, mButton.getId());
-        lp2.addRule(RelativeLayout.ALIGN_TOP, mButton.getId());
-        lp2.addRule(RelativeLayout.ALIGN_BOTTOM, mButton.getId());
-        addView(mProgressBar, lp2);
+        RelativeLayout.LayoutParams progress = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        progress.addRule(RelativeLayout.ALIGN_LEFT, mButton.getId());
+        progress.addRule(RelativeLayout.ALIGN_RIGHT, mButton.getId());
+        progress.addRule(RelativeLayout.ALIGN_TOP, mButton.getId());
+        progress.addRule(RelativeLayout.ALIGN_BOTTOM, mButton.getId());
+        mProgressBar.setLayoutParams(progress);
+        addView(mProgressBar);
 
         // Background
         setBkgColor(mBkgColor);
@@ -271,10 +327,10 @@ public class MUButton extends RelativeLayout implements MUViewHelper {
         setLabel(mLabel);
         setLabelFontWeight(mLabelFontWeight);
         setLabelAlignment(mLabelAlignment);
-//        setLabelFontSize(mLabelFontSize);
+        setLabelFontSize(mLabelFontSize);
         setProgressingColor(mProgressingColor);
         // Style
-//        setFontStyle(mFontStyle);
+        setFontStyle(mFontStyle);
         // Border
         setBorderWidth(mBorderWidth);
         setCornerRadius(mCornerRadius);
@@ -287,8 +343,8 @@ public class MUButton extends RelativeLayout implements MUViewHelper {
         setFontColors();
         setBackgroundColors();
         //Padding
-//        setVerticalPadding(mVerticalPadding);
-//        setHorizontalPadding(mHorizontalPadding);
+        mButton.setPadding(mHorizontalPadding, mVerticalPadding, mHorizontalPadding, mVerticalPadding);
+        mProgressBar.setPadding(mHorizontalPadding, mVerticalPadding, mHorizontalPadding, mVerticalPadding);
     }
 
     @Override
@@ -296,9 +352,6 @@ public class MUButton extends RelativeLayout implements MUViewHelper {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         mButton.setWidth(getMeasuredWidth());
         mButton.setHeight(getMeasuredHeight());
-
-        mButton.setPadding(mHorizontalPadding, mVerticalPadding, mHorizontalPadding, mVerticalPadding);
-        mProgressBar.setPadding(mHorizontalPadding, mVerticalPadding, mHorizontalPadding, mVerticalPadding);
     }
 
     /**
@@ -538,6 +591,8 @@ public class MUButton extends RelativeLayout implements MUViewHelper {
                 mProgressBar.setVisibility(mIsLoading ? VISIBLE : GONE)
         );
         mButton.setTextColor(mIsLoading ? Color.TRANSPARENT : mLabelColor);
+        mButton.setClickable(!mIsLoading);
+        mButton.setEnabled(!mIsLoading);
     }
 
     /**
