@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="26fcb5b1-d161-4fb9-a0c5-d82e2e5e6acb" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/sejima-library/Sejima-Android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/sejima-library/Sejima-Android/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sejima-library/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/sejima-library/build.gradle" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -25,11 +26,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="3" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="3" />
+            <state relative-caret-position="315">
+              <caret line="21" column="31" selection-start-line="21" selection-start-column="9" selection-end-line="21" selection-end-column="31" />
               <folding>
                 <element signature="e#0#312#0" expanded="true" />
               </folding>
@@ -37,7 +38,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/dev/moveupwards/Library.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="45">
@@ -82,7 +83,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
-    <option name="y" value="59" />
+    <option name="x" value="12" />
+    <option name="y" value="47" />
     <option name="width" value="2560" />
     <option name="height" value="1337" />
   </component>
@@ -207,6 +209,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="2560" height="1440" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" visible="true" weight="0.18506752" />
       <window_info id="Structure" side_tool="true" />
@@ -248,20 +251,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="3" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="3" />
-          <folding>
-            <element signature="e#0#312#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/dev/moveupwards/Library.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
           <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="31" selection-start-line="21" selection-start-column="9" selection-end-line="21" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#312#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
