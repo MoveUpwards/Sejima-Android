@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 apply plugin: 'maven'
 
-group = 'com.github.MoveUpwards'
+group = 'com.rlab.sejima'
 
 android {
     compileSdkVersion 28

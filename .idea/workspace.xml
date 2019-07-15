@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="26fcb5b1-d161-4fb9-a0c5-d82e2e5e6acb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/sejima-library/Sejima-Android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/sejima-library/Sejima-Android/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sejima-library/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/sejima-library/build.gradle" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -83,8 +82,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
-    <option name="x" value="13" />
-    <option name="y" value="27" />
+    <option name="x" value="7" />
+    <option name="y" value="22" />
     <option name="width" value="2560" />
     <option name="height" value="1337" />
   </component>
@@ -209,7 +208,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="2560" height="1440" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" visible="true" weight="0.18506752" />
       <window_info id="Structure" side_tool="true" />
