@@ -1,8 +1,30 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 
-apply plugin: 'maven'
+bintray {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
-group = 'com.rlab.sejima'
+    user = properties.getProperty('bintray.user')
+    key = properties.getProperty('bintray.apikey')
+    publications = ['MyPublication']
+
+    pkg {
+        repo = 'Sejima-Android'
+        name = 'com.github.MoveUpwards'
+        userOrg = 'damien-nd'
+        licenses = ['MIT']
+        vcsUrl = 'https://github.com/MoveUpwards/Sejima-Android.git'
+        version {
+            name = '0.1.10'
+            desc = 'Sejima-Android'
+            released  = new Date()
+            vcsTag = '0.1.10'
+            attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
+        }
+    }
+}
 
 android {
     compileSdkVersion 28
@@ -20,11 +42,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
 }
 
 dependencies {
@@ -37,4 +54,9 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test:rules:1.2.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    implementation "androidx.core:core-ktx:1.0.2"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }
