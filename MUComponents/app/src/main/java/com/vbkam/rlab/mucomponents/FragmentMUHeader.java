@@ -35,11 +35,16 @@ public class FragmentMUHeader extends DefaultFragment {
         float detailSize = mMUHeader.getDetailSize();
         float verticalSpace = mMUHeader.getVerticalSpacing();
         float alignment = mMUHeader.getAlignment();
-
+/*
         // Title
         EditText etTitle = view.findViewById(R.id.control_mu_header_et_title);
         view.findViewById(R.id.control_mu_header_title).setOnClickListener(l ->
                 mMUHeader.setTitle(TextUtils.isEmpty(etTitle.getText()) ? "" : etTitle.getText().toString()));
+        */
+        // Title MUTextField
+        MUTextField tfTitle = view.findViewById(R.id.control_mu_header_et_title);
+        view.findViewById(R.id.control_mu_header_title).setOnClickListener(l ->
+                mMUHeader.setTitle(tfTitle.getField()));
 
         // Title color
         ((Switch) view.findViewById(R.id.control_mu_header_title_color)).setOnCheckedChangeListener((buttonView, isChecked) ->

@@ -1,14 +1,16 @@
-package com.rlab.sejima.features
+package com.vbkam.rlab.mucomponents
 
 import android.content.Context
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.Rect
 import android.graphics.Typeface
+import android.os.Build
 import android.text.InputType
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.util.DisplayMetrics
+import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
@@ -443,7 +445,7 @@ class MUTextField : RelativeLayout, MUViewHelper {
         set(fontStyle) {
             if (checkResource(resources, fontStyle)) {
                 mLabelFontStyle = fontStyle
-                mTVLabel?.let { TextViewCompat.setTextAppearance(it, fontStyle) }
+                TextViewCompat.setTextAppearance(mTVLabel!!, fontStyle)
             }
         }
 
@@ -460,7 +462,7 @@ class MUTextField : RelativeLayout, MUViewHelper {
         set(fontStyle) {
             if (checkResource(resources, fontStyle)) {
                 mFieldFontStyle = fontStyle
-                mETInput?.let { TextViewCompat.setTextAppearance(it, fontStyle) }
+                TextViewCompat.setTextAppearance(mETInput!!, fontStyle)
             }
         }
 
@@ -530,7 +532,7 @@ class MUTextField : RelativeLayout, MUViewHelper {
         // Input field
         val lpEVInput = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         lpEVInput.addRule(mAlignment, TRUE)
-        mTVLabel?.let { lpEVInput.addRule(BELOW, it.id) }
+        lpEVInput.addRule(BELOW, mTVLabel!!.id)
         mETInput = object : AppCompatEditText(context) {
             override fun onFocusChanged(focused: Boolean, direction: Int, previouslyFocusedRect: Rect?) {
                 super.onFocusChanged(focused, direction, previouslyFocusedRect)
@@ -552,6 +554,13 @@ class MUTextField : RelativeLayout, MUViewHelper {
                     tfListener?.textUpdated(this)
                 }
             }
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            mETInput?.focusable = 1
+        }
+        mETInput?.isClickable = true
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            mETInput?.isContextClickable = true
         }
 
         mETInput?.layoutParams = lpEVInput
